@@ -50,7 +50,7 @@ agent_llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
     model=OPENAI_MODEL,
     temperature=0.1,
-    streaming=False  # Disable streaming for agent
+    streaming=True  # Disable streaming for agent
 )
 
 movie_chat = chat_prompt | llm | StrOutputParser()
@@ -66,19 +66,25 @@ def football_chat_wrapper(input_text):
 # Define the tools
 tools = [
     Tool.from_function(
-        name="General Football Chat",
-        description="For general football chat not covered by other tools",
-        func=football_chat_wrapper,
-    ), 
+        name="49ers Graph Search",
+        description="""Use for ANY specific 49ers-related queries about players, games, schedules, fans, or team info.
+Examples: "Who are the 49ers playing next week?", "Which players are defensive linemen?", "How many fan chapters are in California?"
+This is your PRIMARY tool for 49ers-specific information and should be your DEFAULT choice for most queries.""",
+        func=cypher_qa_wrapper
+    ),
     Tool.from_function(
         name="Game Summary Search",  
-        description="ONLY use this when specifically searching for details about a particular game or match result",
+        description="""ONLY use for detailed game summaries or specific match results.
+Examples: "What happened in the 49ers vs Seahawks game?", "Give me details about the last playoff game"
+Do NOT use for general schedule or player questions.""",
         func=get_game_summary, 
     ),
     Tool.from_function(
-        name="49ers Graph Search",
-        description="Use this for ANY questions about 49ers players, games, schedules team info, fans, or relationships - this should be your DEFAULT tool for 49ers-related queries",
-        func=cypher_qa_wrapper
+        name="General Football Chat",
+        description="""ONLY use for general football discussion NOT specific to 49ers data.
+Examples: "How does the NFL draft work?", "What are the basic rules of football?"
+Do NOT use for any 49ers-specific questions.""",
+        func=football_chat_wrapper,
     )
 ]
 

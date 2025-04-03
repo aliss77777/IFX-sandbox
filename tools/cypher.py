@@ -14,6 +14,8 @@ Do not use any other relationship types or properties that are not provided.
 
 Do not return entire nodes or embedding properties.
 
+IMPORTANT: Always use case-insensitive comparisons in your Cypher queries by applying toLower() to both the property and the search string, or by using the =~ operator with (?i) for case-insensitive regex matching. This ensures that user queries match regardless of capitalization.
+
 Example Cypher Statements for 49ers Graph:
 
 1. Count All Nodes:
@@ -54,14 +56,16 @@ RETURN c.fan_chapter_name AS chapterName, count(f) AS fanCount
 ORDER BY fanCount DESC
 LIMIT 5
 
-8. Find Fans Favoriting a Specific Player & Community:
-MATCH (f:Fan)-[:FAVORITE_PLAYER]->(p:Player {{ name: "Nick Bosa" }})
-MATCH (f)-[:MEMBER_OF]->(c:Community {{ fan_chapter_name: "Niner Empire Hawaii 808" }})
+8. Find Fans Favoriting a Specific Player & Community (Case-Insensitive):
+MATCH (f:Fan)-[:FAVORITE_PLAYER]->(p:Player)
+WHERE toLower(p.name) = toLower("Nick Bosa")
+MATCH (f)-[:MEMBER_OF]->(c:Community)
+WHERE toLower(c.fan_chapter_name) = toLower("Niner Empire Hawaii 808")
 RETURN f.first_name AS firstName, f.last_name AS lastName, c.fan_chapter_name AS community
 
-9. Upcoming Home Games:
+9. Upcoming Home Games (Case-Insensitive):
 MATCH (g:Game)
-WHERE g.home_team = "San Francisco 49ers"
+WHERE toLower(g.home_team) = toLower("San Francisco 49ers")
 RETURN g.date AS date, g.location AS location, g.away_team AS awayTeam
 ORDER BY date
 
@@ -72,12 +76,20 @@ RETURN g.date AS date, g.home_team AS home, g.away_team AS away, g.result AS fin
 ORDER BY date DESC
 LIMIT 5
 
-11. Games Played at a Specific Location:
-MATCH (g:Game {{ location: "Levi's Stadium" }})
+11. Games Played at a Specific Location (Case-Insensitive):
+MATCH (g:Game)
+WHERE toLower(g.location) = toLower("Levi's Stadium")
 RETURN g.date AS date, g.home_team AS homeTeam, g.away_team AS awayTeam, g.result AS finalScore
 
-12. Find Fans in a Specific Community:
-MATCH (f:Fan)-[:MEMBER_OF]->(c:Community {{ fan_chapter_name: "Bay Area 49ers Fans" }})
+12. Find Fans in a Specific Community (Case-Insensitive):
+MATCH (f:Fan)-[:MEMBER_OF]->(c:Community)
+WHERE toLower(c.fan_chapter_name) = toLower("Bay Area 49ers Fans")
+RETURN f.first_name AS firstName, f.last_name AS lastName
+ORDER BY lastName
+
+12b. Find Fans in a Community (Using Regex, Case-Insensitive):
+MATCH (f:Fan)-[:MEMBER_OF]->(c:Community)
+WHERE c.fan_chapter_name =~ '(?i).*bay area.*'
 RETURN f.first_name AS firstName, f.last_name AS lastName
 ORDER BY lastName
 
@@ -90,6 +102,18 @@ ORDER BY chapter
 MATCH (f:Fan)
 WHERE NOT (f)-[:MEMBER_OF]->(:Community)
 RETURN f.first_name AS firstName, f.last_name AS lastName, f.email AS email
+
+15. Case-Insensitive Player Search:
+MATCH (p:Player)
+WHERE toLower(p.position) = toLower("QB")  // Case-insensitive position filter
+RETURN p.name AS playerName, p.position AS position, p.jersey_number AS jerseyNumber
+ORDER BY p.jersey_number
+
+16. Case-Insensitive Team Search:
+MATCH (g:Game)
+WHERE toLower(g.away_team) CONTAINS toLower("seahawks")  // Case-insensitive team search
+RETURN g.date AS date, g.home_team AS home, g.away_team AS away, g.result AS finalScore
+ORDER BY date DESC
 
 Schema:
 {schema}
@@ -112,7 +136,23 @@ cypher_qa = GraphCypherQAChain.from_llm(
 def cypher_qa_wrapper(input_text):
     """Wrapper function to handle input format and potential errors"""
     try:
-        return cypher_qa.invoke({"query": input_text})
+        # Log the incoming query for debugging
+        print(f"Processing query: {input_text}")
+        
+        # Process the query through the Cypher QA chain
+        result = cypher_qa.invoke({"query": input_text})
+        
+        # If we have access to the generated Cypher query, we could modify it here
+        # to ensure case-insensitivity, but the GraphCypherQAChain already executes
+        # the query. Instead, we rely on the prompt engineering approach to ensure
+        # the LLM generates case-insensitive queries.
+        
+        # Log the result for debugging
+        if "intermediate_steps" in result:
+            generated_cypher = result["intermediate_steps"][0]["query"]
+            print(f"Generated Cypher query: {generated_cypher}")
+        
+        return result
     except Exception as e:
         print(f"Error in cypher_qa: {str(e)}")
         return {"output": "I apologize, but I encountered an error while searching the database. Could you please rephrase your question?"}
