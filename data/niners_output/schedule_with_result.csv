@@ -1,0 +1,18 @@
+Match Number,Round Number,Date,Location,HomeTeam,AwayTeam,Result,game_result,game_id,Summary
+1,1,10/9/24 0:15,Levi's Stadium,San Francisco 49ers,New York Jets,32 - 19,Win,7d5492b7-6372-4ab6-b878-a6ad10936f3b,"Quarterback Brock Purdy threw for 231 yards, with running back Jordan Mason rushing for 147 yards."
+28,2,15/09/2024 17:00,U.S. Bank Stadium,Minnesota Vikings,San Francisco 49ers,23 - 17,Loss,9c37ef4a-8887-4e16-a0e9-53dd21d0ed1c,"Purdy passed for 319 yards; Mason added 100 rushing yards, but the 49ers fell short."
+38,3,22/09/2024 20:25,SoFi Stadium,Los Angeles Rams,San Francisco 49ers,27 - 24,Loss,b8c3e7f7-81ed-48c4-9a49-0897cac450e5,Purdy threw for 292 yards; Jauan Jennings had 175 receiving yards in a close loss.
+55,4,29/09/2024 20:05,Levi's Stadium,San Francisco 49ers,New England Patriots,30 - 13,Win,b4b49323-c84d-4414-bbd4-de399145db28,Brock Purdy threw for 288 yards and a touchdown; Fred Warner returned an interception for a touchdown.
+70,5,6/10/24 20:05,Levi's Stadium,San Francisco 49ers,Arizona Cardinals,23 - 24,Loss,efe67377-f218-4629-94d6-b0a28dae81b4,"Kyler Murray led a comeback, including a 50-yard touchdown run; Chad Ryland kicked the game-winning field goal."
+92,6,11/10/24 0:15,Lumen Field,Seattle Seahawks,San Francisco 49ers,24 - 36,Win,be924e35-6c00-470a-a82e-f77e89f2fca9,Geno Smith's late 13-yard touchdown run secured the Seahawks' victory.
+96,7,20/10/2024 20:25,Levi's Stadium,San Francisco 49ers,Kansas City Chiefs,18 - 28,Loss,c0efcedb-e8a0-4058-8ae8-df418a829c22,Specific game details are not available.
+109,8,28/10/2024 00:20,Levi's Stadium,San Francisco 49ers,Dallas Cowboys,30 - 24,Win,9d3c8085-3864-4c86-9a47-6d91f9561e68,Specific game details are not available.
+149,10,10/11/24 18:00,Raymond James Stadium,Tampa Bay Buccaneers,San Francisco 49ers,20 - 23,Win,8c117905-4d53-4bfb-a85e-d4d0a52262a8,"The 49ers narrowly avoided a collapse, with Jake Moody's game-winning field goal."
+158,11,17/11/2024 21:05,Levi's Stadium,San Francisco 49ers,Seattle Seahawks,17 - 20,Loss,6ee0f83e-d738-43c7-95e2-472bdaa9c2e8,Geno Smith's last-minute touchdown run ended the Seahawks' losing streak against the 49ers.
+169,12,24/11/2024 21:25,Lambeau Field,Green Bay Packers,San Francisco 49ers,38 - 10,Loss,89aeb6ec-c102-442f-a2b2-862a58f08c72,"Despite losing Deebo Samuel early, the 49ers secured a narrow victory."
+181,13,2/12/24 1:20,Highmark Stadium,Buffalo Bills,San Francisco 49ers,35 - 10,Loss,051a9bbd-41b1-4946-b366-2202b9b84646,"Josh Allen scored touchdowns passing, rushing, and receiving, leading the Bills to victory."
+199,14,8/12/24 21:25,Levi's Stadium,San Francisco 49ers,Chicago Bears,38 - 13,Win,2bfc3060-5975-4c60-8cf2-cd359c318bcb,Specific game details are not available.
+224,15,13/12/2024 01:15,Levi's Stadium,San Francisco 49ers,Los Angeles Rams,6 - 12,Loss,07182afe-36bf-44e4-a464-52a56e9e325d,"In a rainy defensive battle, the Rams secured victory with four field goals."
+228,16,22/12/2024 21:25,Hard Rock Stadium,Miami Dolphins,San Francisco 49ers,29 - 17,Loss,0be9a14c-0017-46b8-96e8-7c446e78ea84,A high-scoring game marked by a scuffle involving Jauan Jennings; the 49ers fell short.
+246,17,31/12/2024 01:15,Levi's Stadium,San Francisco 49ers,Detroit Lions,34 - 40,Loss,a6af1ef1-eece-43c2-b98f-c20494003cfe,Specific game details are not available.
+257,18,5/1/25 21:25,State Farm Stadium,Arizona Cardinals,San Francisco 49ers,47 - 24,Loss,2c95b37b-b32d-4b30-a582-f04b8cbf12e4,Specific game details are not available.

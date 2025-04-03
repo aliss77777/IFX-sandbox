@@ -1,0 +1,55 @@
+========================================
+ Test Cases for 2024–2025 49ers Graph
+========================================
+
+Below are Cypher queries designed to test that the new data structure 
+(Player, Game, Community, Fan) is fully and correctly loaded.
+
+--------------------------------------------------------------------------------
+A) BASIC ENTITY EXPLORATION
+--------------------------------------------------------------------------------
+
+1) COUNT ALL NODES
+------------------------------------------------------------
+MATCH (n)
+RETURN labels(n) AS nodeLabels, count(*) AS total
+
+2) LIST ALL PLAYERS
+------------------------------------------------------------
+MATCH (p:Player)
+RETURN p.name AS playerName, p.position AS position, p.jersey_number AS jerseyNumber
+ORDER BY p.jersey_number
+
+3) LIST ALL GAMES
+------------------------------------------------------------
+MATCH (g:Game)
+RETURN g.date AS date, g.location AS location, g.home_team AS homeTeam, g.away_team AS awayTeam, g.result AS finalScore
+ORDER BY g.date
+
+4) LIST ALL FAN COMMUNITIES
+------------------------------------------------------------
+MATCH (c:Community)
+RETURN c.fan_chapter_name AS chapterName, c.city AS city, c.state AS state, c.email_contact AS contactEmail
+ORDER BY chapterName
+
+5) LIST ALL FANS
+------------------------------------------------------------
+MATCH (f:Fan)
+RETURN f.first_name AS firstName, f.last_name AS lastName, f.email AS email
+LIMIT 20
+
+--------------------------------------------------------------------------------
+B) RELATIONSHIP & NETWORK ANALYSIS
+--------------------------------------------------------------------------------
+
+1) MOST-FAVORITED PLAYERS
+------------------------------------------------------------
+MATCH (f:Fan)-[:FAVORITE_PLAYER]->(p:Player)
+RETURN p.name AS playerName, count(f) AS fanCount
+ORDER BY fanCount DESC
+LIMIT 5
+
+2) COMMUNITIES WITH MOST MEMBERS
+------------------------------------------------------------
+MATCH (f:Fan)-[:MEMBER_OF]->(c:Community)
+RETURN c.fan_chapter_name AS chapterName,

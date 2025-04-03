@@ -1,0 +1,797 @@
+Chapter Name,Team,Address,City,State,Zip Code,Address
+State Farm Stadium,Arizona Cardinals,1 Cardinals Dr.,Glendale,Arizona,85305.0,1 Cardinals Dr. Glendale  Arizona 85305
+Mercedes-Benz Stadium,Atlanta Falcons,1 AMB Drive NW,Atlanta,Georgia,30313.0,1 AMB Drive NW Atlanta  Georgia 30313
+M&T Bank Stadium,Baltimore Ravens,Â 1101 Russell St,Baltimore,Maryland,21230.0,Â 1101 Russell St Baltimore  Maryland 21230
+Highmark Stadium,Buffalo Bills,1 Bills Dr,Orchard Park,New York,14127.0,1 Bills Dr Orchard Park  New York 14127
+Bank of America Stadium,Carolina Panthers,800 S Mint St,Charlotte,North Carolina,28202.0,800 S Mint St Charlotte  North Carolina 28202
+Soldier Field,Chicago Bears,1410 Museum Campus Dr,Chicago,Illinois,60605.0,1410 Museum Campus Dr Chicago  Illinois 60605
+Paul Brown Stadium,Cincinnati Bengals,1 Paul Brown Stadium,Cincinnati,Ohio,45202.0,1 Paul Brown Stadium Cincinnati  Ohio 45202
+FirstEnergy Stadium,Cleveland Browns,100 Alfred Lerner Way,Cleveland,Ohio,44114.0,100 Alfred Lerner Way Cleveland  Ohio 44114
+AT&T Stadium,Dallas Cowboys,1 AT&T Way,Arlington,Texas,76011.0,1 AT&T Way Arlington  Texas 76011
+Empower Field at Mile High,Denver Broncos,Â 1701 Bryant St,Denver,Colorado,80204.0,Â 1701 Bryant St Denver  Colorado 80204
+Ford Field,Detroit Lions,2000 Brush St,Detroit,Michigan,48226.0,2000 Brush St Detroit  Michigan 48226
+Lambeau Field,Green Bay Packers,1265 Lombardi Ave,Green Bay,Wisconsin,54304.0,1265 Lombardi Ave Green Bay  Wisconsin 54304
+NRG Stadium,Houston Texans,NRG Pkwy,Houston,Texas,77054.0,NRG Pkwy Houston  Texas 77054
+Lucas Oil Stadium,Indianapolis Colts,500 S Capitol Ave,Indianapolis,Indiana,46225.0,500 S Capitol Ave Indianapolis  Indiana 46225
+EverBank Field,Jacksonville Jaguars,1 Everbank Field Dr,Jacksonville,Florida,32202.0,1 Everbank Field Dr Jacksonville  Florida 32202
+Arrowhead Stadium,Kansas City Chiefs,1 Arrowhead Dr,Kansas City,Missouri,64129.0,1 Arrowhead Dr Kansas City  Missouri 64129
+SoFi Stadium,Los Angeles Chargers & Los Angeles Rams ,1001 Stadium Dr,Inglewood,California,90301.0,1001 Stadium Dr Inglewood  California 90301
+Hard Rock Stadium,Miami Dolphins,347 Don Shula Dr,Miami Gardens,Florida,33056.0,347 Don Shula Dr Miami Gardens  Florida 33056
+U.S. Bank Stadium,Minnesota Vikings,401 Chicago Avenue,Minneapolis,Minnesota,55415.0,401 Chicago Avenue Minneapolis  Minnesota 55415
+Gillette Stadium,New England Patriots,1 Patriot Pl,Foxborough,Massachusetts,2035.0,1 Patriot Pl Foxborough  Massachusetts 2035
+Caesars Superdome,New Orleans Saints,1500 Sugar Bowl Dr,New Orleans,Louisiana,70112.0,1500 Sugar Bowl Dr New Orleans  Louisiana 70112
+MetLife Stadium,New York Giants & New York Jets ,1 MetLife Stadium D,East Rutherford,New Jersey,7073.0,1 MetLife Stadium D East Rutherford  New Jersey 7073
+Allegiant Stadium,Las Vegas Raiders,3333 Al Davis Way,Las Vegas,Nevada,89118.0,3333 Al Davis Way Las Vegas Nevada 89118
+Lincoln Financial Field,Philadelphia Eagles,1 Lincoln Financial Field Way,Philadelphia,Pennsylvania,19148.0,1 Lincoln Financial Field Way Philadelphia  Pennsylvania 19148
+Heinz Field,Pittsburgh Steelers,100 Art Rooney Ave,Pittsburgh,Pennsylvania,15212.0,100 Art Rooney Ave Pittsburgh  Pennsylvania 15212
+Levi's Stadium,San Francisco 49ers,4900 Marie P DeBartolo Way ,Santa Clara,California,95054.0,4900 Marie P DeBartolo Way  Santa Clara  California 95054
+Lumen Field,Seattle Seahawks,800 Occidental Ave,Seattle,Washington,98134.0,800 Occidental Ave Seattle  Washington 98134
+Raymond James Stadium,Tampa Bay Buccaneers,4201 N Dale Mabry Hwy,Tampa,Florida,33607.0,4201 N Dale Mabry Hwy Tampa  Florida 33607
+Nissan Stadium,Tennessee Titans,1 Titans Way,Nashville,Tennessee,37213.0,1 Titans Way Nashville  Tennessee 37213
+FedExField,Washington Comanders,1600 Fedex Way,Landover,Maryland,20785.0,1600 Fedex Way Landover  Maryland 20785
+,,,Aguascalientes,,,
+,,,"Celaya, GTO",,,
+,,,Chiapas,,,
+,,,Chihuahua,,,
+,,,Chihuahua,,,
+,,,"Ciudad de Mexico, Mexico",,,
+,,,Durango,,,
+,,,Estado de Mexico,,,
+,,,"Guadalajara, Jalisco",,,
+,,,"Guadalajara, Jalisco",,,
+,,,Juarez,,,
+,,,Merida,,,
+,,,Mexicali,,,
+,,,Monterrey,,,
+,,,Puebla,,,
+,,,Saltillo,,,
+,,,San Luis Potosi,,,
+,,,Tijuana,,,
+,,,Toluca,,,
+,,,Veracruz,,,
+,,,Bad Vigaun,,,
+,,,Nousseviller Saint Nabor,,,
+,,,Ismaning,,,
+,,,Hamburg,,,
+,,,Cologne State: NRW,,,
+,,,Berlin,,,
+,,,BornhÃ¶ved,,,
+,,,Ampfing,,,
+,,,Duesseldorf,,,
+,,,Cologne,,,
+,,,Dublin 13,,,
+,,,Fiorano Modenese,,,
+,,,Madrid,,,
+,,,Sao Paulo,,,
+,,,"Campo Limpo, Sao Paulo",,,
+,,,"Sao Bernardo do Campo, Sao Paulo",,,
+,,,"Vancouver, BC",,,
+,,,"Bolton, Ontario",,,
+,,,Auckland,,,
+,,,Nuku'alofa,,,
+,,,Greater Manchester,,,
+,,,Newcastle,,,
+,,,London,,,
+,,,Manchester,,,
+,,,Charleston,SC,,
+,,,Chico,Ca,,
+,,,Aurora,CO,,
+,,,bell,ca,,
+,,,Danville,VA,,
+,,,Gilbert,AZ,,
+,,,Evansville,IN,,
+,,,Vacaville,CA,,
+,,,Hesperia,California,,
+,,,Cool,CA,,
+,,,Hermosa Beach,CA,,
+,,,Aurora,Co,,
+,,,Vancouver,Wa,,
+,,,Harlingen,TX,,
+,,,Hollywood,CA,,
+,,,Frisco,TX,,
+,,,San Diego,California,,
+,,,City of Industry,California,,
+,,,Redwood City,CA,,
+,,,Oxnard,CA,,
+,,,Lake Elsinore,California,,
+,,,Gilbert,Az,,
+,,,Forestville,Ca,,
+,,,wylie,texas,,
+,,,Novato,CA,,
+,,,Modesto,ca,,
+,,,Larksville,PA,,
+,,,Portland,Or,,
+,,,Morgan Hill,CA,,
+,,,Erie,PA,,
+,,,Yuma,AZ,,
+,,,Fremont,california,,
+,,,Orlando,FL,,
+,,,517 E Gore Blvd,OK,,
+,,,Alameda,CA,,
+,,,Gilroy,CA,,
+,,,Merced,CA,,
+,,,Buena park,CA,,
+,,,Milpitas,CA,,
+,,,san francisco,California,,
+,,,Denver,Co,,
+,,,Tlalnepantla de Baz,CA,,
+,,,Modesto,CA,,
+,,,Auburn,Wa,,
+,,,Phoenix,AZ,,
+,,,Montclair,California,,
+,,,Woodbridge,va,,
+,,,Hemet,CA,,
+,,,Arlington,TX,,
+,,,Los Angeles,CA,,
+,,,San Pablo,Ca,,
+,,,Oakley,Ca,,
+,,,Mechanicsville,Va,,
+,,,Billings,MT,,
+,,,Waipahu,HI,,
+,,,Porterville,Ca,,
+,,,CHICOPEE,MA,,
+,,,Norfolk,VA,,
+,,,Visalia,Ca,,
+,,,Ewing Twp,NJ,,
+,,,Houston,TX,,
+,,,Honolulu,HI,,
+,,,Murrieta,CA,,
+,,,Sacramento,CA,,
+,,,Huntington Beach,CA,,
+,,,Saltillo,TX,,
+,,,Memphis,TN,,
+,,,KEYES,CA,,
+,,,Manteca,Ca,,
+,,,Las Vegas,NV,,
+,,,Washington,DC,,
+,,,Roseville,CA,,
+,,,Bakersfield,Ca,,
+,,,Salinas,CA,,
+,,,Salinas,CA,,
+,,,Houston,TX,,
+,,,Mountain View,CA,,
+,,,Corpus Christi,TX,,
+,,,Dade City,Florida,,
+,,,Chico,CA,,
+,,,Chicago,IL,,
+,,,Sacramento,CA,,
+,,,Colorado Springs,Co.,,
+,,,Greensboro,NC,,
+,,,Redmond,OR,,
+,,,Carson,CA,,
+,,,Mattoon,Illinois,,
+,,,Star,ID,,
+,,,stamford,ct,,
+,,,Miami,FL,,
+,,,San Francisco,CA,,
+,,,Oxnard,CA,,
+,,,Arlington,TX,,
+,,,Albuquerque,NM,,
+,,,Honolulu,Hawaii,,
+,,,Jonesboro,AR,,
+,,,Marietta,ga,,
+,,,San Diego,CA,,
+,,,Maricopa,AZ,,
+,,,Syracuse,NY,,
+,,,Ventura,CA,,
+,,,Fredericksburg,VA,,
+,,,tampa,fl,,
+,,,Rochester,New York,,
+,,,Waco,TX,,
+,,,Brentwood,CA,,
+,,,Lancaster,PA,,
+,,,El Paso,Tx,,
+,,,West Sacramento,CA,,
+,,,Los Angeles,CA,,
+,,,Denver,CO,,
+,,,Frisco,TX,,
+,,,Fairfield,CA,,
+,,,Redding,CA,,
+,,,Fremont,CA,,
+,,,Fargo,ND,,
+,,,Redding,CA,,
+,,,Summerville,South Carolina,,
+,,,Port St Johns,FL,,
+,,,San Bernardino,CA,,
+,,,REDLANDS,CALIFORNIA,,
+,,,Bakersfield,Ca,,
+,,,Los Angeles,ca,,
+,,,Troy,OH,,
+,,,San Bernardino,California,,
+,,,Elk Grove,CA,,
+,,,Hacienda heights,CA,,
+,,,Homestead,Fl,,
+,,,Chandler,AZ,,
+,,,EDINBURG,TX,,
+,,,Manhattan,KS,,
+,,,Buena park,CA,,
+,,,Bedford,TX,,
+,,,Hilmar,Ca,,
+,,,Bridgeport,WV,,
+,,,Carbondale,IL,,
+,,,HONOLULU,HI,,
+,,,Honolulu,HI,,
+,,,Houston,Tx,,
+,,,Hattiesburg,Mississippi,,
+,,,Duluth,GA,,
+,,,Yonkers,New York,,
+,,,Salinas,Ca,,
+,,,Clackamas,Oregon,,
+,,,Nassau Bay,TX,,
+,,,Brisbane,Ca,,
+,,,Boston,MA,,
+,,,Boston,MA,,
+,,,Riverside,California,,
+,,,Monroe,La.,,
+,,,Austin,TX,,
+,,,San Antonio,TX,,
+,,,Spokane,WA,,
+,,,Newport Beach,CA,,
+,,,Henderson,NV,,
+,,,Turlock,CA,,
+,,,San Jose,CA,,
+,,,merced,ca,,
+,,,Brawley,CA,,
+,,,TOOELE,UT,,
+,,,Wichita,KS,,
+,,,Hickory,NC,,
+,,,Chicago,IL,,
+,,,Vancouver,WA,,
+,,,Hampton,VA,,
+,,,Newport,KY,,
+,,,Oklahoma City,Oklahoma,,
+,,,Wine country,CA,,
+,,,Memphis,Tennessee,,
+,,,North Charleston,SC,,
+,,,Tampa,FL,,
+,,,Palm Springs,CA,,
+,,,Anchorage,AK,,
+,,,Surprise,Az,,
+,,,Bloomington,CA,,
+,,,McAllen,TX,,
+,,,West Sacramento,CA,,
+,,,Industry,CA,,
+,,,Hayward,Ca,,
+,,,Chariton,Iowa,,
+,,,Fresno,CA,,
+,,,East Hartford,Connecticut,,
+,,,Houston,Texas,,
+,,,Houston,Texas,,
+,,,Industry,CA,,
+,,,porterville,CA,,
+,,,Billings,MT,,
+,,,Memphis,Tn,,
+,,,Tulsa,OK,,
+,,,Oklahoma City,OK,,
+,,,Brawley,Ca,,
+,,,Gilbert,AZ,,
+,,,Lacey,WA,,
+,,,Mechanicsville,Virginia,,
+,,,Tampa,FL,,
+,,,Missoula,MT,,
+,,,Corpus Christi,Texas,,
+,,,Delano,ca,,
+,,,Nashville,TN,,
+,,,New York,New York,,
+,,,hesperia,California,,
+,,,Denver,Colorado,,
+,,,Windsor,CO,,
+,,,Wauwatosa,WI,,
+,,,san angelo,tx,,
+,,,Devol,OK,,
+,,,Xenia,Ohio,,
+,,,Cheyenne,WY,,
+,,,Apple Valley,CA,,
+,,,Socorro,TX,,
+,,,Albuquerque,N.M.,,
+,,,Casa grande,Arizona(AZ),,
+,,,Albuquerque,New Mexico,,
+,,,Long Beach,Ca,,
+,,,Charlotte,North Carolina,,
+,,,Saint Paul,MN,,
+,,,Jackson,Ms.,,
+,,,Pleasant Hill,California,,
+,,,mesa,az,,
+,,,San Antonio,TX,,
+,,,Jonesboro,AR,,
+,,,Raleigh,North Carolina,,
+,,,Greensboro,NC,,
+,,,Hanford,CA,,
+,,,Rio Rancho,NM,,
+,,,San Jose,CA,,
+,,,moreno valley,ca,,
+,,,San Antonio,Texas,,
+,,,Tucson,AZ,,
+,,,Glendale,Arizona,,
+,,,el paso,tx,,
+,,,Henderson,Nevada,,
+,,,Salem,OR,,
+,,,San Antonio,Texas,,
+,,,Medford,OR,,
+,,,Toledo,Ohio,,
+,,,Las Vegas,NV,,
+,,,las vegas,NV,,
+,,,Brawley,CA,,
+,,,La Quinta,CA,,
+,,,Santa Clara,CA,,
+,,,Chicago,IL,,
+,,,Jersey City,New Jersey,,
+,,,Bayonne,NJ,,
+,,,Coeur d'Alene,ID,,
+,,,Ellensburg,WA,,
+,,,Herndon,VA,,
+,,,Austin,Texas,,
+,,,new york,ny,,
+,,,Madera,CA,,
+,,,Austin,TX,,
+,,,MORENO VALLEY,CA,,
+,,,Chicopee,MA,,
+,,,Portland,OR,,
+,,,dansville,NY,,
+,,,PORTERVILLE,CA,,
+,,,Solana Beach,CA,,
+,,,Culver City,CA,,
+,,,Casa grande,Arizona(AZ),,
+,,,Prescott,AZ,,
+,,,Honolulu,Hawaii,,
+,,,Portland,OR,,
+,,,Antioch,Ca,,
+,,,Pleasanton,California,,
+,,,New York,New York,,
+,,,Yakima,Wa,,
+,,,Aurora,CO,,
+,,,Gardena,Ca,,
+,,,Downey,CA,,
+,,,EastHartford,CO,,
+,,,Sandy Springs,GA,,
+,,,Reno,Nv,,
+,,,South San Francisco,Ca,,
+,,,Colma,CA,,
+,,,Winchester,CA,,
+,,,Riverside,California,,
+,,,Ankeny,IA,,
+,,,Nashville,TN,,
+,,,Leavenworth,KS,,
+,,,Fair Oaks,Ca,,
+,,,Baton Rouge,LA,,
+,,,Visalia,Ca,,
+,,,Greeley,co,,
+,,,Cupertino,California,,
+,,,San Diego,CA,,
+,,,Apache Junction,AZ,,
+,,,Windsor,CA,,
+,,,Canfield,OH,,
+,,,Everett,WA,,
+,,,Durham,North Carolina,,
+,,,Boynton Beach,Florida,,
+,,,Red Bluff,CA,,
+,,,Finley,Washington,,
+,,,Lake Elsinore,CA,,
+,,,Barnegat,NJ,,
+,,,Santa Fe,New Mexico,,
+,,,Maricopa,AZ,,
+,,,Davie,FL,,
+,,,Lubbock,Texas,,
+,,,Honolulu,HI,,
+,,,Portland,OR,,
+,,,Oakland Park,FL,,
+,,,Tracy,Ca,,
+,,,medford,or,,
+,,,Cameron park,CA,,
+,,,piqua,OH,,
+,,,Oceanside,ca,,
+,,,Trenton,New Jersey,,
+,,,Concord,NH,,
+,,,Fontana,Ca,,
+,,,Arcadia,CA,,
+,,,Fresno,California,,
+,,,Eugene,OR,,
+,,,Linden,NJ,,
+,,,Rochester,NY,,
+,,,Moreno Vallay,CA,,
+,,,Oklahoma city,OK,,
+,,,napa,California,,
+,,,Star,ID,,
+,,,Newport news,VA,,
+,,,Salem,OR,,
+,,,Bell,Ca,,
+,,,Bossier City,LA,,
+,,,Pembroke pines,Florida,,
+,,,Salt Lake City,UT,,
+,,,Phoenix,AZ,,
+,,,Carson,CA,,
+,,,Addison,Texas,,
+,,,Vancouver,Wa,,
+,,,Woodland,CA,,
+,,,Cicero,New York,,
+,,,Durango,CO,,
+,,,Gilbert,AZ,,
+,,,Guadalajara,TX,,
+,,,Charleston,WV,,
+,,,Saddle Brook,NJ,,
+,,,Sunnyvale,CA,,
+,,,Indianapolis,IN,,
+49ers Aguascalientes,,,Aguascalientes,,,"Aguascalientes Mexico Vikingo Bar Av de la Convención de 1914 Sur 312-A, Las Américas, 20230 Aguascalientes, Ags., Mexico"
+Bajio Faithful,,,"Celaya, GTO",,,"Celaya, GTO Mexico California Prime Rib Restaurant Av. Constituyentes 1000 A, 3 Guerras, 38080 Celaya, Gto., Mexico"
+Niner Empire Chiapas,,,Chiapas,,,"Chiapas Mexico Alitas Tuxtla Blvd. Belisario Dominguez 1861 Loc K1 Tuxtl Fracc, Bugambilias, 29060 Tuxtla Gutiérrez, Chis., Mexico"
+49ers Faithful Chihuahua Oficial,,,Chihuahua,,,"Chihuahua Mexico El Coliseo Karaoke Sports Bar C. Jose Maria Morelos 111, Zona Centro, 31000 Chihuahua, Chih., Mexico"
+Gold Rush Chihuahua Spartans,,,Chihuahua,,,"Chihuahua Mexico 34 Billiards & Drinks Av. Tecnológico 4903, Las Granjas 31100"
+Club 49ers Mexico,,,"Ciudad de Mexico, Mexico",,,"Ciudad de Mexico, Mexico Mexico Bar 49 16 Septiembre #27 Colonia Centro Historico Ciudad de Mexico"
+Club 49ers Durango Oficial,,,Durango,,,"Durango Mexico Restaurante Buffalucas Constitución C. Constitución 107B, Zona Centro, 34000 Durango, Dgo., Mexico"
+Niner Empire Edo Mex,,,Estado de Mexico,,,"Estado de Mexico Mexico Beer Garden Satélite Cto. Circunvalación Ote. 10-L-4, Cd. Satélite, 53100 Naucalpan de Juárez, Méx., Mexico"
+Club 49ers Jalisco,,,"Guadalajara, Jalisco",,,"Guadalajara, Jalisco Mexico Restaurante Modo Avión Zapopan Calzada Nte 14, Granja, 45010 Zapopan, Jal., Mexico"
+Niner Empire Jalisco,,,"Guadalajara, Jalisco",,,"Guadalajara, Jalisco Mexico SkyGames Sports Bar Av. Vallarta 874 entre Camarena y, C. Escorza, Centro, 44100 Guadalajara, Jal., Mexico"
+Niner Empire Juarez Oficial,,,Juarez,,,"Juarez Mexico Sport Bar Silver Fox Av. Paseo Triunfo de la República 430, Las Fuentes, 32530 Juárez, Chih., Mexico"
+49ers Merida Oficial,,,Merida,,,"Merida Mexico Taproom Mastache Av. Cámara de Comercio 263, San Ramón Nte, 97117 Mérida, Yuc., Mexico"
+Niner Empire Mexicali,,,Mexicali,,,"Mexicali Mexico La Gambeta Terraza Sports Bar Calz. Cuauhtémoc 328, Aviación, 21230 Mexicali, B.C., Mexico"
+49ers Monterrey Oficial,,,Monterrey,,,"Monterrey Mexico Buffalo Wild Wings Insurgentes Av Insurgentes 3961, Sin Nombre de Col 31, 64620 Monterrey, N.L., Mexico"
+Club 49ers Puebla,,,Puebla,,,"Puebla Mexico Bar John Barrigón Av. Juárez 2925, La Paz, 72160 Heroica Puebla de Zaragoza, Pue., Mexico"
+Niners Empire Saltillo,,,Saltillo,,,"Saltillo Mexico Cervecería La Huérfana Blvd. Venustiano Carranza 7046-Int 9, Los Rodríguez, 25200 Saltillo, Coah., Mexico"
+San Luis Potosi Oficial,,,San Luis Potosi,,,"San Luis Potosi Mexico Bar VIC Av Nereo Rodríguez Barragán 1399, Fuentes del Bosque, 78220 San Luis Potosí, S.L.P., Mexico"
+49ers Tijuana Fans Oficial,,,Tijuana,,,"Tijuana Mexico Titan Sports Bar J. Gorostiza 1209, Zona Urbana Rio Tijuana, 22320 Tijuana, B.C., Mexico"
+49ers Club Toluca Oficial,,,Toluca,,,"Toluca Mexico Revel Wings Carranza Calle Gral. Venustiano Carranza 20 Pte. 905, Residencial Colón y Col Ciprés, 50120 Toluca de Lerdo, Méx., Mexico"
+Cluib de Fans 49ers Veracruz,,,Veracruz,,,"Veracruz Mexico Wings Army del Urban Center C. Lázaro Cárdenas 102, Rafael Lucio, 91110 Xalapa-Enríquez, Ver., Mexico"
+49ersFanZone.net,,,Bad Vigaun,,,Bad Vigaun Austria Neuwirtsweg 315
+The Niner Empire France,,,Nousseviller Saint Nabor,,,Nousseviller Saint Nabor France 4 voie romaine 4 voie romaine
+Niner Empire Germany-Bavaria Chapter,,,Ismaning,,,Ismaning Germany 49er's Sports & Partybar Muenchener Strasse 79
+4T9 Mob Germany Family,,,Hamburg,,,Hamburg Germany Jolly Roger Budapester Str. 44
+49 Niner Empire,,,Cologne State: NRW,,,Cologne State: NRW Germany Joe Camps Sports Bar Joe Champs
+The Niner Empire Germany Berlin Chapter,,,Berlin,,,Berlin Germany Sportsbar Tor133 Torstrasse 133
+,,,BornhÃ¶ved,,,BornhÃ¶ved Germany Comeback Bar MÃ¼hlenstraÃŸe 11
+49ers Fans Bavaria,,,Ampfing,,,Ampfing Germany Holzheim 1a/Ampfing Holzheim 1a
+The Niner Empire Germany - North Rhine-Westphalia Chapter,,,Duesseldorf,,,Duesseldorf Germany Knoten Kurze Strasse 1A
+Niner Empire Germany-NRW Chapter,,,Cologne,,,Cologne Germany Joe Champs Sportsbar Cologne Hohenzollernring 1 -3
+The Irish Faithful,,,Dublin 13,,,Dublin 13 Ireland Busker On The Ball 13 - 17 Fleet Street
+49ers Italian Fan Club,,,Fiorano Modenese,,,"Fiorano Modenese Italy The Beer Corner Via Roma, 2/A"
+Mineros Spanish Faithful,,,Madrid,,,Madrid Spain Penalti Lounge Bar Avenida Reina 15
+Equipe Sports SF,,,Sao Paulo,,,"Sao Paulo Brazil Website, Podcast, Facebook Page, Twitter Rua Hitoshi Ishibashi, 11 B"
+49ers Brasil,,,"Campo Limpo, Sao Paulo",,,"Campo Limpo, Sao Paulo Brazil Bars and Restaurants in SÃ£o Paulo - SP"
+San Francisco 49ers Brasil,,,"Sao Bernardo do Campo, Sao Paulo",,,"Sao Bernardo do Campo, Sao Paulo Brazil Multiple locations around south and southeast states of Brazil"
+"Niner Empire --Vanouver,BC Chapter",,,"Vancouver, BC",,,"Vancouver, BC Canada The Sharks Club--Langley, BC 20169 88 Avenue"
+True North Niners,,,"Bolton, Ontario",,,"Bolton, Ontario Canada Maguire's Pub 284 Queen st E"
+Faithful Panama,,,,,,Panama 5inco Panama 8530 NW 72ND ST
+Niner Empire New Zealand,,,Auckland,,,Auckland New Zealand The Kingslander 470 New North Road
+49er Fans-Tonga,,,Nuku'alofa,,,Nuku'alofa Tonga Tali'eva Bar 14 Taufa'ahau Rd
+49ers Faithful UK,,,Greater Manchester,,,Greater Manchester United Kingdom the green Ducie street Manchester Greater Manchester Lancashire m1 United Kingdom
+49er Faithful UK,,,Newcastle,,,Newcastle United Kingdom Grosvenor Casino 100 St James' Blvd Newcastle Tyne & Wear CA 95054 United Kingdom
+49ers of United Kingdom,,,London,,,London United Kingdom The Sports Cafe 80 Haymarket London SW1Y 4TE United Kingdom
+Niner Empire UK,,,Manchester,,,"Manchester United Kingdom The Green Bridge House 26 Ducie Street, Manchester, Manchester M1 2dq United Kingdom"
+"San Francisco 49er Fans of Charleston, SC",,,Charleston,SC,,Charleston SC United States Recovery Room Tavern 685 King St
+530 Empire,,,Chico,Ca,,Chico Ca United States Nash's 1717 Esplanade
+303 Denver Chapter Niner Empire,,,Aurora,CO,,Aurora CO United States Moes Bbq 2727 s Parker rd
+40NINERS L.A. CHAPTER,,,bell,ca,,bell ca United States KRAZY WINGS SPORTS & GRILL 7016 ATLANTIC AVE
+434 Virginia Niner Empire,,,Danville,VA,,Danville VA United States Kickbacks Jacks 140 Crown Dr
+480 Gilbert Niner Empire LLC,,,Gilbert,AZ,,Gilbert AZ United States The Brass Tap 313 n Gilbert rd
+Midwest Empire,,,Evansville,IN,,Evansville IN United States Hooters (Evansville) 2112 Bremmerton Dr
+49er Booster Club of Vacaville,,,Vacaville,CA,,Vacaville CA United States Blondies Bar and Grill 555 Main Street
+49er Empire High Desert,,,Hesperia,California,,Hesperia California United States Whiskey Barrel 12055 Mariposa Rd.
+Cool 49er Booster Club,,,Cool,CA,,Cool CA United States The Cool Beerworks 5020 Ellinghouse Dr Suite H
+49ersBeachCitiesSoCal,,,Hermosa Beach,CA,,Hermosa Beach CA United States American Junkie Sky Light Bar American Junkie
+49ers Denver Empire,,,Aurora,Co,,Aurora Co United States Moe's Original BBQ Aurora 2727 S Parker Rd
+49ers Forever Faithfuls,,,Vancouver,Wa,,"Vancouver Wa United States Hooligan's sports bar and grill 8220 NE Vancouver Plaza Dr, Vancouver, WA 98662"
+South Texas 49ers Chapter,,,Harlingen,TX,,Harlingen TX United States Wing barn 412 sunny side ln
+49ers Los Angeles,,,Hollywood,CA,,Hollywood CA United States Dave & Buster's Hollywood 6801 Hollywood Blvd.
+49ers United Of Frisco TX,,,Frisco,TX,,Frisco TX United States The Frisco Bar and Grill 6750 Gaylord Pkwy
+619ers San Diego Niner Empire,,,San Diego,California,,San Diego California United States Bridges Bar & Grill 4800 Art Street
+626 FAITHFUL'S,,,City of Industry,California,,City of Industry California United States Hacienda Heights Pizza Co. 15239 E Gale Ave
+Niner Empire 650 Chapter,,,Redwood City,CA,,Redwood City CA United States 5th Quarter 976 Woodside Rd
+714 Niner Empire,,,Oxnard,CA,,"Oxnard CA United States Bottoms Up Tavern, 2162 West Lincoln Ave, Anaheim CA 92801 3206 Lisbon Lane"
+9er Elite Niner Empire,,,Lake Elsinore,California,,Lake Elsinore California United States Pin 'n' Pockets 32250 Mission Trail
+Az 49er Faithful,,,Gilbert,Az,,Gilbert Az United States Fox and Hound! 1017 E Baseline Rd
+Niners Winers,,,Forestville,Ca,,Forestville Ca United States Bars and wineries in sonoma and napa counties River road
+a_49er fan,,,wylie,texas,,wylie texas United States Wylie 922 cedar creek dr.
+Niner Empire Marin,,,Novato,CA,,Novato CA United States Moylan's Brewery & Restaurant 15 Rowland Way
+4T9 Mob,,,Modesto,ca,,Modesto ca United States Jack's pizza cafe 2001 Mchenry ave
+North Eastern Pennsyvania chapter,,,Larksville,PA,,Larksville PA United States Zlo joes sports bar 234 Nesbitt St
+PDX Frisco Fanatics,,,Portland,Or,,Portland Or United States Suki's bar and Grill 2401 sw 4th ave
+The 101 Niner Empire,,,Morgan Hill,CA,,Morgan Hill CA United States Huntington Station restaurant and sports pub Huntington Station restaurant and sports pub
+Faithful Tri-State Empire,,,Erie,PA,,Erie PA United States Buffalo Wild Wings 2099 Interchange Rd
+YUMA Faithfuls,,,Yuma,AZ,,Yuma AZ United States Hooters 1519 S Yuma Palms Pkwy
+49ER EMPIRE SF Bay Area Core Chapter,,,Fremont,california,,Fremont california United States Jack's Brewery 39176 Argonaut Way
+Niner Empire Orlando Chapter,,,Orlando,FL,,Orlando FL United States Underground Public House 19 S Orange Ave
+Niner Artillery Empire,,,517 E Gore Blvd,OK,,517 E Gore Blvd OK United States Sweet Play/ Mike's Sports Grill 2610 Sw Lee Blvd Suite 3 / 517 E Gore Blvd
+510 Empire,,,Alameda,CA,,Alameda CA United States McGee's Bar and Grill 1645 Park ST
+Garlic City Faithful,,,Gilroy,CA,,Gilroy CA United States Straw Hat Pizza 1053 1st Street
+Faithful to the Bay,,,Merced,CA,,Merced CA United States Home Mountain mikes pizza
+O.C. NINER EMPIRE FAITHFUL'S,,,Buena park,CA,,Buena park CA United States Ciro's pizza 6969 la Palma Ave
+408 Faithfuls,,,Milpitas,CA,,Milpitas CA United States Big Al's Silicon Valley 27 Ranch Drive
+415 chapter,,,san francisco,California,,san francisco California United States 49er Faithful house 2090 Bryant street
+HairWorks,,,Denver,Co,,Denver Co United States Hair Works 2201 Lafayette at
+49ers Room The Next Generation Of Faithfuls,,,Tlalnepantla de Baz,CA,,Tlalnepantla de Baz CA United States Buffalo Wild Wings Mindo E Blvd. Manuel Avila Camacho 1007
+Niner Empire 209 Modesto Chapter,,,Modesto,CA,,Modesto CA United States Rivets American Grill 2307 Oakdale Rd
+Lady Niners of Washington,,,Auburn,Wa,,Auburn Wa United States Sports Page 2802 Auburn Way N
+AZ 49ER EMPIRE,,,Phoenix,AZ,,Phoenix AZ United States The Native New Yorker (Ahwatukee) 5030 E Ray Rd.
+The Bulls Eye Bar 49ers,,,Montclair,California,,Montclair California United States Black Angus Montclair California 9415 Monte Vista Ave.
+NoVa Tru9er Empire,,,Woodbridge,va,,Woodbridge va United States Morgan's sports bar & lounge 3081 galansky blvd
+Niner Empire 951 Faithfuls,,,Hemet,CA,,"Hemet CA United States George's Pizza 2920 E. Florida Ave. Hemet, Ca. 2920 E. Florida Ave."
+Spartan Niner Empire Texas,,,Arlington,TX,,Arlington TX United States Bombshells Restaurant & Bar 701 N. Watson Rd.
+THEE EMPIRE FAITHFUL LOS ANGELES COUNTY,,,Los Angeles,CA,,Los Angeles CA United States Home 1422 Saybrook Ave
+Niner Empire Richmond 510 Chapter,,,San Pablo,Ca,,San Pablo Ca United States Noya Lounge 14350 Laurie Lane
+Thee Empire Faithful The Bay Area,,,Oakley,Ca,,Oakley Ca United States Sabrina's Pizzeria 2587 Main St
+The Mid Atlantic Niner Empire Chapter,,,Mechanicsville,Va,,Mechanicsville Va United States The Ville 7526 Mechanicsville Turnpike
+Big Sky SF 49ers,,,Billings,MT,,Billings MT United States Old Chicago - Billings 920 S 24th Street W
+Hawaii Niner Empire,,,Waipahu,HI,,Waipahu HI United States The Hale 94-983 kahuailani st
+Niner Empire Porterville Cen Cal 559,,,Porterville,Ca,,Porterville Ca United States Pizza Factory/ Local Bar & Grill 897 W. Henderson
+W.MA CHAPTER NINER EMPIRE,,,CHICOPEE,MA,,CHICOPEE MA United States MAXIMUM CAPACITY 116 SCHOOL ST
+Hampton Roads Niner Empire (Southside Chapter),,,Norfolk,VA,,Norfolk VA United States Azalea Inn / Timeout Sports Bar Azalea Inn / Timeout Sports Bar
+Central Valley Niners,,,Visalia,Ca,,Visalia Ca United States Pizza factory 3121 w noble
+Niner Knights,,,Ewing Twp,NJ,,Ewing Twp NJ United States Game Room of River Edge Apts 1009 Country Lane
+Lone Star Niner Empire,,,Houston,TX,,Houston TX United States Post oak ice house 5610 Richmond Ave.
+Hawaii Faithfuls,,,Honolulu,HI,,Honolulu HI United States Champions Bar & Grill 1108 Keeaumoku Street
+49er Faithful of Murrieta,,,Murrieta,CA,,Murrieta CA United States Sidelines Bar & Grill 24910 Washington Ave
+Capitol City 49ers,,,Sacramento,CA,,Sacramento CA United States Tom's Watch Bar DOCO Tom's Watch Bar 414 K St suite 180
+Huntington Beach Faithfuls,,,Huntington Beach,CA,,Huntington Beach CA United States BEACHFRONT 301 301 Main St. Suite 101
+Niner Empire Saltillo,,,Saltillo,TX,,Saltillo TX United States Cadillac Bar Cadillac Saltillo Bar
+Germantown 49er's Club,,,Memphis,TN,,Memphis TN United States Mr. P's Sports Bar Hacks Cross Rd. 3284 Hacks Cross Road
+49ers faithful,,,KEYES,CA,,KEYES CA United States Mt mikes ceres ca 4618 Blanca Ct
+Ladies Of The Empire,,,Manteca,Ca,,Manteca Ca United States Central Valley and Bay Area 1660 W. Yosemite Ave
+Las Vegas Niner Empire 702,,,Las Vegas,NV,,Las Vegas NV United States Calico Jack's 8200 W. Charleston rd
+49ers Faithfuls in DC,,,Washington,DC,,Washington DC United States Town Tavern 2323 18th Street NW
+49er Booster Club of Roseville,,,Roseville,CA,,Roseville CA United States Bunz Sports Pub & Grub 311 Judah Street
+Kern County Niner Empire,,,Bakersfield,Ca,,Bakersfield Ca United States Firehouse Restaurant 7701 White Lane
+Central Coast Niner Empire 831,,,Salinas,CA,,Salinas CA United States Buffalo Wild Wings 1988 North Main St
+Central Coast Niner Empire 831,,,Salinas,CA,,Salinas CA United States Pizza Factory 1945 Natividad Rd
+Houston Niner Empire,,,Houston,TX,,Houston TX United States Home Plate Bar & Grill 1800 Texas Street
+Train Whistle Faithful,,,Mountain View,CA,,Mountain View CA United States Savvy Cellar 750 W. Evelyn Avenue
+Corpus Christi Chapter Niner Empire,,,Corpus Christi,TX,,Corpus Christi TX United States Cheers 419 Starr St.
+Niner Empire Dade City,,,Dade City,Florida,,Dade City Florida United States Beef O Brady's Sports Bar 14136 7th Street
+Chico Faithfuls,,,Chico,CA,,Chico CA United States Mountain Mikes Pizza 1722 Mangrove Ave
+Chicago Niners,,,Chicago,IL,,Chicago IL United States Cheesie's Pub & Grub 958 W Belmont Ave Chicago IL 60657 958 W Belmont Ave
+Niner Empire 916 Sac Town,,,Sacramento,CA,,Sacramento CA United States El Toritos 1598 Arden blvd
+49ER EMPIRE COLORADO CHAPTER,,,Colorado Springs,Co.,,Colorado Springs Co. United States FOX & HOUND COLORADO SPRINGS 3101 New Center Pt.
+49ers NC Triad Chapter,,,Greensboro,NC,,Greensboro NC United States Kickback Jack's 1600 Battleground Ave.
+Central Oregon 49ers Faithful,,,Redmond,OR,,Redmond OR United States Redmond Oregon 495 NW 28th St
+Westside 9ers,,,Carson,CA,,Carson CA United States Los Angeles 1462 E Gladwick St
+Niner Empire Illinois Chapter,,,Mattoon,Illinois,,"Mattoon Illinois United States residence, for now 6 Apple Drive"
+Treasure Valley 49er Faithful,,,Star,ID,,Star ID United States The Beer Guys Saloon 10937 W State St
+Ct faithful chapter,,,stamford,ct,,stamford ct United States buffalo wild wings 208 summer st
+305 FAITHFUL EMPIRE,,,Miami,FL,,Miami FL United States Walk-On's 9065 SW 162nd Ave
+Fillmoe SF Niners Nation Chapter,,,San Francisco,CA,,San Francisco CA United States Honey Arts Kitchen by Pinot's 1861 Sutter Street
+49ers So Cal Faithfuls,,,Oxnard,CA,,Oxnard CA United States So Cal (Various locations with friends and family) 3206 Lisbon Lane
+Niner Empire DFW,,,Arlington,TX,,Arlington TX United States Walk-Ons Bistreaux Walk-Ons Bistreaux
+Duke City Faithful Niner Empire,,,Albuquerque,NM,,Albuquerque NM United States Duke City Bar And Grill 6900 Montgomery Blvd NE
+49ers @ Champions,,,Honolulu,Hawaii,,Honolulu Hawaii United States Champions Bar and Grill 1108 Keeaumoku St
+Natural State Niners Club,,,Jonesboro,AR,,"Jonesboro AR United States Buffalo Wild Wings, Jonesboro, AR Buffalo Wild Wings"
+49er Empire - Georgia Chapter,,,Marietta,ga,,Marietta ga United States Dave & Busters of Marietta Georgia 2215 D and B Dr SE
+San Francisco 49ers of San Diego,,,San Diego,CA,,San Diego CA United States Moonshine Beach Moonshine Beach Bar
+Sonoran Desert Niner Empire,,,Maricopa,AZ,,Maricopa AZ United States Cold beers and Cheeseburgers 20350 N John Wayne pkwy
+49ers Empire Syracuse 315 Chapter,,,Syracuse,NY,,Syracuse NY United States Change of pace sports bar 1809 Grant Blvd
+Niner Empire Ventura Chapter,,,Ventura,CA,,Ventura CA United States El Rey Cantina El Rey Cantina
+540 Faithfuls of the Niner Empire,,,Fredericksburg,VA,,Fredericksburg VA United States Home Team Grill 1109 Jefferson Davis Highway
+Ninerempire Tampafl Chapter,,,tampa,fl,,tampa fl United States Ducky's 1719 eest Kennedy blvd
+Gold Diggers,,,Rochester,New York,,Rochester New York United States The Blossom Road Pub 196 N. Winton Rd
+Niner Empire Waco Chapter,,,Waco,TX,,Waco TX United States Salty Dog 2004 N. Valley Mills
+Niner Empire of Brentwood,,,Brentwood,CA,,Brentwood CA United States Buffalo Wild Wings 6051 Lone Tree Way
+"NinerEmpire of Lancaster, PA",,,Lancaster,PA,,Lancaster PA United States PA Lancaster Niners Den 2917 Marietta Avenue
+Empire Tejas 915- El Paso TX,,,El Paso,Tx,,El Paso Tx United States EL Luchador Taqueria/Bar 1613 n Zaragoza
+Capitol City 49ers fan club,,,West Sacramento,CA,,West Sacramento CA United States Burgers and Brew restaurant 317 3rd St
+Golden Empire Hollywood,,,Los Angeles,CA,,Los Angeles CA United States Nova Nightclub 7046 Hollywood Blvd
+Spartan Niner Empire Denver,,,Denver,CO,,Denver CO United States Downtown Denver In transition
+49er empire of Frisco Texas,,,Frisco,TX,,Frisco TX United States The Irish Rover Pub & Restaurant 8250 Gaylord Pkwy
+FAIRFIELD CHAPTER,,,Fairfield,CA,,Fairfield CA United States Legends Sports Bar & Grill 3990 Paradise Valley Rd
+Shasta Niners,,,Redding,CA,,Redding CA United States Shasta Niners Clubhouse 4830 Cedars Rd
+NINER EMPIRE FREMONT CHAPTER,,,Fremont,CA,,Fremont CA United States Buffalo Wild Wings 43821 Pacific Commons Blvd
+Fargo 49ers Faithful,,,Fargo,ND,,Fargo ND United States Herd & Horns 1414 12th Ave N
+49ER ORIGINALS,,,Redding,CA,,Redding CA United States BLEACHERS Sports Bar & Grill 2167 Hilltop Drive
+"49er Flowertown Empire of Summerville, SC",,,Summerville,South Carolina,,Summerville South Carolina United States Buffalo Wild Wings 109 Grandview Drive #1
+49ers of Brevard County,,,Port St Johns,FL,,Port St Johns FL United States Beef O'Bradys in Port St. Johns 3745 Curtis Blvd
+Forever Faithful Clique,,,San Bernardino,CA,,San Bernardino CA United States The Study Pub and Grill 5244 University Pkwy Suite L
+49ERS FOREVER,,,REDLANDS,CALIFORNIA,,REDLANDS CALIFORNIA United States UPPER DECK 1101 N. CALIFORNIA ST.
+Thee Empire Faithful Bakersfield,,,Bakersfield,Ca,,Bakersfield Ca United States Senor Pepe's Mexican Restaurant 8450 Granite Falls Dr
+Saloon Suad,,,Los Angeles,ca,,Los Angeles ca United States San Francisco Saloon Bar 11501
+Troy'a chapter,,,Troy,OH,,Troy OH United States Viva la fiesta restaurant 836 w main st
+Niner Empire IE Chapter,,,San Bernardino,California,,San Bernardino California United States Don Martins Mexican Grill 1970 Ostrems Way
+20916 Faithful,,,Elk Grove,CA,,Elk Grove CA United States Sky River Casino 1 Sky River Parkway
+SO. CAL GOLD BLOODED NINER'S,,,Hacienda heights,CA,,Hacienda heights CA United States SUNSET ROOM 2029 hacinenda blvd
+"South Florida's Faithful, Niner Empire",,,Homestead,Fl,,Homestead Fl United States Chili's in Homestead 2220 NE 8TH St.
+Cesty's 49ers Faithful,,,Chandler,AZ,,Chandler AZ United States Nando's Mexican Cafe 1890 W Germann Rd
+Niner Gang Empire,,,EDINBURG,TX,,EDINBURG TX United States Danny Bar & Grill 4409 Adriana
+The Bell Ringers,,,Manhattan,KS,,Manhattan KS United States Jeff and Josie Schafer's House 1517 Leavenworth St.
+O.C. NINER EMPIRE FAITHFUL'S,,,Buena park,CA,,Buena park CA United States Ciro's pizza 6969 la Palma Ave
+Niner Empire DFW,,,Bedford,TX,,Bedford TX United States Papa G's 2900 HIGHWAY 121
+Hilmar Empire,,,Hilmar,Ca,,Hilmar Ca United States Faithful House 7836 Klint dr
+49ers of West Virginia,,,Bridgeport,WV,,Bridgeport WV United States Buffalo WIld Wings 45 Betten Ct
+618 Niner Empire,,,Carbondale,IL,,"Carbondale IL United States Home Basement aka """"The Local Tavern"""" 401 N Allyn st"
+NINER EMPIRE HAWAII 808,,,HONOLULU,HI,,HONOLULU HI United States DAVE AND BUSTERS 1030 AUAHI ST
+NINER EMPIRE HAWAII 808,,,Honolulu,HI,,Honolulu HI United States Buffalo Wild Wings 1644 Young St # E
+H-Town Empire,,,Houston,Tx,,Houston Tx United States Skybox Bar and Grill 11312 Westheimer
+Hub City Faithful,,,Hattiesburg,Mississippi,,Hattiesburg Mississippi United States Mugshots 204 N 40th Ave
+Spartan Niner Empire Georgia,,,Duluth,GA,,Duluth GA United States Bermuda Bar 3473 Old Norcross Rd
+Westchester County New York 49ers Fans,,,Yonkers,New York,,"Yonkers New York United States We meet at 3 locations, Burkes Bar in Yonkers, Matador's Fan Cave and Finnerty's 14 Troy Lane"
+Niner Empire 831,,,Salinas,Ca,,Salinas Ca United States Straw Hat Pizza 156 E. Laurel Drive
+Niner Empire Portland,,,Clackamas,Oregon,,Clackamas Oregon United States Various 14682 SE Sunnyside Rd
+49ers Empire Galveston County Chapter,,,Nassau Bay,TX,,Nassau Bay TX United States Office 1322 Space Park Dr.
+NINER EMPIRE,,,Brisbane,Ca,,Brisbane Ca United States 7 Mile House 2800 Bayshore Blvd
+Boston San Francisco Bay Area Crew,,,Boston,MA,,Boston MA United States The Point Boston 147 Hanover Street
+49ers Faithful of Boston,,,Boston,MA,,"Boston MA United States The Point, Boston, MA 147 Hanover Street"
+Riverside 49ers Booster Club,,,Riverside,California,,Riverside California United States Lake Alice Trading Co Saloon &Eatery 3616 University Ave
+318 Niner Empire,,,Monroe,La.,,Monroe La. United States 318 Niner Empire HQ 400 Stone Ave.
+The Austin Faithful,,,Austin,TX,,Austin TX United States 8 Track 2805 Manor Rd
+Niner Empire San Antonio,,,San Antonio,TX,,San Antonio TX United States Sir Winston's Pub 2522 Nacogdoches Rd.
+NINER EMPIRE OF THE 509,,,Spokane,WA,,"Spokane WA United States Mac daddy's 808 W Main Ave #106, Spokane, WA 99201"
+SOCAL OC 49ERS,,,Newport Beach,CA,,Newport Beach CA United States The Blue Beet 107 21st Place
+Sin City Niner Empire,,,Henderson,NV,,Henderson NV United States Hi Scores Bar-Arcade 65 S Stephanie St.
+Central Valley 9er Faithful,,,Turlock,CA,,Turlock CA United States Mountain Mike's 409 S Orange St.
+Niner Squad,,,San Jose,CA,,"San Jose CA United States 4171 Gion Ave San Jose,Ca 4171 Gion Ave"
+merced niner empire,,,merced,ca,,merced ca United States round table pizza 1728 w olive ave
+NINERS ROLLIN HARD IMPERIAL VALLEY CHAPTER,,,Brawley,CA,,Brawley CA United States SPOT 805 550 main Street
+Tooele County 49ers,,,TOOELE,UT,,"TOOELE UT United States Pins and Ales - 1111 N 200 W, Tooele, UT 84074 1111 N 200 W"
+49ers united of wichita ks,,,Wichita,KS,,Wichita KS United States Hurricane sports grill 8641 w 13th st suite 111
+828 NCNINERS,,,Hickory,NC,,Hickory NC United States Coaches Neighborhood Bar and Grill 2049 Catawba Valley Blvd SE
+Chicago 49ers Club,,,Chicago,IL,,Chicago IL United States The Globe Pub 1934 West Irving Park Road
+Niner Empire Vancouver,,,Vancouver,WA,,Vancouver WA United States Heathen feral public house 1109 Washington St
+Hampton Roads Niners Fanatics,,,Hampton,VA,,Hampton VA United States Nascar Grille 1996 Power Plant Parkway
+Cincy Faithful,,,Newport,KY,,Newport KY United States Buffalo Wild Wings (Newport) 83 Carothers Rd
+Southside OKC Faithful Niners,,,Oklahoma City,Oklahoma,,Oklahoma City Oklahoma United States CrosseEyed Moose 10601 Sout Western Ave
+707 FAITHFULS,,,Wine country,CA,,"Wine country CA United States Wine country Breweries, restaurant's, wineries, private locations"
+NINER EMPIRE MEMPHIS CHAPTER,,,Memphis,Tennessee,,Memphis Tennessee United States 360 Sports Bar & Grill 3896 Lamar Avenue
+Chucktown Empire 49ers of Charleston,,,North Charleston,SC,,"North Charleston SC United States Chill n' Grill Sports bar 2810 Ashley Phosphate Rd A1, North Charleston, SC 29418"
+Spartans Niner Empire Florida,,,Tampa,FL,,Tampa FL United States Ducky's Sports Bar 1719 Kennedy Blvd
+Palm Springs Area 49er Club,,,Palm Springs,CA,,Palm Springs CA United States The Draughtsmen 1501 N Palm Canyon
+49th State Faithful,,,Anchorage,AK,,Anchorage AK United States Al's Alaskan Inn 7830 Old Seward Hwy
+49er faithful of Arizona ( of the West Valley ),,,Surprise,Az,,"Surprise Az United States Booty's Wings, Burgers and Beer Bar and Grill 15557 W. Bell Rd. Suite 405"
+NINER CORE,,,Bloomington,CA,,Bloomington CA United States Traveling chapter 18972 Grove pl
+Forever Faithful RGV (Rio Grande Valley),,,McAllen,TX,,McAllen TX United States My Place 410 N 17th St
+49ers Sacramento Faithfuls,,,West Sacramento,CA,,West Sacramento CA United States Kick N Mule Restaurant and Sports Bar 2901 W Capitol Ave
+SO. CAL GOLDBLOOED NINERS,,,Industry,CA,,Industry CA United States Hacienda nights pizza co. 15239 Gale ave
+Niner Empire Hayward chapter,,,Hayward,Ca,,Hayward Ca United States Strawhat pizza 1163 industrial pkwy W
+49ers Empire Iowa Chapter,,,Chariton,Iowa,,Chariton Iowa United States Shoemakers Steak House 2130 Court Ave
+Niner Empire of Fresno,,,Fresno,CA,,Fresno CA United States Round Table Pizza 5702 N. First st
+Connecticut Spartan Niner Empire,,,East Hartford,Connecticut,,East Hartford Connecticut United States Silver Lanes Lounge 748 Silverlane
+"Niner Empire Houston, TX Chapter",,,Houston,Texas,,Houston Texas United States Little J's Bar 5306 Washington Ave
+"Niner Empire Houston, TX",,,Houston,Texas,,Houston Texas United States coaches I-10 17754 Katy Fwy #1
+SO. CAL GOLD BLOODED NINER'S,,,Industry,CA,,Industry CA United States Hacienda heights Pizza Co 15239 Gale Ave
+the 559 ers,,,porterville,CA,,porterville CA United States landing 13 landing 13
+Billings Niners Faithful,,,Billings,MT,,Billings MT United States Craft B&B 2658 Grand ave
+901 9ers,,,Memphis,Tn,,Memphis Tn United States Prohibition 4855 American Way
+Tulsa 49ers Faithful,,,Tulsa,OK,,Tulsa OK United States Buffalo Wild Wings 6222 E 41st St
+The Niner Empire - 405 Faithfuls - Oklahoma City,,,Oklahoma City,OK,,Oklahoma City OK United States The Side Chick 115 E. California Ave 5911 Yale Drive
+Niner Empire Imperial Valley,,,Brawley,Ca,,Brawley Ca United States Waves Restaurant & Saloon 621 S Brawley Ave
+East Valley Faithful,,,Gilbert,AZ,,Gilbert AZ United States TBD 5106 South Almond CT
+360 Niner Empire,,,Lacey,WA,,Lacey WA United States Dela Cruz Residence 1118 Villanova St NE
+49ers Booster Club of Virginia,,,Mechanicsville,Virginia,,Mechanicsville Virginia United States Sports Page Bar & Grill 8319 Bell Creek Rd
+Niner Empire Tampa,,,Tampa,FL,,Tampa FL United States The Bad Monkey 1717 East 7th Avenue
+49ers Faithful Montana State,,,Missoula,MT,,Missoula MT United States Not yet determined 415 Coloma Way
+49ers Fan club,,,Corpus Christi,Texas,,Corpus Christi Texas United States Click Paradise Billiards 5141 Oakhurst Dr.
+Niner Empire Delano,,,Delano,ca,,Delano ca United States Aviator casino 1225 Airport dr
+Mid South Niner Empire,,,Nashville,TN,,Nashville TN United States Winners Bar and Grill 1913 Division St
+49ers Empire New York City,,,New York,New York,,New York New York United States Off The Wagon 109 MacDougal Street
+49er Empire High Desert,,,hesperia,California,,hesperia California United States Thorny's 1330 Ranchero rd.
+Mile High 49ers,,,Denver,Colorado,,Denver Colorado United States IceHouse Tavern 1801 Wynkoop St
+NOCO 49ers,,,Windsor,CO,,Windsor CO United States The Summit Windsor 4455 N Fairgrounds Ave
+Milwaukee Spartans of the Niner Empire,,,Wauwatosa,WI,,Wauwatosa WI United States jacksons blue ribbon pub 11302 w bluemound rd
+SAN ANGELO NINER EMPIRE,,,san angelo,tx,,san angelo tx United States buffalo wild wings 4251 sherwoodway
+580 FAITHFUL,,,Devol,OK,,"Devol OK United States APACHE LONE STAR CASUNO Devol, Oklahoma"
+49ers of Ohio,,,Xenia,Ohio,,Xenia Ohio United States Cafe Ole' 131 North Allison Ave
+307 FAITHFUL,,,Cheyenne,WY,,"Cheyenne WY United States 4013 Golden Ct, Cheyenne, Wyoming 4013 Golden Ct"
+Mojave Desert 49er Faithfuls,,,Apple Valley,CA,,Apple Valley CA United States Gator's Sports Bar and Grill - Apple Valley 21041 Bear Valley Rd
+The Dusty Faithful,,,Socorro,TX,,Socorro TX United States The Dusty Tap Bar 10297 Socorro Rd
+The Duke City Faithful,,,Albuquerque,N.M.,,Albuquerque N.M. United States Buffalo wild wings 6001 iliff rd.
+Emilio,,,Casa grande,Arizona(AZ),,Casa grande Arizona(AZ) United States Liquor factory bar and deli 930 E Florence
+New Mexico Niner Empire,,,Albuquerque,New Mexico,,"Albuquerque New Mexico United States Ojos Locos Sports Cantina Park Square,2105 Louisiana Blvd N.E"
+So Cal Niner Empire,,,Long Beach,Ca,,Long Beach Ca United States Gallaghers Irish Pub and Grill 2751 E. Broadway
+49er Faithful of Charlotte,,,Charlotte,North Carolina,,Charlotte North Carolina United States Strike City Charlotte 210 E. Trade St.
+MSP Niner Faithful,,,Saint Paul,MN,,Saint Paul MN United States Firebox BBQ 1585 Marshall Ave
+Mississippi Niner Empire Chapter-Jackson,,,Jackson,Ms.,,Jackson Ms. United States M-Bar Sports Grill 6340 Ridgewood Ct.
+BayArea Faithfuls,,,Pleasant Hill,California,,Pleasant Hill California United States Damo Sushi 508 Contra Costa Blvd
+AZ49erFaithful,,,mesa,az,,mesa az United States Boulders on Southern 1010 w Southern ave suite 1
+Pluckers Alamo Ranch,,,San Antonio,TX,,San Antonio TX United States Pluckers Wong Bar 202 Meadow Bend Dr
+Natural State Niners,,,Jonesboro,AR,,Jonesboro AR United States Buffalo Wild Wings 1503 Red Wolf Blvd
+North Carolina Gold Blooded Empire,,,Raleigh,North Carolina,,Raleigh North Carolina United States Tobacco Road - Raleigh 222 Glenwood Avenue
+Spartan Empire of North Carolina,,,Greensboro,NC,,Greensboro NC United States World of Beer 1310 westover terr
+Niner Empire Kings County,,,Hanford,CA,,Hanford CA United States Fatte Albert's pizza co 110 E 7th St
+New Mexico Gold Rush,,,Rio Rancho,NM,,Rio Rancho NM United States Applebee's 4100 Ridge Rock Rd
+Niner 408 Squad,,,San Jose,CA,,San Jose CA United States Personal home 3189 Apperson Ridge Court
+NINER ALLEY,,,moreno valley,ca,,moreno valley ca United States home 13944 grant st
+Niner Empire San Antonio,,,San Antonio,Texas,,San Antonio Texas United States Fatso's 1704 Bandera Road
+NinerEmpire520,,,Tucson,AZ,,Tucson AZ United States Maloney's 213 North 4th Ave
+49er Empire Desert West,,,Glendale,Arizona,,Glendale Arizona United States McFadden's Glendale 9425 West Coyotes Blvd
+Niner Empire EPT,,,el paso,tx,,el paso tx United States knockout pizza 10110 mccombs
+"Niner Empire Henderson, NV",,,Henderson,Nevada,,Henderson Nevada United States Hi Scores Bar-Arcade 65 S Stephanie St
+Niner Empire Salem,,,Salem,OR,,Salem OR United States IWingz IWingz
+Niner Empire San Antonio,,,San Antonio,Texas,,San Antonio Texas United States Fatsos 1704 Bandera Rd
+Niner Empire Southern Oregon,,,Medford,OR,,Medford OR United States The Zone Sports Bar & Grill 1250 Biddle Rd.
+niner empire faithfuls of toledo,,,Toledo,Ohio,,Toledo Ohio United States Legendz sports pub and grill 519 S. Reynolds RD
+Las Vegas Niner EmpireNorth,,,Las Vegas,NV,,Las Vegas NV United States Timbers Bar & Grill 7240 West Azure Drive
+NINER FRONTIER,,,las vegas,NV,,las vegas NV United States Luckys Lounge 7345 S Jones Blvd
+NINERS ROLLIN HARD IMPERIAL VALLEY,,,Brawley,CA,,Brawley CA United States SPOT 805 Bar and Grill 550 Main St
+Niners Rollin Hard EL Valle C.V. Chapter,,,La Quinta,CA,,La Quinta CA United States The Beer Hunters 78483 Highway 111
+Niners United,,,Santa Clara,CA,,"Santa Clara CA United States Levi's Stadium Section 201, Section 110, Section 235 (8 of the 18 members are Season Ticket Holders) 4900 Marie P DeBartolo Way"
+San Francisco 49ers Fans of Chicago,,,Chicago,IL,,"Chicago IL United States Gracie O'Malley's (Wicker Park location), 1635 N Milwaukee Ave, Chicago, IL 60647 Gracie O'Malley's"
+NJ Niner Empire Faithful Warriors,,,Jersey City,New Jersey,,Jersey City New Jersey United States O'Haras Downtown 172 1st Street
+NJ9ers,,,Bayonne,NJ,,Bayonne NJ United States Mr. Cee's Bar & Grill 17 E 21st Street
+North Idaho 49ers Faithful,,,Coeur d'Alene,ID,,Coeur d'Alene ID United States Iron Horse Bar and Grille 407 Sherman Ave
+Northwest Niner Empire,,,Ellensburg,WA,,Ellensburg WA United States Armies Horseshoe Sports Bar 106 W 3rd
+NOVA Niners,,,Herndon,VA,,Herndon VA United States Finnegan's Sports Bar & Grill 2310 Woodland Crossing Dr
+Austin Niner Empire,,,Austin,Texas,,Austin Texas United States Mister Tramps Pub & Sports Bar 8565 Research Blvd
+New York 49ers Club,,,new york,ny,,new york ny United States Finnerty's Sports Bar 221 2nd Avenue
+Mad-town chapter,,,Madera,CA,,Madera CA United States Madera Ranch 28423 Oregon Ave
+Gold Rush Army of Austin,,,Austin,TX,,Austin TX United States Midway Field House 2015 E Riverside Dr
+niner alley,,,MORENO VALLEY,CA,,MORENO VALLEY CA United States papa joes sports bar 12220 frederick ave
+413 Spartans,,,Chicopee,MA,,Chicopee MA United States Bullseye Bullseye
+Clementine's Faithful,,,Portland,OR,,Portland OR United States The Mule Bar 4915 NE Fremont Street
+585faithful,,,dansville,NY,,dansville NY United States dansville ny 108 main st
+Niner Empire Cen Cal 559,,,PORTERVILLE,CA,,PORTERVILLE CA United States BRICKHOUSE BAR AND GRILL 152 North Hockett Street
+Booze & Niner Football,,,Solana Beach,CA,,Solana Beach CA United States Saddle Bar 123 W Plaza St
+Westside Niners Nation,,,Culver City,CA,,Culver City CA United States Buffalo Wings and Pizza 5571 Sepulveda Blvd.
+Pinal county niner empire,,,Casa grande,Arizona(AZ),,Casa grande Arizona(AZ) United States Liquor factory bar and deli 930 E Florence
+"Prescott, AZ 49ers faithful",,,Prescott,AZ,,Prescott AZ United States Prescott Office Resturant 128 N. Cortez St.
+San Francisco 49'ers Hawaii Fan Club,,,Honolulu,Hawaii,,Honolulu Hawaii United States To be determined To be determined
+Niner Empire Portland,,,Portland,OR,,Portland OR United States KingPins Portland 3550 SE 92nd ave
+QueensandKings Bay Area Empire Chapter,,,Antioch,Ca,,Antioch Ca United States Tailgaters 4605 Golf Course Rd
+Club 49 Tailgate Crew,,,Pleasanton,California,,Pleasanton California United States Sunshine Saloon Sports Bar 1807 Santa Rita Rd #K
+49ers Nyc Chapter,,,New York,New York,,"New York New York United States Off the Wagon 109 Macdougal St,"
+"49er faithfuls Yakima,Wa",,,Yakima,Wa,,Yakima Wa United States TheEndzone 1023 N 1st
+49er's Faithful Aurora Co Chapter,,,Aurora,CO,,Aurora CO United States 17307 E Flora Place 17307 E Flora Place
+49er F8thfuls,,,Gardena,Ca,,Gardena Ca United States Paradise 889 w 190th
+westside9ers,,,Downey,CA,,Downey CA United States Bar Louie 8860 Apollo Way
+Spartan 9er Empire Connecticut,,,EastHartford,CO,,EastHartford CO United States Red Room 1543 Main St
+Red & Gold Empire,,,Sandy Springs,GA,,Sandy Springs GA United States Hudson Grille Sandy Springs 6317 Roswell Rd NE
+RENO NINEREMPIRE,,,Reno,Nv,,Reno Nv United States Semenza's Pizzeria 4380 Neil rd.
+650 Niner Empire peninsula chapter,,,South San Francisco,Ca,,South San Francisco Ca United States 7 Mile House 1201 bayshore blvd
+Spartan Niner Empire California,,,Colma,CA,,Colma CA United States Molloys Tavern Molloys tavern
+Riverside county TEF (Thee Empire Faithful),,,Winchester,CA,,Winchester CA United States Pizza factory 30676 Bentod Rd
+Riverside 49ers Booster Club,,,Riverside,California,,Riverside California United States Lake Alice Trading Co Saloon &Eatery 3616 University Ave
+49ers Strong Iowa - Des Moines Chapter,,,Ankeny,IA,,Ankeny IA United States Benchwarmers 705 S Ankeny Blvd
+Mid South Niner Nation,,,Nashville,TN,,Nashville TN United States Kay Bob's 1602 21st Ave S
+Kansas City 49ers Faithful,,,Leavenworth,KS,,"Leavenworth KS United States Fox and hound. 10428 metcalf Ave. Overland Park, ks 22425"
+49er Booster Club Carmichael Ca,,,Fair Oaks,Ca,,Fair Oaks Ca United States Fair Oaks 7587 Pineridge Lane
+Rouge & Gold Niner Empire,,,Baton Rouge,LA,,Baton Rouge LA United States Sporting News Grill 4848 Constitution Avenue
+Niner Empire Tulare County,,,Visalia,Ca,,Visalia Ca United States 5th Quarter 3360 S. Fairway
+Mile High 49ers NOCO Booster Club,,,Greeley,co,,Greeley co United States Old Chicago Greeley 2349 W. 29th St
+NINERFANS.COM,,,Cupertino,California,,Cupertino California United States Islands Bar And Grill (Cupertino) 20750 Stevens Creek Blvd.
+San Diego Gold Rush,,,San Diego,CA,,San Diego CA United States Bootleggers 804 market st.
+East Valley Niner Empire,,,Apache Junction,AZ,,Apache Junction AZ United States Tumbleweed Bar & Grill 725 W Apache Trail
+Santa Rosa Niner Empire,,,Windsor,CA,,Windsor CA United States Santa Rosa 140 3rd St
+Youngstown Faithful,,,Canfield,OH,,Canfield OH United States The Cave 369 Timber Run Drive
+Seattle Niners Faithful,,,Everett,WA,,Everett WA United States Great American Casino 12715 4th Ave W
+"San Francisco 49ers Faithful - Greater Triangle Area, NC",,,Durham,North Carolina,,Durham North Carolina United States Tobacco Road Sports Cafe 280 S. Mangum St. #100
+South Florida Gold Blooded Empire,,,Boynton Beach,Florida,,Boynton Beach Florida United States Miller's Ale House 2212 N. Congress Avenue
+Red Rock's Local 49 Club,,,Red Bluff,CA,,Red Bluff CA United States Tips Bar 501 walnut St.
+Columbia Basin Niners Faithful,,,Finley,Washington,,Finley Washington United States Shooters 214711 e SR 397 314711 wa397
+9er Elite,,,Lake Elsinore,CA,,Lake Elsinore CA United States Pins N Pockets 32250 Mission Trail
+Shore Faithful,,,Barnegat,NJ,,Barnegat NJ United States 603 East Bay Ave
+Santa Fe Faithfuls,,,Santa Fe,New Mexico,,Santa Fe New Mexico United States Blue Corn Brewery 4056 Cerrilos Rd.
+Sonoran Desert Niner Empire,,,Maricopa,AZ,,Maricopa AZ United States Cold beers and cheeseburgers 20350 N John Wayne Pkwy
+9549ERS faithful,,,Davie,FL,,Davie FL United States Twin peaks Twin peaks
+806 Niner Empire West Texas Chapter,,,Lubbock,Texas,,Lubbock Texas United States Buffalo Wild Wings 6320 19th st
+Ohana Niner Empire,,,Honolulu,HI,,Honolulu HI United States TBD 1234 TBD
+Westside Portland 49er Fan Club,,,Portland,OR,,Portland OR United States The Cheerful Tortoise 1939 SW 6th Ave
+49ersGold,,,Oakland Park,FL,,Oakland Park FL United States stout bar and grill Stout Bar and Grill
+4T9 MOB TRACY FAMILY,,,Tracy,Ca,,Tracy Ca United States Buffalo wild wings 2796 Naglee road
+Niner Empire Southern Oregon Chapter,,,medford,or,,medford or United States imperial event center 41 north Front Street
+SacFaithful,,,Cameron park,CA,,Cameron park CA United States Presidents home 3266 Cimmarron rd
+Niner Faithful Of Southern Ohio,,,piqua,OH,,piqua OH United States My House 410 Camp St
+NinerGangFaithfuls,,,Oceanside,ca,,Oceanside ca United States my house 4020 Thomas st
+Jersey 49ers riders,,,Trenton,New Jersey,,Trenton New Jersey United States sticky wecket 2465 S.broad st
+Life Free or Die Faithfuls,,,Concord,NH,,Concord NH United States Buffalo Wild Wings 8 Loudon Rd
+The 909 Niner Faithfuls,,,Fontana,Ca,,Fontana Ca United States Boston's Sports Bar and Grill 16927 Sierra Lakes Pkwy.
+Arcadia Chapter,,,Arcadia,CA,,Arcadia CA United States 4167 e live oak Ave 4167 e live oak Ave
+Thee Empire Faithful,,,Fresno,California,,Fresno California United States Buffalo Wild Wings 3065 E Shaw Ave
+The Oregon Faithful,,,Eugene,OR,,Eugene OR United States The Side Bar Side Bar
+The ORIGINAL Niner Empire-New Jersey Chapter,,,Linden,NJ,,Linden NJ United States Nuno's Pavilion 300 Roselle ave
+What a Rush (gold),,,Rochester,NY,,Rochester NY United States The Scotch House Pub 373 south Goodman street
+Moreno Valley 49er Empire,,,Moreno Vallay,CA,,Moreno Vallay CA United States S Bar and Grill 23579 Sunnymead Ranch Pkwy
+"The Niner Empire, 405 Faithfuls, Oklahoma City",,,Oklahoma city,OK,,Oklahoma city OK United States Hooters NW Expressway OKC 3025 NW EXPRESSWAY
+707 EMPIRE VALLEY,,,napa,California,,napa California United States Ruiz Home 696a stonehouse drive
+Treasure Valley 49er Faithful,,,Star,ID,,Star ID United States The Beer Guys Saloon 10937 W. State Street
+Hampton Roads Niner Empire,,,Newport news,VA,,Newport news VA United States Boathouse Live 11800 Merchants Walk #100
+Niner Empire Salem,,,Salem,OR,,Salem OR United States AMF Firebird Lanes 4303 Center St NE
+Forty Niners LA chapter,,,Bell,Ca,,Bell Ca United States Krazy Wings 7016 Atlantic Blvd
+Red River Niner Empire,,,Bossier City,LA,,Bossier City LA United States Walk On's Bossier City 3010 Airline Dr
+Ultimate 49er Empire,,,Pembroke pines,Florida,,Pembroke pines Florida United States Pines alehouse 11795 pine island blvd
+Utah Niner Empire,,,Salt Lake City,UT,,Salt Lake City UT United States Legends Sports Pub 677 South 200 West
+Phoenix602Faithful,,,Phoenix,AZ,,Phoenix AZ United States Galaghers 3220 E Baseline Rd
+WESTSIDE 9ERS,,,Carson,CA,,Carson CA United States Buffalo Wild Wings 736 E Del Amo Blvd
+Addison Point 49ner's Fans,,,Addison,Texas,,Addison Texas United States Addison Point Sports Grill 4578 Beltline Road
+49er Forever Faithfuls,,,Vancouver,Wa,,"Vancouver Wa United States Hooligans bar and grill 8220 NE Vancouver Plaza Dr, Vancouver, WA 98662"
+Woodland Faithful,,,Woodland,CA,,Woodland CA United States Mountain Mikes Pizza 171 W. Main St
+Niner Empire Central New York,,,Cicero,New York,,Cicero New York United States Tully's Good Times 7838 Brewerton Rd
+4 Corners Faithful,,,Durango,CO,,Durango CO United States Sporting News Grill 21636 Highway 160
+480 Gilbert Niner Empire,,,Gilbert,AZ,,Gilbert AZ United States Panda Libre 748 N Gilbert Rd
+Niner Empire Jalisco 49ers Guadalajara,,,Guadalajara,TX,,Guadalajara TX United States Bar Cheleros Bar CHELEROS
+49ERS Faithful of West Virginia,,,Charleston,WV,,Charleston WV United States The Pitch 5711 MacCorkle Ave SE
+49 Migos Chapter,,,Saddle Brook,NJ,,Saddle Brook NJ United States Midland Brewhouse 374 N Midland Ave
+49ers Bay Area Faithful Social Club,,,Sunnyvale,CA,,Sunnyvale CA United States Giovanni's New York Pizzeria 1127 Lawrence Expy
+Niner Empire Of Indy,,,Indianapolis,IN,,Indianapolis IN United States The Bulldog Bar and Lounge 5380 N College Ave
+NoTT 49ers SB BANG BANG,,,Goleta,California,,Goleta California United States No Town Tavern 5114 Hollister Ave
