@@ -103,7 +103,7 @@ agent_executor = AgentExecutor(
     tools=tools,
     verbose=True,
     handle_parsing_errors=True,
-    max_iterations=3  # Limit the number of iterations to prevent infinite loops
+    max_iterations=5  # Limit the number of iterations to prevent infinite loops
 )
 
 # Create a chat agent with memory

@@ -1,7 +1,4 @@
-"""
-Movie Chatbot powered by Langchain, Neo4j, Streamlit, and Zep.
-"""
-
+ 
 import os
 import uuid
 import streamlit as st

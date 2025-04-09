@@ -1,3 +1,9 @@
+---
+title: ifx-sandbox
+app_file: gradio_app.py
+sdk: gradio
+sdk_version: 5.24.0
+---
 # 49ers FanAI Hub - Streamlit Version
 
 This is a Streamlit-based chatbot application that provides information about the San Francisco 49ers, players, games, and fans. The application uses LangChain, Neo4j, and Zep for memory management.
