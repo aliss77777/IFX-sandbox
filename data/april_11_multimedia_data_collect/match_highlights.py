@@ -1,14 +1,17 @@
 import csv
 import re
+import os
+from pathlib import Path
 from collections import defaultdict
 
+
 # Define file paths
-YOUTUBE_HIGHLIGHTS_PATH = "ifx-sandbox/data/april_11_multimedia_data_collect/youtube_highlights.csv"
-PLAYERS_ROSTER_PATH = "ifx-sandbox/data/april_11_multimedia_data_collect/niners_players_headshots_with_socials_merged.csv"
-GAMES_SCHEDULE_PATH = "ifx-sandbox/data/nfl-2024-san-francisco-49ers-with-results.csv"
-OUTPUT_PLAYERS_PATH = "ifx-sandbox/data/niners_output/players_with_highlights.csv"
-OUTPUT_GAMES_PATH = "ifx-sandbox/data/niners_output/games_with_highlights.csv"
-OUTPUT_TEAM_VIDEOS_PATH = "ifx-sandbox/data/niners_output/team_highlights.csv"
+YOUTUBE_HIGHLIGHTS_PATH =  "youtube_highlights.csv"
+PLAYERS_ROSTER_PATH =  "niners_players_headshots_with_socials_merged.csv"
+GAMES_SCHEDULE_PATH = "nfl-2024-san-francisco-49ers-with-results.csv"
+OUTPUT_PLAYERS_PATH =  "new_niners_players_with_highlights.csv"
+OUTPUT_GAMES_PATH =   "new_games_with_highlights.csv"
+OUTPUT_TEAM_VIDEOS_PATH =   "new_team_highlights.csv"
 
 def load_youtube_highlights():
     """Load YouTube highlights data from CSV file."""

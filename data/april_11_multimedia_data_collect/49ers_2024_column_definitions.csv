@@ -1,0 +1,62 @@
+column_name,definition
+game_id,Unique identifier for each game (format: YYYY_WK_HOME_AWAY)
+player_id,Unique identifier for each player
+player_name,Player name (Last.First format)
+posteam,Team the player was on for this play
+position,"Player position (QB, RB, WR, TE, OL, DL, LB, DB, etc.)"
+team,Team the player was on for the season
+passing_yards,Total passing yards
+passing_tds,Total passing touchdowns
+air_yards,Total air yards (distance ball traveled in the air)
+yards_after_catch,Total yards after catch (YAC)
+cpoe,Completion Percentage Over Expected (average)
+qb_epa,Expected Points Added by quarterback
+pass_attempts,Number of pass attempts
+complete_passes,Number of completed passes
+avg_air_yards,Average air yards per pass attempt
+avg_yac,Average yards after catch per reception
+pass_location_left,Number of passes thrown to the left side of the field
+pass_location_middle,Number of passes thrown to the middle of the field
+pass_location_right,Number of passes thrown to the right side of the field
+pass_length_short,Number of short passes (0-9 yards)
+pass_length_medium,Number of medium passes (10-19 yards)
+pass_length_deep,Number of deep passes (20+ yards)
+rushing_yards,Total rushing yards
+rushing_tds,Total rushing touchdowns
+rush_attempts,Number of rush attempts
+first_downs_rush,Number of first downs achieved by rushing
+xyac_mean,Expected Yards After Contact (mean)
+xyac_median,Expected Yards After Contact (median)
+xyac_success_rate,Expected Yards After Contact success rate
+rush_epa,Expected Points Added by rushing plays
+run_location_left,Number of rushes to the left side of the field
+run_location_middle,Number of rushes to the middle of the field
+run_location_right,Number of rushes to the right side of the field
+run_gap_guard,Number of rushes through the guard gap
+run_gap_tackle,Number of rushes through the tackle gap
+run_gap_end,Number of rushes through the end gap
+receiving_yards,Total receiving yards
+receiving_tds,Total receiving touchdowns
+receiving_attempts,Number of pass attempts targeting this player
+first_downs_receiving,Number of first downs achieved by receiving
+receiving_epa,Expected Points Added by receiving plays
+avg_yac_y,Average yards after catch per reception
+avg_air_yards_y,Average air yards per target
+solo_tackles,Number of solo tackles
+assisted_tackles,Number of assisted tackles
+tackles_for_loss,Number of tackles for loss
+qb_hits,Number of quarterback hits
+sacks,Number of sacks (including half sacks)
+interceptions,Number of interceptions
+forced_fumbles,Number of forced fumbles
+fumble_recoveries,Number of fumble recoveries
+pass_defenses,Number of pass defenses (passes defended)
+total_plays,Total number of plays
+third_down_attempts,Number of third down attempts
+third_down_conversions,Number of third down conversions
+fourth_down_attempts,Number of fourth down attempts
+fourth_down_conversions,Number of fourth down conversions
+red_zone_attempts,Number of plays in the red zone (inside 20-yard line)
+red_zone_touchdowns,Number of touchdowns scored in the red zone
+avg_field_position,Average field position (yard line)
+total_epa,Total Expected Points Added

@@ -1,0 +1,18 @@
+match_number,round_number,date,location,home_team,away_team,result,game_result,opponent,highlight_video_url
+1,1,10/09/2024 00:15,Levi's Stadium,San Francisco 49ers,New York Jets,32 - 19,Win,New York Jets,https://www.youtube.com/watch?v=igOb4mfV7To
+28,2,15/09/2024 17:00,U.S. Bank Stadium,Minnesota Vikings,San Francisco 49ers,23 - 17,Loss,Minnesota Vikings,https://www.youtube.com/watch?v=jTJw2uf-Pdg
+38,3,22/09/2024 20:25,SoFi Stadium,Los Angeles Rams,San Francisco 49ers,27 - 24,Loss,Los Angeles Rams,https://www.youtube.com/watch?v=Y1dnhN-1ryU
+55,4,29/09/2024 20:05,Levi's Stadium,San Francisco 49ers,New England Patriots,30 - 13,Win,New England Patriots,https://www.youtube.com/watch?v=NCUjGFJILLo
+70,5,06/10/2024 20:05,Levi's Stadium,San Francisco 49ers,Arizona Cardinals,23 - 24,Loss,Arizona Cardinals,https://www.youtube.com/watch?v=v62sybG_3Lk
+92,6,11/10/2024 00:15,Lumen Field,Seattle Seahawks,San Francisco 49ers,24 - 36,Win,Seattle Seahawks,https://www.youtube.com/watch?v=LaDE1QBC3Cc
+96,7,20/10/2024 20:25,Levi's Stadium,San Francisco 49ers,Kansas City Chiefs,18 - 28,Loss,Kansas City Chiefs,https://www.youtube.com/watch?v=4_xM1tOK-28
+109,8,28/10/2024 00:20,Levi's Stadium,San Francisco 49ers,Dallas Cowboys,30 - 24,Win,Dallas Cowboys,https://www.youtube.com/watch?v=7nTBwPljD-Q
+149,10,10/11/2024 18:00,Raymond James Stadium,Tampa Bay Buccaneers,San Francisco 49ers,20 - 23,Win,Tampa Bay Buccaneers,https://www.youtube.com/watch?v=607mv01G8UU
+158,11,17/11/2024 21:05,Levi's Stadium,San Francisco 49ers,Seattle Seahawks,17 - 20,Loss,Seattle Seahawks,https://www.youtube.com/watch?v=VMPRSGk7bUg
+169,12,24/11/2024 21:25,Lambeau Field,Green Bay Packers,San Francisco 49ers,38 - 10,Loss,Green Bay Packers,https://www.youtube.com/watch?v=rtBtGh02HvA
+181,13,02/12/2024 01:20,Highmark Stadium,Buffalo Bills,San Francisco 49ers,35 - 10,Loss,Buffalo Bills,
+199,14,08/12/2024 21:25,Levi's Stadium,San Francisco 49ers,Chicago Bears,38 - 13,Win,Chicago Bears,https://www.youtube.com/watch?v=qmzSVmVNaFg
+224,15,13/12/2024 01:15,Levi's Stadium,San Francisco 49ers,Los Angeles Rams,6 - 12,Loss,Los Angeles Rams,https://www.youtube.com/watch?v=3JfiboQ6ZC8
+228,16,22/12/2024 21:25,Hard Rock Stadium,Miami Dolphins,San Francisco 49ers,29 - 17,Loss,Miami Dolphins,
+246,17,31/12/2024 01:15,Levi's Stadium,San Francisco 49ers,Detroit Lions,34 - 40,Loss,Detroit Lions,https://www.youtube.com/watch?v=AooNLyum7Ng
+257,18,05/01/2025 21:25,State Farm Stadium,Arizona Cardinals,San Francisco 49ers,47 - 24,Loss,Arizona Cardinals,https://www.youtube.com/watch?v=HfqGFWVdf9w
