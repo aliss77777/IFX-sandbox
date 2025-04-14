@@ -6,11 +6,10 @@ from zep_cloud.client import AsyncZep
 from zep_cloud.types import Message
 
 # Import our components
-# We need to modify the agent import to use our Gradio-compatible modules
-# But we can't modify agent.py directly, so we'll import it and patch it
 import agent
 from gradio_graph import graph
 import gradio_utils
+from components.game_recap_component import create_game_recap_component
 
 # Patch the agent module to use our Gradio-compatible modules
 import sys
@@ -21,6 +20,113 @@ sys.modules['llm'] = importlib.import_module('gradio_llm')
 # Now we can safely import generate_response
 from agent import generate_response
 
+# Define CSS directly
+css = """
+/* Base styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #111111;
+    color: #E6E6E6;
+}
+
+/* Headings */
+h1, h2, h3 {
+    color: #AA0000;
+}
+
+/* Buttons */
+button {
+    background-color: #AA0000;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #B3995D;
+}
+
+/* Game Recap Component */
+.game-recap-container {
+    background-color: #111111;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+.game-recap-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.team-info {
+    text-align: center;
+}
+
+.team-logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.team-name {
+    font-size: 1.2em;
+    color: #E6E6E6;
+}
+
+.team-score {
+    font-size: 2em;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.winner {
+    color: #B3995D;
+}
+
+.video-preview {
+    background-color: #222222;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* Chat Interface */
+.chatbot {
+    background-color: #111111;
+    border: 1px solid #333333;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.message-input {
+    background-color: #222222;
+    color: #E6E6E6;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.clear-button {
+    background-color: #AA0000;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.clear-button:hover {
+    background-color: #B3995D;
+}
+"""
+
 # Initialize Zep client
 zep_api_key = os.environ.get("ZEP_API_KEY")
 if not zep_api_key:
@@ -29,15 +135,25 @@ if not zep_api_key:
 else:
     zep = AsyncZep(api_key=zep_api_key)
 
-# Global state management (replacing Streamlit's session_state)
 class AppState:
     def __init__(self):
-        self.messages = []
+        self.chat_history = []
+        self.current_game = None
         self.initialized = False
         self.user_id = None
         self.session_id = None
+        self.zep_client = None
 
-# Create a global state instance
+    def add_message(self, role, content):
+        self.chat_history.append({"role": role, "content": content})
+
+    def get_chat_history(self):
+        return self.chat_history
+
+    def set_current_game(self, game_data):
+        self.current_game = game_data
+
+# Initialize global state
 state = AppState()
 
 # Add welcome message to state
@@ -52,9 +168,9 @@ I can help you with:
 What would you like to know about today?
 """
 
-# Function to initialize the chat session
+# Initialize the chat session
 async def initialize_chat():
-    """Set up the chat session when a user connects"""
+    """Initialize the chat session with Zep and return a welcome message."""
     try:
         # Generate unique identifiers for the user and session
         state.user_id = gradio_utils.get_user_id()
@@ -77,8 +193,8 @@ async def initialize_chat():
                 user_id=state.user_id,
             )
         
-        
-        state.messages.append({"role": "assistant", "content": welcome_message})
+        # Add welcome message to state
+        state.add_message("assistant", welcome_message)
         state.initialized = True
         
         return welcome_message
@@ -88,14 +204,12 @@ async def initialize_chat():
         print(f"Error in initialize_chat: {str(e)}")
         print(f"Traceback: {traceback.format_exc()}")
         error_message = "There was an error starting the chat. Please refresh the page and try again."
-        state.messages.append({"role": "system", "content": error_message})
+        state.add_message("system", error_message)
         return error_message
 
-# Function to process user messages
+# Process a message and return a response
 async def process_message(message):
-    """Process user messages and generate responses with the agent"""
-    print("Starting message processing...")
-    
+    """Process a message and return a response."""
     try:
         # Store user message in Zep memory if available
         if zep:
@@ -106,7 +220,7 @@ async def process_message(message):
             )
         
         # Add user message to state
-        state.messages.append({"role": "user", "content": message})
+        state.add_message("user", message)
         
         # Process with the agent
         print('Calling generate_response function...')
@@ -120,7 +234,7 @@ async def process_message(message):
         print(f"Extracted metadata: {metadata}")
         
         # Add assistant response to state
-        state.messages.append({"role": "assistant", "content": output})
+        state.add_message("assistant", output)
         
         # Store assistant's response in Zep memory if available
         if zep:
@@ -138,53 +252,53 @@ async def process_message(message):
         print(f"Error in process_message: {str(e)}")
         print(f"Traceback: {traceback.format_exc()}")
         error_message = "I apologize, but I encountered an error. Could you please try again?"
-        state.messages.append({"role": "assistant", "content": error_message})
+        state.add_message("assistant", error_message)
         return error_message
 
 # Function to handle user input in Gradio
 def user_input(message, history):
-    """Handle user input and update chat history"""
-    # Return immediately to update the UI with user message
+    """Handle user input and update the chat history."""
+    # Check if this is the first message (initialization)
+    if not state.initialized:
+        # Initialize the chat session
+        asyncio.run(initialize_chat())
+        state.initialized = True
+    
+    # Add the user message to the history
     history.append({"role": "user", "content": message})
+    
+    # Clear the input field
     return "", history
 
 # Function to generate bot response in Gradio
 def bot_response(history):
-    """Generate bot response and update chat history"""
+    """Generate a response from the bot and update the chat history."""
     # Get the last user message
     user_message = history[-1]["content"]
     
-    # Process the message using asyncio.run
+    # Process the message and get a response
     response = asyncio.run(process_message(user_message))
     
-    # Add the assistant's response to history
+    # Add the bot response to the history
     history.append({"role": "assistant", "content": response})
     
     return history
 
-# Function to initialize the chat when the app starts
-#async def on_app_start():
-    """Initialize the chat when the app starts"""
-    #if not state.initialized:
-    #    welcome_message = await initialize_chat()
-    #    return [{"role": "assistant", "content": welcome_message}]
-    #return []
-
-# Initialize the chat before creating the interface
-#initial_messages = asyncio.run(on_app_start())
-initial_messages = [{"role": "assistant", "content": welcome_message}]
-
 # Create the Gradio interface
-with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft()) as demo:
+with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo:
     gr.Markdown("# 🏈 49ers FanAI Hub")
+    
+    # Game Recap Component
+    with gr.Row():
+        game_recap = create_game_recap_component(state.current_game)
     
     # Chat interface
     chatbot = gr.Chatbot(
-        value=initial_messages,
+        value=state.get_chat_history(),
         height=500,
         show_label=False,
         elem_id="chatbot",
-        type="messages"  # Use the new messages format
+        type="messages"
     )
     
     # Input components
@@ -210,8 +324,6 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft()) as demo:
         history.append({"role": "assistant", "content": response})
 
         return "", history
-
-
     
     # Set up event handlers with the combined function - explicitly disable queue
     msg.submit(process_and_respond, [msg, chatbot], [msg, chatbot], queue=False)
@@ -223,6 +335,4 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft()) as demo:
 
 # Launch the app
 if __name__ == "__main__":
-    # Disable the queue completely
-    #demo.queue(enabled=False)
     demo.launch(share=True) 

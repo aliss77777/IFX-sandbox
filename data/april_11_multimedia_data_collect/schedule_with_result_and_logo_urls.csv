@@ -1,0 +1,18 @@
+Match Number,Round Number,Date,Location,Home Team,Away Team,Result,game_result,home_team_logo_url,away_team_logo_url
+1,1,10/09/2024 00:15,Levi's Stadium,San Francisco 49ers,New York Jets,32 - 19,Win,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png
+28,2,15/09/2024 17:00,U.S. Bank Stadium,Minnesota Vikings,San Francisco 49ers,23 - 17,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/min.png,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png
+38,3,22/09/2024 20:25,SoFi Stadium,Los Angeles Rams,San Francisco 49ers,27 - 24,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/lar.png,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png
+55,4,29/09/2024 20:05,Levi's Stadium,San Francisco 49ers,New England Patriots,30 - 13,Win,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/ne.png
+70,5,06/10/2024 20:05,Levi's Stadium,San Francisco 49ers,Arizona Cardinals,23 - 24,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/ari.png
+92,6,11/10/2024 00:15,Lumen Field,Seattle Seahawks,San Francisco 49ers,24 - 36,Win,https://a.espncdn.com/i/teamlogos/nfl/500/sea.png,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png
+96,7,20/10/2024 20:25,Levi's Stadium,San Francisco 49ers,Kansas City Chiefs,18 - 28,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/kc.png
+109,8,28/10/2024 00:20,Levi's Stadium,San Francisco 49ers,Dallas Cowboys,30 - 24,Win,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/dal.png
+149,10,10/11/2024 18:00,Raymond James Stadium,Tampa Bay Buccaneers,San Francisco 49ers,20 - 23,Win,https://a.espncdn.com/i/teamlogos/nfl/500/tb.png,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png
+158,11,17/11/2024 21:05,Levi's Stadium,San Francisco 49ers,Seattle Seahawks,17 - 20,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/sea.png
+169,12,24/11/2024 21:25,Lambeau Field,Green Bay Packers,San Francisco 49ers,38 - 10,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/gb.png,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png
+181,13,02/12/2024 01:20,Highmark Stadium,Buffalo Bills,San Francisco 49ers,35 - 10,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/buf.png,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png
+199,14,08/12/2024 21:25,Levi's Stadium,San Francisco 49ers,Chicago Bears,38 - 13,Win,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/chi.png
+224,15,13/12/2024 01:15,Levi's Stadium,San Francisco 49ers,Los Angeles Rams,6 - 12,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/lar.png
+228,16,22/12/2024 21:25,Hard Rock Stadium,Miami Dolphins,San Francisco 49ers,29 - 17,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/mia.png,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png
+246,17,31/12/2024 01:15,Levi's Stadium,San Francisco 49ers,Detroit Lions,34 - 40,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,https://a.espncdn.com/i/teamlogos/nfl/500/det.png
+257,18,05/01/2025 21:25,State Farm Stadium,Arizona Cardinals,San Francisco 49ers,47 - 24,Loss,https://a.espncdn.com/i/teamlogos/nfl/500/ari.png,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png
