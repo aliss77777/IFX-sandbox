@@ -1,0 +1,63 @@
+team_name,logo_url,local_path
+"Arizona Cardinals News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/ARI,"team_logos/arizona_cardinals_news,_scores,_stats,_schedule.png"
+"Atlanta Falcons News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/ATL,"team_logos/atlanta_falcons_news,_scores,_stats,_schedule.png"
+"Carolina Panthers News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/CAR,"team_logos/carolina_panthers_news,_scores,_stats,_schedule.png"
+"Chicago Bears News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/CHI,"team_logos/chicago_bears_news,_scores,_stats,_schedule.png"
+"Dallas Cowboys News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/DAL,"team_logos/dallas_cowboys_news,_scores,_stats,_schedule.png"
+"Detroit Lions News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/DET,"team_logos/detroit_lions_news,_scores,_stats,_schedule.png"
+"Green Bay Packers News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/GB,"team_logos/green_bay_packers_news,_scores,_stats,_schedule.png"
+"Los Angeles Rams News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/LA,"team_logos/los_angeles_rams_news,_scores,_stats,_schedule.png"
+"Minnesota Vikings News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/MIN,"team_logos/minnesota_vikings_news,_scores,_stats,_schedule.png"
+"New Orleans Saints News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/NO,"team_logos/new_orleans_saints_news,_scores,_stats,_schedule.png"
+"New York Giants News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/NYG,"team_logos/new_york_giants_news,_scores,_stats,_schedule.png"
+"Philadelphia Eagles News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/PHI,"team_logos/philadelphia_eagles_news,_scores,_stats,_schedule.png"
+"San Francisco 49ers News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/SF,"team_logos/san_francisco_49ers_news,_scores,_stats,_schedule.png"
+"Seattle Seahawks News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/SEA,"team_logos/seattle_seahawks_news,_scores,_stats,_schedule.png"
+"Tampa Bay Buccaneers News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/TB,"team_logos/tampa_bay_buccaneers_news,_scores,_stats,_schedule.png"
+"Washington Commanders News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/WAS,"team_logos/washington_commanders_news,_scores,_stats,_schedule.png"
+"Baltimore Ravens News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/BAL,"team_logos/baltimore_ravens_news,_scores,_stats,_schedule.png"
+"Buffalo Bills News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/BUF,"team_logos/buffalo_bills_news,_scores,_stats,_schedule.png"
+"Cincinnati Bengals News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/CIN,"team_logos/cincinnati_bengals_news,_scores,_stats,_schedule.png"
+"Cleveland Browns News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/CLE,"team_logos/cleveland_browns_news,_scores,_stats,_schedule.png"
+"Denver Broncos News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/DEN,"team_logos/denver_broncos_news,_scores,_stats,_schedule.png"
+"Jacksonville Jaguars News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/JAX,"team_logos/jacksonville_jaguars_news,_scores,_stats,_schedule.png"
+"Kansas City Chiefs News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/KC,"team_logos/kansas_city_chiefs_news,_scores,_stats,_schedule.png"
+"Las Vegas Raiders News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/LV,"team_logos/las_vegas_raiders_news,_scores,_stats,_schedule.png"
+"Los Angeles Chargers News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/LAC,"team_logos/los_angeles_chargers_news,_scores,_stats,_schedule.png"
+"Miami Dolphins News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/MIA,"team_logos/miami_dolphins_news,_scores,_stats,_schedule.png"
+"New England Patriots News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/NE,"team_logos/new_england_patriots_news,_scores,_stats,_schedule.png"
+"New York Jets News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/NYJ,"team_logos/new_york_jets_news,_scores,_stats,_schedule.png"
+"Pittsburgh Steelers News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/PIT,"team_logos/pittsburgh_steelers_news,_scores,_stats,_schedule.png"
+"Tennessee Titans News, Scores, Stats, Schedule",https://static.www.nfl.com/t_headshot_desktop/league/api/clubs/logos/TEN,"team_logos/tennessee_titans_news,_scores,_stats,_schedule.png"
+Arizona Cardinals,https://a.espncdn.com/i/teamlogos/nfl/500/ari.png,team_logos/arizona_cardinals.png
+Atlanta Falcons,https://a.espncdn.com/i/teamlogos/nfl/500/atl.png,team_logos/atlanta_falcons.png
+Baltimore Ravens,https://a.espncdn.com/i/teamlogos/nfl/500/bal.png,team_logos/baltimore_ravens.png
+Buffalo Bills,https://a.espncdn.com/i/teamlogos/nfl/500/buf.png,team_logos/buffalo_bills.png
+Carolina Panthers,https://a.espncdn.com/i/teamlogos/nfl/500/car.png,team_logos/carolina_panthers.png
+Chicago Bears,https://a.espncdn.com/i/teamlogos/nfl/500/chi.png,team_logos/chicago_bears.png
+Cincinnati Bengals,https://a.espncdn.com/i/teamlogos/nfl/500/cin.png,team_logos/cincinnati_bengals.png
+Cleveland Browns,https://a.espncdn.com/i/teamlogos/nfl/500/cle.png,team_logos/cleveland_browns.png
+Dallas Cowboys,https://a.espncdn.com/i/teamlogos/nfl/500/dal.png,team_logos/dallas_cowboys.png
+Denver Broncos,https://a.espncdn.com/i/teamlogos/nfl/500/den.png,team_logos/denver_broncos.png
+Detroit Lions,https://a.espncdn.com/i/teamlogos/nfl/500/det.png,team_logos/detroit_lions.png
+Green Bay Packers,https://a.espncdn.com/i/teamlogos/nfl/500/gb.png,team_logos/green_bay_packers.png
+Houston Texans,https://a.espncdn.com/i/teamlogos/nfl/500/hou.png,team_logos/houston_texans.png
+Indianapolis Colts,https://a.espncdn.com/i/teamlogos/nfl/500/ind.png,team_logos/indianapolis_colts.png
+Jacksonville Jaguars,https://a.espncdn.com/i/teamlogos/nfl/500/jax.png,team_logos/jacksonville_jaguars.png
+Kansas City Chiefs,https://a.espncdn.com/i/teamlogos/nfl/500/kc.png,team_logos/kansas_city_chiefs.png
+Las Vegas Raiders,https://a.espncdn.com/i/teamlogos/nfl/500/lv.png,team_logos/las_vegas_raiders.png
+Los Angeles Chargers,https://a.espncdn.com/i/teamlogos/nfl/500/lac.png,team_logos/los_angeles_chargers.png
+Los Angeles Rams,https://a.espncdn.com/i/teamlogos/nfl/500/lar.png,team_logos/los_angeles_rams.png
+Miami Dolphins,https://a.espncdn.com/i/teamlogos/nfl/500/mia.png,team_logos/miami_dolphins.png
+Minnesota Vikings,https://a.espncdn.com/i/teamlogos/nfl/500/min.png,team_logos/minnesota_vikings.png
+New England Patriots,https://a.espncdn.com/i/teamlogos/nfl/500/ne.png,team_logos/new_england_patriots.png
+New Orleans Saints,https://a.espncdn.com/i/teamlogos/nfl/500/no.png,team_logos/new_orleans_saints.png
+New York Giants,https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png,team_logos/new_york_giants.png
+New York Jets,https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png,team_logos/new_york_jets.png
+Philadelphia Eagles,https://a.espncdn.com/i/teamlogos/nfl/500/phi.png,team_logos/philadelphia_eagles.png
+Pittsburgh Steelers,https://a.espncdn.com/i/teamlogos/nfl/500/pit.png,team_logos/pittsburgh_steelers.png
+San Francisco 49ers,https://a.espncdn.com/i/teamlogos/nfl/500/sf.png,team_logos/san_francisco_49ers.png
+Seattle Seahawks,https://a.espncdn.com/i/teamlogos/nfl/500/sea.png,team_logos/seattle_seahawks.png
+Tampa Bay Buccaneers,https://a.espncdn.com/i/teamlogos/nfl/500/tb.png,team_logos/tampa_bay_buccaneers.png
+Tennessee Titans,https://a.espncdn.com/i/teamlogos/nfl/500/ten.png,team_logos/tennessee_titans.png
+Washington Commanders,https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png,team_logos/washington_commanders.png
