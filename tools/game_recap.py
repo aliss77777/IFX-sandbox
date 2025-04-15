@@ -17,6 +17,21 @@ from gradio_graph import graph
 from langchain_neo4j import GraphCypherQAChain
 from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 
+# Create a global variable to store the last retrieved game data
+# This is a workaround for LangChain dropping structured data
+LAST_GAME_DATA = None
+
+# Function to get the cached game data
+def get_last_game_data():
+    global LAST_GAME_DATA
+    return LAST_GAME_DATA
+
+# Function to set the cached game data
+def set_last_game_data(game_data):
+    global LAST_GAME_DATA
+    LAST_GAME_DATA = game_data
+    print(f"STORED GAME DATA IN CACHE: {game_data}")
+
 # Create the Cypher generation prompt for game search
 GAME_SEARCH_TEMPLATE = """
 You are an expert Neo4j Developer translating user questions about NFL games into Cypher queries.
@@ -215,6 +230,10 @@ def game_recap_qa(input_text):
         
         # Generate the recap
         recap_text = generate_game_recap(game_data)
+        
+        # CRITICAL: Store the game data in our cache so it can be retrieved later
+        # This is a workaround for LangChain dropping structured data
+        set_last_game_data(game_data)
         
         # Return both the text and structured data
         return {

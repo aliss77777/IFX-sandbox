@@ -222,61 +222,91 @@ async def process_message(message):
         print('Calling generate_response function...')
         agent_response = generate_response(message, state.session_id)
         print(f"Agent response received: {agent_response}")
-            
-        # Extract the output and metadata
+        
+        # Always extract the output first, before any other processing
         output = agent_response.get("output", "")
         metadata = agent_response.get("metadata", {})
         print(f"Extracted output: {output}")
         print(f"Extracted metadata: {metadata}")
         
-        # Check if game recap is mentioned in the output and no direct metadata info
-        if "game" in message.lower() and "49ers" in output and any(team in output for team in ["Jets", "Buccaneers", "Seahawks"]):
-            print("Game content detected in response")
+        # Import the game_recap module to access the cached game data
+        from tools.game_recap import get_last_game_data
+        
+        # FIRST CHECK: Get the cached game data (this is the most reliable indicator)
+        cached_game_data = get_last_game_data()
+        
+        # SECOND CHECK: Look for game-related keywords in the output
+        is_game_related = any(keyword in output.lower() for keyword in [
+            "score", "stadium", "defeated", "won", "lost", "final score",
+            "game at", "home team", "away team", "dolphins", "49ers", "seahawks", 
+            "jets", "vikings", "cardinals", "buccaneers", "final"
+        ])
+        
+        # THIRD CHECK: Check metadata for Game Recap tool usage (rarely works but try)
+        tools_used = metadata.get("tools_used", [])
+        tool_used_game_recap = "Game Recap" in str(tools_used)
+        
+        # Determine if this is a game recap response
+        is_game_recap = cached_game_data is not None or (is_game_related and "game" in message.lower())
+        
+        print(f"Is game recap detection: cached_data={cached_game_data is not None}, keywords={is_game_related}, tool={tool_used_game_recap}")
+        
+        if is_game_recap:
+            print("Game Recap detected in response")
             
-            # Hardcoded game detection - simple but effective
-            if "Jets" in output and "32-19" in output:
-                # Jets game data
-                game_data = {
-                    'game_id': 'jets-game',
-                    'date': '10/9/24',
-                    'location': "Levi's Stadium",
-                    'home_team': 'San Francisco 49ers',
-                    'away_team': 'New York Jets',
-                    'home_score': '32',
-                    'away_score': '19',
-                    'result': '32-19',
-                    'winner': 'home',
-                    'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
-                    'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png',
-                    'highlight_video_url': 'https://www.youtube.com/watch?v=igOb4mfV7To'
-                }
-                state.set_current_game(game_data)
-                print(f"Set current game to Jets game")
-            
-            elif "Buccaneers" in output and "23-20" in output:
-                # Bucs game data
-                game_data = {
-                    'game_id': 'bucs-game',
-                    'date': '10/11/24',
-                    'location': 'Raymond James Stadium',
-                    'home_team': 'Tampa Bay Buccaneers',
-                    'away_team': 'San Francisco 49ers',
-                    'home_score': '20',
-                    'away_score': '23',
-                    'result': '20-23',
-                    'winner': 'away',
-                    'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/tb.png',
-                    'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
-                    'highlight_video_url': 'https://www.youtube.com/watch?v=607mv01G8UU'
-                }
-                state.set_current_game(game_data)
-                print(f"Set current game to Bucs game")
+            if cached_game_data:
+                print(f"Found cached game data: {cached_game_data}")
+                state.set_current_game(cached_game_data)
+                print("Set current game from cache")
             else:
-                # No specific game recognized
-                state.set_current_game(None)
+                # Fallback for cases where the cache doesn't work
+                print("No cached game data found - using text-based game detection")
+                
+                # Text-based game detection as a fallback
+                if "Vikings" in output and "49ers" in output:
+                    # Create Vikings game data
+                    game_data = {
+                        'game_id': 'vikings-game',
+                        'date': '15/09/2024',
+                        'location': 'U.S. Bank Stadium',
+                        'home_team': 'Minnesota Vikings',
+                        'away_team': 'San Francisco 49ers',
+                        'home_score': '23',
+                        'away_score': '17',
+                        'result': '23-17',
+                        'winner': 'home',
+                        'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/min.png',
+                        'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
+                        'highlight_video_url': 'https://www.youtube.com/watch?v=jTJw2uf-Pdg'
+                    }
+                    state.set_current_game(game_data)
+                    print("Set current game to Vikings game from text")
+                elif "Dolphins" in output and "49ers" in output:
+                    # Create Dolphins game data 
+                    game_data = {
+                        'game_id': 'dolphins-game',
+                        'date': '22/12/2024',
+                        'location': 'Hard Rock Stadium',
+                        'home_team': 'Miami Dolphins',
+                        'away_team': 'San Francisco 49ers',
+                        'home_score': '29',
+                        'away_score': '17',
+                        'result': '29-17',
+                        'winner': 'home',
+                        'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/mia.png',
+                        'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
+                        'highlight_video_url': 'https://www.youtube.com/watch?v=example'
+                    }
+                    state.set_current_game(game_data)
+                    print("Set current game to Dolphins game from text")
+                else:
+                    # No game detected
+                    state.set_current_game(None)
+                    print("No game detected in text")
         else:
             # Not a game recap query
             state.set_current_game(None)
+            print("Not a game recap query")
         
         # Add assistant response to state
         state.add_message("assistant", output)
@@ -367,24 +397,33 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
         history.append({"role": "user", "content": message})
         response = await process_message(message)
         history.append({"role": "assistant", "content": response})
-        
+
         # Update game recap component visibility based on current_game
         has_game_data = state.current_game is not None
         
         # Create the game recap HTML content if we have game data
         if has_game_data:
-            # Pass the HTML component directly
+            # Print game data for debugging
+            print(f"Creating game recap component with data: {state.current_game}")
+            
+            # Create game recap component and add debugging
             game_recap_html = create_game_recap_component(state.current_game)
-            # Use gr.update() for the container visibility
+            
+            # Debug the HTML content
+            print(f"Game recap component created: {type(game_recap_html)}")
+            
+            # Make sure the container is visible
             container_update = gr.update(visible=True)
+            
+            return "", history, game_recap_html, container_update
         else:
             # Create an empty HTML component
+            print("No game data available, hiding game recap component")
             game_recap_html = gr.HTML("")
-            # Use gr.update() to hide the container
+            # Hide the container
             container_update = gr.update(visible=False)
-        
-        # Return in order: msg (empty), history, game_recap HTML component, container visibility update
-        return "", history, game_recap_html, container_update
+            
+            return "", history, game_recap_html, container_update
     
     # Set up event handlers with the combined function - explicitly disable queue
     msg.submit(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container], queue=False)
