@@ -4,9 +4,9 @@ app_file: gradio_app.py
 sdk: gradio
 sdk_version: 5.24.0
 ---
-# 49ers FanAI Hub - Streamlit Version
+# 49ers FanAI Hub - Gradio Version
 
-This is a Streamlit-based chatbot application that provides information about the San Francisco 49ers, players, games, and fans. The application uses LangChain, Neo4j, and Zep for memory management.
+This is a Gradio-based chatbot application that provides information about the San Francisco 49ers, players, games, and fans. The application uses LangChain, Neo4j, and Zep for memory management.
 
 ## Features
 
@@ -14,6 +14,7 @@ This is a Streamlit-based chatbot application that provides information about th
 - Integration with Neo4j graph database for structured data queries
 - Vector search for finding game summaries
 - Memory management with Zep for conversation history
+- Game Recap component that displays visual information for game-related queries
 
 ## Prerequisites
 
@@ -28,13 +29,12 @@ This is a Streamlit-based chatbot application that provides information about th
 2. Install the required packages:
 
 ```bash
-pip install -r requirements.txt
+pip install -r gradio_requirements.txt
 ```
 
 3. Set up your environment variables:
    - Copy `.env.example` to `.env` in the root directory
-   - Copy `data/.env.example` to `data/.env` in the data directory
-   - Fill in your API keys and credentials in both `.env` files
+   - Fill in your API keys and credentials
 
 Example `.env` file:
 ```
@@ -46,50 +46,48 @@ AURA_PASSWORD=your_neo4j_password
 ZEP_API_KEY=your_zep_api_key
 ```
 
-Alternatively, you can set up your credentials in the `.streamlit/secrets.toml` file:
-
-```toml
-# OpenAI API credentials
-OPENAI_API_KEY = "your_openai_api_key"
-OPENAI_MODEL = "gpt-4o"  # Or your preferred model
-
-# Neo4j credentials
-NEO4J_URI = "your_neo4j_uri"
-NEO4J_USERNAME = "your_neo4j_username"
-NEO4J_PASSWORD = "your_neo4j_password"
-
-# Zep API key
-ZEP_API_KEY = "your_zep_api_key"
-```
-
-> **IMPORTANT**: Never commit your actual API keys or credentials to the repository. The `.env` files and `.streamlit/secrets.toml` are included in `.gitignore` to prevent accidental exposure of sensitive information.
+> **IMPORTANT**: Never commit your actual API keys or credentials to the repository. The `.env` files are included in `.gitignore` to prevent accidental exposure of sensitive information.
 
 ## Running the Application
 
-To run the Streamlit application:
+To run the Gradio application:
 
 ```bash
-streamlit run app.py
+python gradio_app.py
 ```
 
-This will start the Streamlit server and open the application in your default web browser.
+This will start the Gradio server and open the application in your default web browser.
 
 ## Project Structure
 
-- `app.py`: Main Streamlit application
-- `agent.py`: Agent implementation using LangChain
-- `graph.py`: Neo4j graph connection
-- `llm.py`: Language model configuration
-- `utils.py`: Utility functions
+- `gradio_app.py`: Main Gradio application
+- `gradio_agent.py`: Agent implementation using LangChain for Gradio
+- `gradio_graph.py`: Neo4j graph connection for Gradio
+- `gradio_llm.py`: Language model configuration for Gradio
+- `gradio_utils.py`: Utility functions for Gradio
 - `prompts.py`: System prompts for the agent
 - `tools/`: Specialized tools for the agent
   - `cypher.py`: Tool for Cypher queries to Neo4j
   - `vector.py`: Tool for vector search of game summaries
+  - `game_recap.py`: Tool for game recaps with visual component
+- `components/`: UI components
+  - `game_recap_component.py`: Game recap visual component
 - `data/`: Data files and scripts
-  - `create_embeddings.py`: Script to create embeddings for game summaries
-  - `upload_embeddings.py`: Script to upload embeddings to Neo4j
-  - `neo4j_ingestion.py`: Script to ingest data into Neo4j
-  - Various CSV files with 49ers data
+  - Various scripts and CSV files with 49ers data
+- `docs/`: Documentation
+  - `requirements.md`: Detailed product and technical requirements
+  - `game_recap_implementation_instructions.md`: Implementation details for the game recap feature
+
+## Game Recap Component
+
+The Game Recap feature provides visual information about games in addition to text-based summaries. When a user asks about a specific game, the application:
+
+1. Identifies the game being referenced
+2. Retrieves game data from the Neo4j database
+3. Displays a visual component with team logos, scores, and other game information
+4. Generates a text summary in the chat
+
+Note: As mentioned in `docs/game_recap_implementation_instructions.md`, this component is still a work in progress. Currently, it displays above the chat window rather than embedded within chat messages.
 
 ## Security Considerations
 
@@ -110,6 +108,6 @@ Before pushing to a public repository:
    - "Who are the current players on the 49ers roster?"
    - "Tell me about the 49ers game against the Chiefs"
    - "Which fan communities have the most members?"
-   - "Who is the most popular player among fans?"
+   - "Show me the recap of the 49ers vs. Vikings game"
 
 The application will use the appropriate tools to answer your questions based on the data in the Neo4j database.

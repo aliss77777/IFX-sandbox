@@ -15,7 +15,7 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from gradio_llm import llm
 from gradio_graph import graph
 from prompts import AGENT_SYSTEM_PROMPT, CHAT_SYSTEM_PROMPT
-from utils import get_session_id
+from gradio_utils import get_session_id
 
 # Import tools
 from tools.cypher import cypher_qa_wrapper
