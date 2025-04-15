@@ -363,9 +363,9 @@ def bot_response(history):
 with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo:
     gr.Markdown("# 🏈 49ers FanAI Hub")
     
-    # Game Recap Component (use a container with HTML inside)
-    with gr.Column(visible=False) as game_recap_container:
-        game_recap = gr.HTML("")
+    # Game recap container at the top that appears only when needed
+    with gr.Row(visible=False) as game_recap_container:
+        game_recap = gr.HTML()
     
     # Chat interface
     chatbot = gr.Chatbot(
@@ -373,7 +373,8 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
         height=500,
         show_label=False,
         elem_id="chatbot",
-        type="messages"
+        type="messages",
+        render_markdown=True
     )
     
     # Input components
@@ -395,49 +396,38 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
 
         # Now handle the actual user message
         history.append({"role": "user", "content": message})
-        response = await process_message(message)
-        history.append({"role": "assistant", "content": response})
-
-        # Update game recap component visibility based on current_game
-        has_game_data = state.current_game is not None
         
-        # Create the game recap HTML content if we have game data
-        if has_game_data:
-            # Print game data for debugging
-            print(f"Creating game recap component with data: {state.current_game}")
-            
-            # Create game recap component and add debugging
+        # Process the message
+        response = await process_message(message)
+        
+        # Add text response to history
+        history.append({"role": "assistant", "content": response})
+        
+        # Check if we have game data to display
+        if state.current_game:
+            # Use the create_game_recap_component function to get proper HTML
+            game_data = state.current_game
             game_recap_html = create_game_recap_component(state.current_game)
             
-            # Debug the HTML content
-            print(f"Game recap component created: {type(game_recap_html)}")
-            
-            # Make sure the container is visible
-            container_update = gr.update(visible=True)
-            
-            return "", history, game_recap_html, container_update
+            # Show the game recap container with the HTML content
+            return "", history, game_recap_html, gr.update(visible=True)
         else:
-            # Create an empty HTML component
-            print("No game data available, hiding game recap component")
-            game_recap_html = gr.HTML("")
-            # Hide the container
-            container_update = gr.update(visible=False)
-            
-            return "", history, game_recap_html, container_update
+            # Hide the game recap container
+            return "", history, gr.HTML(""), gr.update(visible=False)
     
-    # Set up event handlers with the combined function - explicitly disable queue
-    msg.submit(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container], queue=False)
-    submit.click(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container], queue=False)
+    # Set up event handlers with the combined function
+    msg.submit(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container])
+    submit.click(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container])
     
     # Add a clear button
     clear = gr.Button("Clear Conversation")
     
-    # Clear function that also hides the game recap
+    # Clear function
     def clear_chat():
         state.set_current_game(None)
         return [], gr.HTML(""), gr.update(visible=False)
     
-    clear.click(clear_chat, None, [chatbot, game_recap, game_recap_container], queue=False)
+    clear.click(clear_chat, None, [chatbot, game_recap, game_recap_container])
 
 # Launch the app
 if __name__ == "__main__":
