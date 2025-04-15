@@ -362,10 +362,10 @@ Based on a review of the existing codebase and requirements, here's a structured
 
 ## 11. Feature Work Log
 
-### Phase 1, Step 1.2: Team Search Feature Implementation
+### Phase 1, Step 1.2: Game Search Feature Implementation
 
 #### Objective
-Implement the Team Search feature (Feature 1 from Feature Overview) with focus on game recap display functionality.
+Implement the Game Search feature (Feature 1 from Feature Overview) with focus on game recap display functionality.
 
 #### Prerequisites
 - Access to `schedule_with_result_april_11.csv`
@@ -407,7 +407,7 @@ Implement the Team Search feature (Feature 1 from Feature Overview) with focus o
      - Video preview box
    - Use static assets for 49ers first game
    - Implement responsive design
-   - **Implementation:** Created a reusable game recap component in `components/game_recap_component.py` that displays team logos, names, scores, and highlights the winning team. The component uses the data from the merged CSV file and applies the 49ers theme styling. The component was integrated into the main Gradio app and tested independently. ❌ What Needs Attention: Video player does not display links it shows 'link coming soon'
+   - **Implementation:** Created a reusable game recap component in `components/game_recap_component.py` that displays team logos, names, scores, and highlights the winning team. The component uses the data from the merged CSV file and applies the 49ers theme styling. The component was integrated into the main Gradio app and tested independently. ❌ What Needs Attention: remove background color in right-hand video container
 
 5. **Component Testing**
    - Add component as first element in Gradio app
