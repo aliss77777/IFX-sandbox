@@ -229,6 +229,9 @@ Based on a review of the existing codebase and requirements, here's a structured
 | **1.1 Complete data ingestion of team thumbnail images** | Download and integrate team logo files into the database | None |
 | **1.1 data extracted on 4.13 ✅** |
 | **1.2 Build and test gradio components locally** | Create components using CSV files instead of Neo4j, including multimedia integration | 1.1 |
+| **1.2.1 Team Result Search** | Returning queries about the team using a multi-media component | 1.1 |
+| **1.2.1 Player Search** | Return queries about the player using a multi-media component | 1.1 |
+| **1.2.3 Game Search** | Return queries about a game using a multi-media component  | 1.1 |
 | **1.3 Develop memory system and UI integration with Zep** | Implement persona-based memory system with Zep | None |
 
 **Demo 1 Milestone:** April 22
@@ -395,7 +398,7 @@ Implement the Team Search feature (Feature 1 from Feature Overview) with focus o
    - Save as new version
    - **Implementation:** Created a Python script to merge the schedule data with team logo URLs. The script maps team names to their corresponding logo URLs and adds two new columns to the schedule CSV: 'home_team_logo_url' and 'away_team_logo_url'. The merged data was saved as 'schedule_with_result_and_logo_urls.csv'.
 
-4. **Static Gradio Component Development ✅**
+4. **Static Gradio Component Development 🔁**
    - Create new component file
    - Implement layout matching `game recap layout example.png`:
      - Top row: away team elements
@@ -404,7 +407,7 @@ Implement the Team Search feature (Feature 1 from Feature Overview) with focus o
      - Video preview box
    - Use static assets for 49ers first game
    - Implement responsive design
-   - **Implementation:** Created a reusable game recap component in `components/game_recap_component.py` that displays team logos, names, scores, and highlights the winning team. The component uses the data from the merged CSV file and applies the 49ers theme styling. The component was integrated into the main Gradio app and tested independently.
+   - **Implementation:** Created a reusable game recap component in `components/game_recap_component.py` that displays team logos, names, scores, and highlights the winning team. The component uses the data from the merged CSV file and applies the 49ers theme styling. The component was integrated into the main Gradio app and tested independently. ❌ What Needs Attention: Video player does not display links it shows 'link coming soon'
 
 5. **Component Testing**
    - Add component as first element in Gradio app
