@@ -7,57 +7,43 @@ def create_game_recap_component(game_data=None):
     """
     Creates a Gradio component to display game information with a simple table layout.
     Args:
-        game_data (dict, optional): Game data to display. If None, loads from CSV.
+        game_data (dict, optional): Game data to display. If None, returns an empty component.
     Returns:
         gr.HTML: A Gradio component displaying the game recap.
     """
     try:
-        current_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # If no game data provided, return an empty component
+        if game_data is None or not isinstance(game_data, dict):
+            return gr.HTML("")
         
-        # Load game schedule if no game data provided
-        if game_data is None:
-            # Try to load from the April 11 final data which includes highlight videos
-            schedule_path = os.path.join(current_dir, "data", "april_11_multimedia_data_collect", 
-                                        "new_final_april 11", "schedule_with_result_april_11.csv")
-            if not os.path.exists(schedule_path):
-                # Fallback to the other schedule file
-                schedule_path = os.path.join(current_dir, "data", "april_11_multimedia_data_collect", 
-                                            "schedule_with_result_and_logo_urls.csv")
-            
-            df = pd.read_csv(schedule_path)
-            # use a single game for testing
-            game_row = df[df['Match Number'] == 92]
-            if len(game_row) > 0:
-                game_data = game_row.iloc[0].to_dict()
-            else:
-                game_data = df.iloc[0].to_dict()  # Fallback to first game
-
         # Extract game details
-        match_number = game_data.get('Match Number', 'N/A')
-        date = game_data.get('Date', 'N/A')
-        location = game_data.get('Location', 'N/A')
+        match_number = game_data.get('match_number', game_data.get('Match Number', 'N/A'))
+        date = game_data.get('date', 'N/A')
+        location = game_data.get('location', 'N/A')
         
-        # Handle different column naming conventions between CSV files
-        home_team = game_data.get('Home Team', game_data.get('HomeTeam', 'N/A'))
-        away_team = game_data.get('Away Team', game_data.get('AwayTeam', 'N/A'))
+        # Handle different column naming conventions between sources
+        home_team = game_data.get('home_team', game_data.get('Home Team', game_data.get('HomeTeam', 'N/A')))
+        away_team = game_data.get('away_team', game_data.get('Away Team', game_data.get('AwayTeam', 'N/A')))
         
         # Get team logo URLs
         home_logo = game_data.get('home_team_logo_url', '')
         away_logo = game_data.get('away_team_logo_url', '')
         
         # Get result and determine scores
-        result = game_data.get('Result', 'N/A')
-        home_score = away_score = 'N/A'
+        result = game_data.get('result', 'N/A')
+        home_score = game_data.get('home_score', 'N/A')
+        away_score = game_data.get('away_score', 'N/A')
         
-        if result != 'N/A':
+        # If we don't have separate scores but have result, try to parse it
+        if (home_score == 'N/A' or away_score == 'N/A') and result != 'N/A':
             scores = result.split('-')
             if len(scores) == 2:
                 home_score = scores[0].strip()
                 away_score = scores[1].strip()
         
         # Determine winner for highlighting
-        winner = None
-        if result != 'N/A':
+        winner = game_data.get('winner')
+        if not winner and result != 'N/A':
             try:
                 home_score_int = int(home_score)
                 away_score_int = int(away_score)
@@ -165,7 +151,7 @@ def create_game_recap_component(game_data=None):
             .video-link {{
                 display: inline-block;
                 padding: 8px 15px;
-                background-color: rgba(255,255,255,0.2);
+                background-color: #AA0000;
                 color: white;
                 text-decoration: none;
                 border-radius: 4px;
@@ -173,7 +159,7 @@ def create_game_recap_component(game_data=None):
             }}
             
             .video-link:hover {{
-                background-color: rgba(255,255,255,0.3);
+                background-color: #B3995D;
             }}
         </style>
         
@@ -221,9 +207,86 @@ def create_game_recap_component(game_data=None):
         # Return a simple error message component
         return gr.HTML("<div style='padding: 1rem; color: red;'>⚠️ Error loading game recap. Please try again later.</div>")
 
-# Test the component when run directly
+# Function to process a game recap response from the agent
+def process_game_recap_response(response):
+    """
+    Process a response from the agent that may contain game recap data.
+    
+    Args:
+        response (dict): The response from the agent
+        
+    Returns:
+        tuple: (text_output, game_data)
+            - text_output (str): The text output to display
+            - game_data (dict or None): Game data for the visual component or None
+    """
+    try:
+        # Check if the response has game_data directly
+        if isinstance(response, dict) and "game_data" in response:
+            return response.get("output", ""), response.get("game_data")
+        
+        # Check if game data is in intermediate steps (where LangChain often puts tool outputs)
+        if isinstance(response, dict) and "intermediate_steps" in response:
+            steps = response.get("intermediate_steps", [])
+            for step in steps:
+                # Check the observation part of the step, which contains the tool output
+                if isinstance(step, list) and len(step) >= 2:
+                    observation = step[1]  # Second element is typically the observation
+                    if isinstance(observation, dict) and "game_data" in observation:
+                        return observation.get("output", response.get("output", "")), observation.get("game_data")
+                
+                # Alternative format where step might be a dict with observation key
+                if isinstance(step, dict) and "observation" in step:
+                    observation = step["observation"]
+                    if isinstance(observation, dict) and "game_data" in observation:
+                        return observation.get("output", response.get("output", "")), observation.get("game_data")
+        
+        # If it's just a text response
+        if isinstance(response, str):
+            return response, None
+        
+        # Default case for other response types
+        if isinstance(response, dict):
+            return response.get("output", ""), None
+        
+        return str(response), None
+        
+    except Exception as e:
+        print(f"Error processing game recap response: {str(e)}")
+        import traceback
+        traceback.print_exc()  # Add stack trace for debugging
+        return "I encountered an error processing the game data. Please try again.", None
+
+# Test function for running the component directly
 if __name__ == "__main__":
-    demo = gr.Blocks()
-    with demo:
-        game_recap = create_game_recap_component()
+    # Create sample game data for testing
+    test_game_data = {
+        'game_id': 'test-game-123',
+        'date': '10/09/2024',
+        'location': "Levi's Stadium",
+        'home_team': 'San Francisco 49ers',
+        'away_team': 'New York Jets',
+        'home_score': '32',
+        'away_score': '19',
+        'result': '32-19',
+        'winner': 'home',
+        'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
+        'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png',
+        'highlight_video_url': 'https://www.youtube.com/watch?v=igOb4mfV7To'
+    }
+    
+    # Create a test Gradio interface
+    with gr.Blocks() as demo:
+        gr.Markdown("# Game Recap Component Test")
+        
+        with gr.Row():
+            game_recap = create_game_recap_component(test_game_data)
+            
+        with gr.Row():
+            clear_btn = gr.Button("Clear Component")
+            show_btn = gr.Button("Show Component")
+        
+        clear_btn.click(lambda: None, None, game_recap)
+        show_btn.click(lambda: test_game_data, None, game_recap)
+    
     demo.launch(share=True)

@@ -5,20 +5,15 @@ import gradio as gr
 from zep_cloud.client import AsyncZep
 from zep_cloud.types import Message
 
-# Import our components
-import agent
+# Import the Gradio-specific implementations directly, not patching
 from gradio_graph import graph
+from gradio_llm import llm
 import gradio_utils
-from components.game_recap_component import create_game_recap_component
+from components.game_recap_component import create_game_recap_component, process_game_recap_response
 
-# Patch the agent module to use our Gradio-compatible modules
-import sys
-import importlib
-sys.modules['graph'] = importlib.import_module('gradio_graph')
-sys.modules['llm'] = importlib.import_module('gradio_llm')
-
-# Now we can safely import generate_response
-from agent import generate_response
+# Import the Gradio-compatible agent instead of the original agent
+import gradio_agent
+from gradio_agent import generate_response
 
 # Define CSS directly
 css = """
@@ -152,6 +147,7 @@ class AppState:
 
     def set_current_game(self, game_data):
         self.current_game = game_data
+        print(f"Updated current game: {game_data}")
 
 # Initialize global state
 state = AppState()
@@ -233,6 +229,55 @@ async def process_message(message):
         print(f"Extracted output: {output}")
         print(f"Extracted metadata: {metadata}")
         
+        # Check if game recap is mentioned in the output and no direct metadata info
+        if "game" in message.lower() and "49ers" in output and any(team in output for team in ["Jets", "Buccaneers", "Seahawks"]):
+            print("Game content detected in response")
+            
+            # Hardcoded game detection - simple but effective
+            if "Jets" in output and "32-19" in output:
+                # Jets game data
+                game_data = {
+                    'game_id': 'jets-game',
+                    'date': '10/9/24',
+                    'location': "Levi's Stadium",
+                    'home_team': 'San Francisco 49ers',
+                    'away_team': 'New York Jets',
+                    'home_score': '32',
+                    'away_score': '19',
+                    'result': '32-19',
+                    'winner': 'home',
+                    'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
+                    'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png',
+                    'highlight_video_url': 'https://www.youtube.com/watch?v=igOb4mfV7To'
+                }
+                state.set_current_game(game_data)
+                print(f"Set current game to Jets game")
+            
+            elif "Buccaneers" in output and "23-20" in output:
+                # Bucs game data
+                game_data = {
+                    'game_id': 'bucs-game',
+                    'date': '10/11/24',
+                    'location': 'Raymond James Stadium',
+                    'home_team': 'Tampa Bay Buccaneers',
+                    'away_team': 'San Francisco 49ers',
+                    'home_score': '20',
+                    'away_score': '23',
+                    'result': '20-23',
+                    'winner': 'away',
+                    'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/tb.png',
+                    'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
+                    'highlight_video_url': 'https://www.youtube.com/watch?v=607mv01G8UU'
+                }
+                state.set_current_game(game_data)
+                print(f"Set current game to Bucs game")
+            else:
+                # No specific game recognized
+                state.set_current_game(None)
+        else:
+            # Not a game recap query
+            state.set_current_game(None)
+        
         # Add assistant response to state
         state.add_message("assistant", output)
         
@@ -251,7 +296,7 @@ async def process_message(message):
         import traceback
         print(f"Error in process_message: {str(e)}")
         print(f"Traceback: {traceback.format_exc()}")
-        error_message = "I apologize, but I encountered an error. Could you please try again?"
+        error_message = f"I'm sorry, there was an error processing your request: {str(e)}"
         state.add_message("assistant", error_message)
         return error_message
 
@@ -288,9 +333,9 @@ def bot_response(history):
 with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo:
     gr.Markdown("# 🏈 49ers FanAI Hub")
     
-    # Game Recap Component
-    with gr.Row():
-        game_recap = create_game_recap_component(state.current_game)
+    # Game Recap Component (use a container with HTML inside)
+    with gr.Column(visible=False) as game_recap_container:
+        game_recap = gr.HTML("")
     
     # Chat interface
     chatbot = gr.Chatbot(
@@ -322,16 +367,38 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
         history.append({"role": "user", "content": message})
         response = await process_message(message)
         history.append({"role": "assistant", "content": response})
-
-        return "", history
+        
+        # Update game recap component visibility based on current_game
+        has_game_data = state.current_game is not None
+        
+        # Create the game recap HTML content if we have game data
+        if has_game_data:
+            # Pass the HTML component directly
+            game_recap_html = create_game_recap_component(state.current_game)
+            # Use gr.update() for the container visibility
+            container_update = gr.update(visible=True)
+        else:
+            # Create an empty HTML component
+            game_recap_html = gr.HTML("")
+            # Use gr.update() to hide the container
+            container_update = gr.update(visible=False)
+        
+        # Return in order: msg (empty), history, game_recap HTML component, container visibility update
+        return "", history, game_recap_html, container_update
     
     # Set up event handlers with the combined function - explicitly disable queue
-    msg.submit(process_and_respond, [msg, chatbot], [msg, chatbot], queue=False)
-    submit.click(process_and_respond, [msg, chatbot], [msg, chatbot], queue=False)
+    msg.submit(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container], queue=False)
+    submit.click(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container], queue=False)
     
     # Add a clear button
     clear = gr.Button("Clear Conversation")
-    clear.click(lambda: [], None, chatbot, queue=False)
+    
+    # Clear function that also hides the game recap
+    def clear_chat():
+        state.set_current_game(None)
+        return [], gr.HTML(""), gr.update(visible=False)
+    
+    clear.click(clear_chat, None, [chatbot, game_recap, game_recap_container], queue=False)
 
 # Launch the app
 if __name__ == "__main__":

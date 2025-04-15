@@ -1,5 +1,9 @@
-from llm import llm
-from graph import graph
+import sys
+import os
+# Add parent directory to path to access gradio modules
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from gradio_llm import llm
+from gradio_graph import graph
 
 # Create the Cypher QA chain
 from langchain_neo4j import GraphCypherQAChain

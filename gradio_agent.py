@@ -1,5 +1,6 @@
 """
 Agent implementation for 49ers chatbot using LangChain and Neo4j.
+Gradio-compatible version that doesn't rely on Streamlit.
 """
 import os
 from langchain.agents import AgentExecutor, create_react_agent
@@ -10,8 +11,9 @@ from langchain_neo4j import Neo4jChatMessageHistory
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
-from llm import llm
-from graph import graph
+# Import Gradio-specific modules directly
+from gradio_llm import llm
+from gradio_graph import graph
 from prompts import AGENT_SYSTEM_PROMPT, CHAT_SYSTEM_PROMPT
 from utils import get_session_id
 
@@ -33,25 +35,32 @@ chat_prompt = ChatPromptTemplate.from_messages(
 
 # Create a non-streaming LLM for the agent
 from langchain_openai import ChatOpenAI
-import streamlit as st
 
-# Get API key from environment or Streamlit secrets
+# Get API key from environment only (no Streamlit)
 def get_api_key(key_name):
-    """Get API key from environment or Streamlit secrets"""
-    # First try to get from Streamlit secrets
-    if hasattr(st, 'secrets') and key_name in st.secrets:
-        return st.secrets[key_name]
-    # Then try to get from environment
-    return os.environ.get(key_name)
+    """Get API key from environment variables only (no Streamlit)"""
+    value = os.environ.get(key_name)
+    if value:
+        print(f"Found {key_name} in environment variables")
+    return value
 
 OPENAI_API_KEY = get_api_key("OPENAI_API_KEY")
 OPENAI_MODEL = get_api_key("OPENAI_MODEL") or "gpt-4-turbo"
+
+# Use a fallback key if available for development
+if not OPENAI_API_KEY:
+    fallback_key = os.environ.get("OPENAI_API_KEY_FALLBACK")
+    if fallback_key:
+        print("Using fallback API key for development")
+        OPENAI_API_KEY = fallback_key
+    else:
+        raise ValueError(f"OPENAI_API_KEY not found in environment variables")
 
 agent_llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
     model=OPENAI_MODEL,
     temperature=0.1,
-    streaming=True  # Disable streaming for agent
+    streaming=True  # Enable streaming for agent
 )
 
 movie_chat = chat_prompt | llm | StrOutputParser()
@@ -188,4 +197,4 @@ def generate_response(user_input, session_id=None):
                     "metadata": {"tools_used": ["None"]}
                 }
             print(f"Attempt {attempt + 1} failed, retrying...")
-            continue
+            continue 
