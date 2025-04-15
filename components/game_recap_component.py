@@ -129,8 +129,8 @@ def create_game_recap_component(game_data=None):
             }}
             
             .video-cell {{
-                background: linear-gradient(135deg, #e31837 0%, #e31837 50%, #4f2683 50%, #4f2683 100%);
-                color: white;
+                background: #ffffff; /* replaced the gradient with solid white */
+                color: #333;         /* changed from white to a darker color for visibility */
                 padding: 20px;
                 text-align: center;
                 vertical-align: middle;
@@ -159,6 +159,7 @@ def create_game_recap_component(game_data=None):
                 font-size: 24px;
                 font-weight: bold;
                 margin: 10px 0;
+                color: #AA0000 !important; /* 49ers primary red from your design system */
             }}
             
             .video-link {{
