@@ -111,3 +111,24 @@ Before pushing to a public repository:
    - "Show me the recap of the 49ers vs. Vikings game"
 
 The application will use the appropriate tools to answer your questions based on the data in the Neo4j database.
+
+## Deployment
+
+This application has been deployed to HuggingFace Spaces and is publicly available at: 
+[https://huggingface.co/spaces/aliss77777/ifx-sandbox](https://huggingface.co/spaces/aliss77777/ifx-sandbox)
+
+### Deployment Steps
+1. Used Gradio's built-in deployment feature: `gradio deploy --app-file gradio_app.py --title "49ers FanAI Hub"`
+2. Uploaded environment variables securely as Secrets in the HuggingFace Space
+3. Verified all API connections and data access on the deployed version
+
+The deployment process automatically handles:
+- Code upload to HuggingFace Spaces
+- Installing dependencies from requirements.txt
+- Building and serving the Gradio application
+
+### Final Checks
+- Verified UI rendering and responsiveness
+- Confirmed data accuracy and Neo4j connection
+- Tested all features: chat, graph queries, and game recap functionality
+- Documented any deployment-specific issues or limitations
