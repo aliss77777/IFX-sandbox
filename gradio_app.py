@@ -9,11 +9,16 @@ from zep_cloud.types import Message
 from gradio_graph import graph
 from gradio_llm import llm
 import gradio_utils
-from components.game_recap_component import create_game_recap_component, process_game_recap_response
+from components.game_recap_component import create_game_recap_component
+from components.player_card_component import create_player_card_component
 
 # Import the Gradio-compatible agent instead of the original agent
 import gradio_agent
 from gradio_agent import generate_response
+
+# Import cache getter functions
+from tools.game_recap import get_last_game_data
+from tools.player_search import get_last_player_data
 
 # Define CSS directly
 css = """
@@ -133,7 +138,6 @@ else:
 class AppState:
     def __init__(self):
         self.chat_history = []
-        self.current_game = None
         self.initialized = False
         self.user_id = None
         self.session_id = None
@@ -144,10 +148,6 @@ class AppState:
 
     def get_chat_history(self):
         return self.chat_history
-
-    def set_current_game(self, game_data):
-        self.current_game = game_data
-        print(f"Updated current game: {game_data}")
 
 # Initialize global state
 state = AppState()
@@ -205,7 +205,9 @@ async def initialize_chat():
 
 # Process a message and return a response
 async def process_message(message):
-    """Process a message and return a response."""
+    """Process a message and return a response (text only)."""
+    # NOTE: This function now primarily focuses on getting the agent's text response.
+    # UI component updates are handled in process_and_respond based on cached data.
     try:
         # Store user message in Zep memory if available
         if zep:
@@ -214,103 +216,23 @@ async def process_message(message):
                 session_id=state.session_id,
                 messages=[Message(role_type="user", content=message, role="user")]
             )
-        
-        # Add user message to state
-        state.add_message("user", message)
-        
+
+        # Add user message to state (for context, though Gradio manages history display)
+        # state.add_message("user", message)
+
         # Process with the agent
         print('Calling generate_response function...')
         agent_response = generate_response(message, state.session_id)
         print(f"Agent response received: {agent_response}")
-        
-        # Always extract the output first, before any other processing
-        output = agent_response.get("output", "")
-        metadata = agent_response.get("metadata", {})
+
+        # Always extract the text output
+        output = agent_response.get("output", "I apologize, I encountered an issue.")
+        # metadata = agent_response.get("metadata", {})
         print(f"Extracted output: {output}")
-        print(f"Extracted metadata: {metadata}")
-        
-        # Import the game_recap module to access the cached game data
-        from tools.game_recap import get_last_game_data
-        
-        # FIRST CHECK: Get the cached game data (this is the most reliable indicator)
-        cached_game_data = get_last_game_data()
-        
-        # SECOND CHECK: Look for game-related keywords in the output
-        is_game_related = any(keyword in output.lower() for keyword in [
-            "score", "stadium", "defeated", "won", "lost", "final score",
-            "game at", "home team", "away team", "dolphins", "49ers", "seahawks", 
-            "jets", "vikings", "cardinals", "buccaneers", "final"
-        ])
-        
-        # THIRD CHECK: Check metadata for Game Recap tool usage (rarely works but try)
-        tools_used = metadata.get("tools_used", [])
-        tool_used_game_recap = "Game Recap" in str(tools_used)
-        
-        # Determine if this is a game recap response
-        is_game_recap = cached_game_data is not None or (is_game_related and "game" in message.lower())
-        
-        print(f"Is game recap detection: cached_data={cached_game_data is not None}, keywords={is_game_related}, tool={tool_used_game_recap}")
-        
-        if is_game_recap:
-            print("Game Recap detected in response")
-            
-            if cached_game_data:
-                print(f"Found cached game data: {cached_game_data}")
-                state.set_current_game(cached_game_data)
-                print("Set current game from cache")
-            else:
-                # Fallback for cases where the cache doesn't work
-                print("No cached game data found - using text-based game detection")
-                
-                # Text-based game detection as a fallback
-                if "Vikings" in output and "49ers" in output:
-                    # Create Vikings game data
-                    game_data = {
-                        'game_id': 'vikings-game',
-                        'date': '15/09/2024',
-                        'location': 'U.S. Bank Stadium',
-                        'home_team': 'Minnesota Vikings',
-                        'away_team': 'San Francisco 49ers',
-                        'home_score': '23',
-                        'away_score': '17',
-                        'result': '23-17',
-                        'winner': 'home',
-                        'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/min.png',
-                        'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
-                        'highlight_video_url': 'https://www.youtube.com/watch?v=jTJw2uf-Pdg'
-                    }
-                    state.set_current_game(game_data)
-                    print("Set current game to Vikings game from text")
-                elif "Dolphins" in output and "49ers" in output:
-                    # Create Dolphins game data 
-                    game_data = {
-                        'game_id': 'dolphins-game',
-                        'date': '22/12/2024',
-                        'location': 'Hard Rock Stadium',
-                        'home_team': 'Miami Dolphins',
-                        'away_team': 'San Francisco 49ers',
-                        'home_score': '29',
-                        'away_score': '17',
-                        'result': '29-17',
-                        'winner': 'home',
-                        'home_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/mia.png',
-                        'away_team_logo_url': 'https://a.espncdn.com/i/teamlogos/nfl/500/sf.png',
-                        'highlight_video_url': 'https://www.youtube.com/watch?v=example'
-                    }
-                    state.set_current_game(game_data)
-                    print("Set current game to Dolphins game from text")
-                else:
-                    # No game detected
-                    state.set_current_game(None)
-                    print("No game detected in text")
-        else:
-            # Not a game recap query
-            state.set_current_game(None)
-            print("Not a game recap query")
-        
-        # Add assistant response to state
-        state.add_message("assistant", output)
-        
+
+        # Add assistant response to state (for context)
+        # state.add_message("assistant", output)
+
         # Store assistant's response in Zep memory if available
         if zep:
             print("Storing assistant response in Zep...")
@@ -319,15 +241,15 @@ async def process_message(message):
                 messages=[Message(role_type="assistant", content=output, role="assistant")]
             )
             print("Assistant response stored in Zep")
-        
-        return output
-        
+
+        return output # Return only the text output
+
     except Exception as e:
         import traceback
         print(f"Error in process_message: {str(e)}")
         print(f"Traceback: {traceback.format_exc()}")
         error_message = f"I'm sorry, there was an error processing your request: {str(e)}"
-        state.add_message("assistant", error_message)
+        # state.add_message("assistant", error_message)
         return error_message
 
 # Function to handle user input in Gradio
@@ -362,21 +284,25 @@ def bot_response(history):
 # Create the Gradio interface
 with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo:
     gr.Markdown("# 🏈 49ers FanAI Hub")
-    
-    # Game recap container at the top that appears only when needed
-    with gr.Row(visible=False) as game_recap_container:
-        game_recap = gr.HTML()
-    
+
+    # --- Component Display Area --- #
+    # Debug Textbox (Temporary)
+    debug_textbox = gr.Textbox(label="Debug Player Data", visible=True, interactive=False)
+    # Player card display (initially hidden)
+    player_card_display = gr.HTML(visible=False)
+    # Game recap display (initially hidden)
+    game_recap_display = gr.HTML(visible=False)
+
     # Chat interface
     chatbot = gr.Chatbot(
-        value=state.get_chat_history(),
+        # value=state.get_chat_history(), # Let Gradio manage history display directly
         height=500,
         show_label=False,
         elem_id="chatbot",
-        type="messages",
+        # type="messages", # Default type often works better
         render_markdown=True
     )
-    
+
     # Input components
     with gr.Row():
         msg = gr.Textbox(
@@ -384,50 +310,80 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
             show_label=False,
             scale=9
         )
-        submit = gr.Button("Send", scale=1)
-    
+        submit_btn = gr.Button("Send", scale=1) # Renamed for clarity
+
     # Define a combined function for user input and bot response
     async def process_and_respond(message, history):
-        # If not initialized yet, do it now
+        print(f"History IN: {history}")
+        # Initialize if first interaction
         if not state.initialized:
-            welcome_message = await initialize_chat()
-            # Optionally show the welcome message right away
-            history.append({"role": "assistant", "content": welcome_message})
+            welcome_msg = await initialize_chat()
+            history = [(None, welcome_msg)] # Start history with welcome message
+            state.initialized = True
+            # Return immediately after initialization to show welcome message
+            # No component updates needed yet
+            return "", history, gr.update(visible=False), gr.update(visible=False), gr.update(value="")
 
-        # Now handle the actual user message
-        history.append({"role": "user", "content": message})
-        
-        # Process the message
-        response = await process_message(message)
-        
-        # Add text response to history
-        history.append({"role": "assistant", "content": response})
-        
-        # Check if we have game data to display
-        if state.current_game:
-            # Use the create_game_recap_component function to get proper HTML
-            game_data = state.current_game
-            game_recap_html = create_game_recap_component(state.current_game)
-            
-            # Show the game recap container with the HTML content
-            return "", history, game_recap_html, gr.update(visible=True)
+        # Append user message for processing & display
+        history.append((message, None))
+
+        # Process the message to get bot's text response
+        response_text = await process_message(message)
+
+        # Update last message in history with bot response
+        history[-1] = (message, response_text)
+        print(f"History OUT: {history}")
+
+        # --- Check Caches and Update Components --- #
+        # player_card_html = "" # No longer creating HTML directly here for player
+        player_card_visible = False
+        game_recap_html = ""
+        game_recap_visible = False
+        debug_text_update = gr.update(value="") # Default debug text update
+
+        # Check for Player Data first
+        player_data = get_last_player_data() # Check player cache
+        if player_data:
+            print("Player data found in cache, updating debug textbox...")
+            # player_card_html = create_player_card_component(player_data) # Temporarily disable HTML generation
+            player_card_visible = False # Keep HTML hidden for now
+            debug_text_update = gr.update(value=str(player_data)) # Update debug textbox instead
         else:
-            # Hide the game recap container
-            return "", history, gr.HTML(""), gr.update(visible=False)
-    
+            # If no player data, check for Game Data
+            game_data = get_last_game_data() # Check game cache
+            if game_data:
+                print("Game data found in cache, creating recap...")
+                game_recap_html = create_game_recap_component(game_data)
+                game_recap_visible = True
+            # No player data found, ensure debug text is cleared
+            debug_text_update = gr.update(value="")
+
+        # Return updates for all relevant components
+        # Note: player_card_display update is temporarily disabled (always hidden)
+        return (
+            "", 
+            history, 
+            debug_text_update, # Update for the debug textbox
+            gr.update(value="", visible=False), # Keep player HTML hidden
+            gr.update(value=game_recap_html, visible=game_recap_visible) # Update game recap as before
+        )
+
     # Set up event handlers with the combined function
-    msg.submit(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container])
-    submit.click(process_and_respond, [msg, chatbot], [msg, chatbot, game_recap, game_recap_container])
-    
+    # Ensure outputs list matches the return values of process_and_respond
+    # Added debug_textbox to the outputs list
+    outputs_list = [msg, chatbot, debug_textbox, player_card_display, game_recap_display]
+    msg.submit(process_and_respond, [msg, chatbot], outputs_list)
+    submit_btn.click(process_and_respond, [msg, chatbot], outputs_list)
+
     # Add a clear button
-    clear = gr.Button("Clear Conversation")
-    
-    # Clear function
+    clear_btn = gr.Button("Clear Conversation")
+
+    # Clear function - now needs to clear/hide components including debug box
     def clear_chat():
-        state.set_current_game(None)
-        return [], gr.HTML(""), gr.update(visible=False)
-    
-    clear.click(clear_chat, None, [chatbot, game_recap, game_recap_container])
+        return [], gr.update(value=""), gr.update(value="", visible=False), gr.update(value="", visible=False)
+
+    # Update clear outputs
+    clear_btn.click(clear_chat, None, [chatbot, debug_textbox, player_card_display, game_recap_display])
 
 # Launch the app
 if __name__ == "__main__":

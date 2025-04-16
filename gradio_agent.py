@@ -20,7 +20,8 @@ from gradio_utils import get_session_id
 # Import tools
 from tools.cypher import cypher_qa_wrapper
 from tools.vector import get_game_summary
-from tools.game_recap import game_recap_qa  # Import the new game recap tool
+from tools.game_recap import game_recap_qa
+from tools.player_search import player_search_qa # Import the new player search tool
 
 # Create a basic chat chain for general football discussion
 from langchain_core.prompts import ChatPromptTemplate
@@ -77,29 +78,37 @@ def football_chat_wrapper(input_text):
 tools = [
     Tool.from_function(
         name="49ers Graph Search",
-        description="""Use for ANY specific 49ers-related queries about players, games, schedules, fans, or team info.
-Examples: "Who are the 49ers playing next week?", "Which players are defensive linemen?", "How many fan chapters are in California?"
-This is your PRIMARY tool for 49ers-specific information and should be your DEFAULT choice for most queries.""",
+        description="""Use for broader 49ers-related queries about GROUPS of players (e.g., list by position), general team info, schedules, fan chapters, or when other specific tools (like Player Search or Game Recap) are not applicable or fail.
+Examples: "Who are the 49ers playing next week?", "Which players are defensive linemen?", "How many fan chapters are in California?", "List the running backs".
+This is your general fallback for 49ers data if a more specific tool isn't a better fit.""",
         func=cypher_qa_wrapper
     ),
     Tool.from_function(
+        name="Player Information Search",
+        description="""Use this tool FIRST for any questions about a SPECIFIC player identified by name or jersey number.
+Use it to get player details, stats, headshots, social media links, or an info card.
+Examples: "Tell me about Brock Purdy", "Who is player number 97?", "Show me Nick Bosa's info card", "Get Deebo Samuel's stats", "Does Kalia Davis have an Instagram?"
+Returns text summary and potentially visual card data.""",
+        func=player_search_qa
+    ),
+    Tool.from_function(
         name="Game Recap",
-        description="""Use SPECIFICALLY for detailed game recaps or when users want to see visual information about a particular game.
+        description="""Use SPECIFICALLY for detailed game recaps or when users want to see visual information about a particular game identified by opponent or date.
 Examples: "Show me the recap of the 49ers vs Jets game", "I want to see the highlights from the last 49ers game", "What happened in the game against the Patriots?"
 Returns both a text summary AND visual game data that can be displayed to the user.
-PREFER this tool over Game Summary Search for any game-specific questions.""",
+PREFER this tool over Game Summary Search or Graph Search for specific game detail requests.""",
         func=game_recap_qa
     ),
     Tool.from_function(
-        name="Game Summary Search",  
-        description="""ONLY use for detailed game summaries or specific match results when Game Recap doesn't return good results.
-Examples: "What happened in the 49ers vs Seahawks game?", "Give me details about the last playoff game"
-Do NOT use for general schedule or player questions.""",
-        func=get_game_summary, 
+        name="Game Summary Search",
+        description="""ONLY use for detailed game summaries or specific match results if the 'Game Recap' tool fails or doesn't provide enough detail.
+Examples: "Summarize the 49ers vs Seahawks game", "Give me details about the last playoff game results"
+Do NOT use for general schedule questions.""",
+        func=get_game_summary,
     ),
     Tool.from_function(
         name="General Football Chat",
-        description="""ONLY use for general football discussion NOT specific to 49ers data.
+        description="""ONLY use for general football discussion NOT specific to the 49ers team, players, or games.
 Examples: "How does the NFL draft work?", "What are the basic rules of football?"
 Do NOT use for any 49ers-specific questions.""",
         func=football_chat_wrapper,
