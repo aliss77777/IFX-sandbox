@@ -25,8 +25,9 @@ except ImportError as e:
 load_dotenv()
 
 # Configuration
-# Assumes the CSV is in the same directory as this script
-CSV_FILEPATH = os.path.join(os.path.dirname(__file__), "team_news_articles.csv")
+# Update path to reflect moved CSV file location
+# CSV_FILEPATH = os.path.join(os.path.dirname(__file__), "team_news_articles.csv") # Old path
+CSV_FILEPATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "april_11_multimedia_data_collect", "team_news_articles.csv") # New path
 TEAM_NAME = "San Francisco 49ers"
 
 def upload_articles_to_neo4j(csv_filepath):

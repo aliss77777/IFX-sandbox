@@ -230,7 +230,7 @@ Based on a review of the existing codebase and requirements, here's a structured
 | **1.2 Build and test v1 Gradio UI components** | Create components with multimedia integration, focusing on feasability rather than design polish | 1.1 |
 | **1.2.1 ✅ Game Recap Search (WIP)** | Returning queries about the a specific game, display through a multi-media component in the UI *(Backend logic implemented, visual component integration pending)* | 1.1 |
 | **1.2.2 ✅ Player Search (WIP)** | Return queries about the player using a multi-media component *(Backend logic implemented, visual component integration pending)* | 1.1 |
-| **1.2.3 Team Info Search** | Return queries about a team using a multi-media component  | 1.1 |
+| **1.2.3 ✅ Team Info Search** | Scraped, summarized, and stored recent team news articles in Neo4j; implemented a Gradio tool and component to query and display relevant news summaries and links in the chat. | 1.1 |
 | **1.3 Develop memory system and UI integration with Zep** | Implement persona-based memory system with Zep | None |
 
 **Demo 1 Milestone:** April 22
@@ -358,3 +358,62 @@ Based on a review of the existing codebase and requirements, here's a structured
 | Persona complexity | Start with simplified personas, then enhance |
 | Deployment constraints | Test with Hugging Face resource limits early |
 | Memory persistence | Implement simple local fallback if Zep has issues |
+
+## Appendix: Project File Structure
+
+This outlines the main files and directories in the `ifx-sandbox` project, highlighting those critical for the current Gradio application and noting potentially outdated ones.
+
+```
+ifx-sandbox/
+├── .env                    # **CRITICAL**: API keys and environment variables (OpenAI, Neo4j, Zep etc.)
+├── .env.example            # Example environment file structure.
+├── .git/                   # Git repository data.
+├── .github/                # GitHub specific files (e.g., workflows - check if used).
+├── .gitignore              # Specifies intentionally untracked files that Git should ignore.
+├── .gradio/                # Gradio cache/temporary files.
+├── .streamlit/             # **OLD?**: Streamlit configuration folder (App uses Gradio).
+├── components/             # **CRITICAL**: Directory for Gradio UI components.
+│   ├── __init__.py
+│   ├── game_recap_component.py # **CRITICAL**: Component for displaying game recaps.
+│   ├── player_card_component.py # **CRITICAL**: Component for displaying player cards.
+│   └── team_story_component.py  # **CRITICAL**: Component for displaying team news stories.
+├── data/
+│   └── april_11_multimedia_data_collect/ # Contains various data ingestion scripts.
+│       ├── team_news_articles.csv      # **CRITICAL DATA**: Source for team news uploads.
+│       ├── team_news_scraper.py        # Script to scrape team news (moved here).
+│       ├── get_player_socials.py       # **ARCHIVABLE?**: One-off data collection?
+│       ├── player_headshots.py         # **ARCHIVABLE?**: One-off data collection?
+│       └── get_youtube_playlist_videos.py # **ARCHIVABLE?**: One-off data collection?
+│       └── ... (other potential one-off scripts)
+├── docs/
+│   ├── requirements.md       # **CRITICAL DOC**: This file (Product/Technical Requirements).
+│   └── Phase 1/
+│       └── Task 1.2.3 Team Search Implementation.md # **CRITICAL DOC**: Implementation plan/notes for recent task.
+│       └── ... (Other phase/task docs - check relevance)
+├── tools/
+│   ├── __init__.py
+│   ├── cypher.py             # **CRITICAL**: Tool for generic Cypher QA.
+│   ├── game_recap.py         # **CRITICAL**: Tool logic for game recaps.
+│   ├── neo4j_article_uploader.py # Tool to upload team news CSV (depends on data folder).
+│   ├── player_search.py      # **CRITICAL**: Tool logic for player search.
+│   ├── team_story.py         # **CRITICAL**: Tool logic for team news search.
+│   └── vector.py             # **CRITICAL?**: Tool for game summary search (check if used by agent).
+├── gradio_app.py           # **CRITICAL**: Main Gradio application entry point and UI definition.
+├── gradio_agent.py         # **CRITICAL**: LangChain agent definition, tool integration, response generation.
+├── gradio_graph.py         # **CRITICAL**: Neo4j graph connection setup for Gradio.
+├── gradio_llm.py           # **CRITICAL**: OpenAI LLM setup for Gradio.
+├── gradio_requirements.txt # **OLD?**: Specific Gradio requirements? Check if needed alongside main requirements.txt.
+├── gradio_utils.py         # **CRITICAL**: Utility functions for the Gradio app (e.g., session IDs).
+├── prompts.py              # **CRITICAL**: System prompts for the agent and LLM chains.
+├── requirements.txt        # **CRITICAL**: Main Python package dependencies.
+├── README.md               # Main project README (check if up-to-date vs GRADIO_README).
+├── GRADIO_README.md        # **OLD?**: Specific README for Gradio version? Consolidate/update.
+├── test.ipynb              # **ARCHIVABLE?**: Jupyter notebook for testing (likely outdated).
+├── __pycache__/            # Python bytecode cache.
+└── .DS_Store               # macOS folder metadata.
+```
+
+**Notes:**
+*   Files marked **CRITICAL** are essential for the current `gradio_app.py` to run with Player, Game, and Team News search features.
+*   Items marked **OLD?** or **ARCHIVABLE?** are potential candidates for cleanup or removal, depending on whether they are still relevant or have been superseded.
+*   The `data/april_11_multimedia_data_collect/` folder contains various scripts; some may be one-off data collection scripts that are no longer needed now that data is in Neo4j, but the recently moved scraper and CSV are now located here.

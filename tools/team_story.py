@@ -131,10 +131,13 @@ def team_story_qa(query: str) -> dict:
             print("Warning: No Cypher query was generated.")
             output_text = "I couldn't formulate a query to find the specific news you asked for."
 
-        LAST_TEAM_STORY_DATA = structured_results
+        # --- Limit the number of results stored and returned --- #
+        MAX_STORIES_TO_SHOW = 3 
+        LAST_TEAM_STORY_DATA = structured_results[:MAX_STORIES_TO_SHOW] 
+        # --- End limiting --- #
         
-        # 4. Format the text output based on structured results
-        if not structured_results:
+        # 4. Format the text output based on the limited structured results
+        if not LAST_TEAM_STORY_DATA: # Check the potentially limited list now
              # Keep default error or no-query message unless results were empty after valid query
              if cleaned_cypher and not neo4j_results:
                  output_text = "I found no specific news articles matching your query in the database."
@@ -143,11 +146,13 @@ def team_story_qa(query: str) -> dict:
              else: # Error occurred during query execution or processing
                  pass # Keep the default error message
         else:
+             # Base the text output on the *limited* list
              output_text = "Here's what I found related to your query:\n\n"
-             for i, story in enumerate(structured_results[:3]): # Show top 3
+             for i, story in enumerate(LAST_TEAM_STORY_DATA): # Iterate over the limited list
                  output_text += f"{i+1}. {story['summary']}\n[Link: {story['link_to_article']}]\n\n"
-             if len(structured_results) > 3:
-                 output_text += f"... found {len(structured_results)} relevant articles in total."
+             # Optionally, mention if more were found originally (before limiting)
+             if len(structured_results) > MAX_STORIES_TO_SHOW:
+                 output_text += f"... displaying the top {MAX_STORIES_TO_SHOW} of {len(structured_results)} relevant articles found."
 
     except Exception as e:
         import traceback
