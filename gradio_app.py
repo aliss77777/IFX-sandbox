@@ -22,6 +22,9 @@ from tools.game_recap import get_last_game_data
 from tools.player_search import get_last_player_data
 from tools.team_story import get_last_team_story_data
 
+# --- IMPORTANT: Need access to the lists themselves to clear them --- #
+from tools import game_recap, player_search, team_story
+
 # Define CSS directly
 css = """
 /* Base styles */
@@ -316,6 +319,13 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
     async def process_and_respond(message, history):
         """Process user input, get agent response, check for components, and update history."""
         
+        # --- Clear caches before processing --- #
+        print("Clearing tool data caches...")
+        player_search.LAST_PLAYER_DATA = [] 
+        game_recap.LAST_GAME_DATA = []
+        team_story.LAST_TEAM_STORY_DATA = []
+        # --- End cache clearing --- #
+
         print(f"process_and_respond: Received message: {message}")
         # history.append((message, None)) # Add user message placeholder
         # yield "", history # Show user message immediately
