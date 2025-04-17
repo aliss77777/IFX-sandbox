@@ -20,8 +20,9 @@ from gradio_utils import get_session_id
 # Import tools
 from tools.cypher import cypher_qa_wrapper
 from tools.vector import get_game_summary
-from tools.game_recap import game_recap_qa
-from tools.player_search import player_search_qa # Import the new player search tool
+from tools.game_recap import game_recap_qa, get_last_game_data
+from tools.player_search import player_search_qa, get_last_player_data
+from tools.team_story import team_story_qa, get_last_team_story_data
 
 # Create a basic chat chain for general football discussion
 from langchain_core.prompts import ChatPromptTemplate
@@ -90,6 +91,13 @@ Use it to get player details, stats, headshots, social media links, or an info c
 Examples: "Tell me about Brock Purdy", "Who is player number 97?", "Show me Nick Bosa's info card", "Get Deebo Samuel's stats", "Does Kalia Davis have an Instagram?"
 Returns text summary and potentially visual card data.""",
         func=player_search_qa
+    ),
+    Tool.from_function(
+        name="Team News Search",
+        description="""Use for questions about recent 49ers news, articles, summaries, or specific topics like 'draft' or 'roster moves'. 
+Examples: 'What's the latest team news?', 'Summarize recent articles about the draft', 'Any news about the offensive line?'
+Returns text summary and potentially structured article data.""",
+        func=team_story_qa
     ),
     Tool.from_function(
         name="Game Recap",

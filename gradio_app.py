@@ -11,6 +11,7 @@ from gradio_llm import llm
 import gradio_utils
 from components.game_recap_component import create_game_recap_component
 from components.player_card_component import create_player_card_component
+from components.team_story_component import create_team_story_component
 
 # Import the Gradio-compatible agent instead of the original agent
 import gradio_agent
@@ -19,6 +20,7 @@ from gradio_agent import generate_response
 # Import cache getter functions
 from tools.game_recap import get_last_game_data
 from tools.player_search import get_last_player_data
+from tools.team_story import get_last_team_story_data
 
 # Define CSS directly
 css = """
@@ -286,20 +288,18 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
     gr.Markdown("# 🏈 49ers FanAI Hub")
 
     # --- Component Display Area --- #
-    # Debug Textbox (Temporary)
-    debug_textbox = gr.Textbox(label="Debug Player Data", visible=True, interactive=False)
-    # Player card display (initially hidden)
-    player_card_display = gr.HTML(visible=False)
-    # Game recap display (initially hidden)
-    game_recap_display = gr.HTML(visible=False)
+    # REMOVED Unused/Redundant Component Placeholders:
+    # debug_textbox = gr.Textbox(label="Debug Player Data", visible=True, interactive=False)
+    # player_card_display = gr.HTML(visible=False)
+    # game_recap_display = gr.HTML(visible=False)
 
-    # Chat interface
+    # Chat interface - Components will be added directly here
     chatbot = gr.Chatbot(
         # value=state.get_chat_history(), # Let Gradio manage history display directly
         height=500,
         show_label=False,
         elem_id="chatbot",
-        # type="messages", # Default type often works better
+        # type="messages", # Using default tuple format as components are added
         render_markdown=True
     )
 
@@ -314,76 +314,92 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
 
     # Define a combined function for user input and bot response
     async def process_and_respond(message, history):
-        print(f"History IN: {history}")
-        # Initialize if first interaction
-        if not state.initialized:
-            welcome_msg = await initialize_chat()
-            history = [(None, welcome_msg)] # Start history with welcome message
-            state.initialized = True
-            # Return immediately after initialization to show welcome message
-            # No component updates needed yet
-            return "", history, gr.update(visible=False), gr.update(visible=False), gr.update(value="")
+        """Process user input, get agent response, check for components, and update history."""
+        
+        print(f"process_and_respond: Received message: {message}")
+        # history.append((message, None)) # Add user message placeholder
+        # yield "", history # Show user message immediately
 
-        # Append user message for processing & display
-        history.append((message, None))
+        # Call the agent to get the response (text output + potentially populates cached data)
+        agent_response = generate_response(message, state.session_id)
+        text_output = agent_response.get("output", "Sorry, something went wrong.")
+        metadata = agent_response.get("metadata", {})
+        tools_used = metadata.get("tools_used", ["None"])
+        
+        print(f"process_and_respond: Agent text output: {text_output}")
+        print(f"process_and_respond: Tools used: {tools_used}")
 
-        # Process the message to get bot's text response
-        response_text = await process_message(message)
+        # Initialize response list with the text output
+        response_list = [(message, text_output)]
 
-        # Update last message in history with bot response
-        history[-1] = (message, response_text)
-        print(f"History OUT: {history}")
-
-        # --- Check Caches and Update Components --- #
-        # player_card_html = "" # No longer creating HTML directly here for player
-        player_card_visible = False
-        game_recap_html = ""
-        game_recap_visible = False
-        debug_text_update = gr.update(value="") # Default debug text update
-
-        # Check for Player Data first
-        player_data = get_last_player_data() # Check player cache
+        # Check for specific component data based on tools used or cached data
+        # Important: Call the getter functions *after* generate_response has run
+        
+        # Check for Player Card
+        player_data = get_last_player_data()
         if player_data:
-            print("Player data found in cache, updating debug textbox...")
-            # player_card_html = create_player_card_component(player_data) # Temporarily disable HTML generation
-            player_card_visible = False # Keep HTML hidden for now
-            debug_text_update = gr.update(value=str(player_data)) # Update debug textbox instead
-        else:
-            # If no player data, check for Game Data
-            game_data = get_last_game_data() # Check game cache
-            if game_data:
-                print("Game data found in cache, creating recap...")
-                game_recap_html = create_game_recap_component(game_data)
-                game_recap_visible = True
-            # No player data found, ensure debug text is cleared
-            debug_text_update = gr.update(value="")
+            print(f"process_and_respond: Found player data: {player_data}")
+            player_card_component = create_player_card_component(player_data)
+            if player_card_component:
+                response_list.append((None, player_card_component))
+                print("process_and_respond: Added player card component.")
+            else:
+                 print("process_and_respond: Player data found but component creation failed.")
 
-        # Return updates for all relevant components
-        # Note: player_card_display update is temporarily disabled (always hidden)
-        return (
-            "", 
-            history, 
-            debug_text_update, # Update for the debug textbox
-            gr.update(value="", visible=False), # Keep player HTML hidden
-            gr.update(value=game_recap_html, visible=game_recap_visible) # Update game recap as before
-        )
+        # Check for Game Recap
+        game_data = get_last_game_data()
+        if game_data:
+            print(f"process_and_respond: Found game data: {game_data}")
+            game_recap_comp = create_game_recap_component(game_data)
+            if game_recap_comp:
+                response_list.append((None, game_recap_comp))
+                print("process_and_respond: Added game recap component.")
+            else:
+                 print("process_and_respond: Game data found but component creation failed.")
+
+        # Check for Team Story --- NEW --- 
+        team_story_data = get_last_team_story_data()
+        if team_story_data:
+             print(f"process_and_respond: Found team story data: {team_story_data}")
+             team_story_comp = create_team_story_component(team_story_data)
+             if team_story_comp:
+                  response_list.append((None, team_story_comp))
+                  print("process_and_respond: Added team story component.")
+             else:
+                  print("process_and_respond: Team story data found but component creation failed.")
+                 
+        # Update history with all parts of the response (text + components)
+        # Gradio's Chatbot handles lists of (user, assistant) tuples, 
+        # where assistant can be text or a Gradio component.
+        # We replace the last entry (user, None) with the actual response items.
+        
+        # Gradio manages history display; we just return the latest exchange.
+        # The actual history state is managed elsewhere (e.g., Zep, Neo4j history)
+        
+        # Return the combined response list to update the chatbot UI
+        # The first element is user message + assistant text response
+        # Subsequent elements are None + UI component
+        print(f"process_and_respond: Final response list for UI: {response_list}")
+        # Return values suitable for outputs: [msg, chatbot]
+        return "", response_list # Return empty string for msg, list for chatbot
 
     # Set up event handlers with the combined function
     # Ensure outputs list matches the return values of process_and_respond
-    # Added debug_textbox to the outputs list
-    outputs_list = [msg, chatbot, debug_textbox, player_card_display, game_recap_display]
+    # REMOVED redundant components from outputs_list
+    outputs_list = [msg, chatbot]
     msg.submit(process_and_respond, [msg, chatbot], outputs_list)
     submit_btn.click(process_and_respond, [msg, chatbot], outputs_list)
 
     # Add a clear button
     clear_btn = gr.Button("Clear Conversation")
 
-    # Clear function - now needs to clear/hide components including debug box
+    # Clear function - now only needs to clear msg and chatbot
     def clear_chat():
-        return [], gr.update(value=""), gr.update(value="", visible=False), gr.update(value="", visible=False)
+        # Return empty values for msg and chatbot
+        return "", [] 
 
-    # Update clear outputs
-    clear_btn.click(clear_chat, None, [chatbot, debug_textbox, player_card_display, game_recap_display])
+    # Update clear outputs - only need msg and chatbot
+    clear_btn.click(clear_chat, None, [msg, chatbot])
 
 # Launch the app
 if __name__ == "__main__":
