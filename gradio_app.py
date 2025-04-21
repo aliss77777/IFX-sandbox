@@ -303,7 +303,7 @@ with gr.Blocks(title="49ers FanAI Hub", css=css) as demo:
         height=500,
         show_label=False,
         elem_id="chatbot",
-        # type="messages", # Using default tuple format as components are added
+        type="tuples", # this triggers a deprecation warning but OK for now
         render_markdown=True
     )
 
@@ -417,4 +417,4 @@ with gr.Blocks(title="49ers FanAI Hub", css=css) as demo:
 
 # Launch the app
 if __name__ == "__main__":
-    demo.launch(share=True) 
+    demo.launch() 

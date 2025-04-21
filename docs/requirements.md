@@ -371,7 +371,6 @@ ifx-sandbox/
 ├── .github/                # GitHub specific files (e.g., workflows - check if used).
 ├── .gitignore              # Specifies intentionally untracked files that Git should ignore.
 ├── .gradio/                # Gradio cache/temporary files.
-├── .streamlit/             # **OLD?**: Streamlit configuration folder (App uses Gradio).
 ├── components/             # **CRITICAL**: Directory for Gradio UI components.
 │   ├── __init__.py
 │   ├── game_recap_component.py # **CRITICAL**: Component for displaying game recaps.
@@ -407,13 +406,6 @@ ifx-sandbox/
 ├── prompts.py              # **CRITICAL**: System prompts for the agent and LLM chains.
 ├── requirements.txt        # **CRITICAL**: Main Python package dependencies.
 ├── README.md               # Main project README (check if up-to-date vs GRADIO_README).
-├── GRADIO_README.md        # **OLD?**: Specific README for Gradio version? Consolidate/update.
-├── test.ipynb              # **ARCHIVABLE?**: Jupyter notebook for testing (likely outdated).
 ├── __pycache__/            # Python bytecode cache.
 └── .DS_Store               # macOS folder metadata.
 ```
-
-**Notes:**
-*   Files marked **CRITICAL** are essential for the current `gradio_app.py` to run with Player, Game, and Team News search features.
-*   Items marked **OLD?** or **ARCHIVABLE?** are potential candidates for cleanup or removal, depending on whether they are still relevant or have been superseded.
-*   The `data/april_11_multimedia_data_collect/` folder contains various scripts; some may be one-off data collection scripts that are no longer needed now that data is in Neo4j, but the recently moved scraper and CSV are now located here.
