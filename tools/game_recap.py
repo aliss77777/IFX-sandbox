@@ -107,6 +107,7 @@ Instructions:
 5. Keep the tone professional and engaging - like an ESPN or NFL Network broadcast.
 6. Write 2-3 paragraphs maximum.
 7. If the 49ers are one of the teams, focus slightly more on their perspective.
+8. IMPORTANT: Do NOT include any Markdown images, team logos, or links in your text response. Provide text only.
 
 Write your recap:
 """
