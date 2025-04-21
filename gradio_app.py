@@ -103,8 +103,8 @@ button:hover {
 /* Chat Interface */
 .chatbot {
     background-color: #111111;
-    border: 1px solid #333333;
-    border-radius: 10px;
+    border: 1px solid #333333; /* Reverted for Bug 2 */
+    border-radius: 10px; /* Reverted for Bug 2 */
     padding: 20px;
     margin: 20px 0;
 }
@@ -288,7 +288,7 @@ def bot_response(history):
     return history
 
 # Create the Gradio interface
-with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo:
+with gr.Blocks(title="49ers FanAI Hub", css=css) as demo:
     gr.Markdown("# 🏈 49ers FanAI Hub")
 
     # --- Component Display Area --- #

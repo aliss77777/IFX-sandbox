@@ -46,6 +46,14 @@ Your objective is to debug and fix four specific visual glitches in the Gradio a
 3.  **Test CSS Adjustments:** Experiment by commenting out or modifying specific CSS rules related to backgrounds (e.g., the `.video-cell` background) or potentially conflicting styles. Start with the most likely candidates identified in the previous step. *Present proposed CSS changes to the user before applying.*
 4.  **Component Rendering:** If CSS changes don't resolve the issue, investigate how components are layered and updated in `ifx-sandbox/gradio_app.py`. Check if any components are being unnecessarily re-rendered or overlaid in a way that could cause visual artifacts.
 
+    *   **Resolution Status:** Unresolved.
+    *   **Investigation Steps Taken:**
+        1.  Initial attempts focused on component-specific CSS (`game_recap_component.py`), modifying `.video-cell` background and `.game-recap-table` box-shadow based on initial descriptions, but these had no effect on the artifact.
+        2.  User clarified artifact appears as dark, semi-transparent rectangles on the left side of *all* components rendered within the chatbot area (including welcome message, player cards).
+        3.  Modified global CSS (`gradio_app.py`) targeting `.chatbot` border-radius (artifact became square) and then border (artifact persisted).
+        4.  Temporarily removed the `gr.themes.Soft()` theme; the artifact still persisted with the default Gradio theme.
+    *   **Likely Cause:** The artifact seems inherent to the default internal structure/styling of the `gr.Chatbot` component's message rendering, independent of custom CSS or themes. Pinpointing the exact internal element/style would require browser developer tools.
+
 **Bug 3: Game Recap Highlight URL Not Linked**
 1.  **Trace Data Flow:** Follow the data path for game recaps:
     *   How is the agent response handled? Examine the `process_and_respond` function in `ifx-sandbox/gradio_app.py` (around line 319).
@@ -55,12 +63,28 @@ Your objective is to debug and fix four specific visual glitches in the Gradio a
 3.  **Inspect Component Logic:** Re-confirm the logic in `ifx-sandbox/components/game_recap_component.py` within the `create_game_recap_component` function (around line 166). The code `f'<a href="{html.escape(highlight_video_url)}" target="_blank" class="video-link">Watch Highlights</a>' if highlight_video_url else ''` should correctly create the link *if* `highlight_video_url` has a value.
 4.  **Correct Data Path:** If the `highlight_video_url` is missing or incorrect in the data dictionary when the component is updated, the issue lies in the data retrieval (`get_last_game_data`) or agent response processing. Focus on ensuring the correct data field is extracted and passed along the chain. *Present findings and proposed fixes (e.g., adjusting data extraction logic) to the user.*
 
+    *   **Resolution Status:** Resolved (Data Issue).
+    *   **Actions Taken:**
+        1.  Confirmed component logic in `game_recap_component.py` correctly generates the link if `highlight_video_url` is present.
+        2.  Confirmed data flow in `gradio_app.py` passes the `game_data` dictionary to the component update.
+        3.  **User confirmed that the missing link is due to missing `highlight_video_url` data in the source database for some games.** This is a data issue, not a code bug.
+        4.  No code changes were required for this item.
+
 **Bug 4: Extra Team Logos in Game Recap Area**
 1.  **Examine Layout:** In `ifx-sandbox/gradio_app.py`, carefully review the `gr.Blocks()` layout where the `game_recap_html = create_game_recap_component()` is instantiated and placed. (Refer to `debug image 3.png` and `debug image 4.png` for visual examples of the extra logos.)
 2.  **Check for Duplication:** Look for any place where `create_game_recap_component()` might be called unintentionally, or where raw image elements (`gr.Image` or similar) might be rendered near the `game_recap_html` component, potentially using team logo variables.
 3.  **Analyze Update Logic:** Review the `process_and_respond` function in `ifx-sandbox/gradio_app.py`. Ensure that only the intended `game_recap_html` component is being updated with game recap data. Check if any other components related to logos are being updated erroneously within this function.
 4.  **Isolate Rendering:** Temporarily comment out the instantiation or update logic for the main `game_recap_html` component in `gradio_app.py` to see if the extra logos still appear. This will help determine if the logos are coming from the component itself (unlikely based on code review) or from the surrounding layout/logic in `gradio_app.py`. *Inform the user before making temporary changes for testing.*
 5.  **Remove Erroneous Code:** Once the source of the extra logos is identified (likely in `gradio_app.py`), remove the unnecessary rendering code. *Present the identified code and the removal plan to the user.*
+
+    *   **Resolution Status:** Resolved.
+    *   **Actions Taken:**
+        1.  Reviewed `gradio_app.py` layout and `process_and_respond` function; no static logos or incorrect component updates found.
+        2.  **Isolation Test:** Temporarily commented out the addition of `game_recap_comp` in `process_and_respond`. User confirmed extra logos *still* appeared in the text response, indicating they were not from the component itself.
+        3.  **Root Cause Identified:** Found that the agent's final text response (`response['output']` in `gradio_agent.py`) contained Markdown image links (`![...](...)`) for the logos, rendered by the `gr.Chatbot`.
+        4.  **Attempt 1 (Tool Prompt):** Modified the `GAME_RECAP_TEMPLATE` in `tools/game_recap.py` to instruct the LLM generating the recap text not to include images. This failed; the agent LLM still added logos to the final answer.
+        5.  **Attempt 2 (Agent Prompt):** Modified the main `AGENT_SYSTEM_PROMPT` in `prompts.py` to add explicit instructions for the agent: "When you use a tool that generates a visual component... your final text answer should *only* contain the summary text. Do NOT include Markdown for images... The visual component will be displayed separately."
+        6.  User confirmed this resolved the issue: text recap appears without logos, and the visual component appears correctly below.
 
 ## Failure Condition
 If you are unable to complete any step after 3 attempts, immediately halt the process and consult with the user on how to continue.

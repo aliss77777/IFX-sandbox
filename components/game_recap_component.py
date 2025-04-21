@@ -64,7 +64,7 @@ def create_game_recap_component(game_data=None):
                 border-radius: 8px;
                 overflow: hidden;
                 margin: 20px 0;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Reverted: Uncommented for Bug 2 re-evaluation */
             }}
             
             .team-cell {{
@@ -115,7 +115,7 @@ def create_game_recap_component(game_data=None):
             }}
             
             .video-cell {{
-                background: #ffffff; /* replaced the gradient with solid white */
+                background: #ffffff; /* Reverted back to solid white */
                 color: #333;         /* changed from white to a darker color for visibility */
                 padding: 20px;
                 text-align: center;
