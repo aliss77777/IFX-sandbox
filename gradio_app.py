@@ -198,7 +198,8 @@ async def initialize_chat():
         state.add_message("assistant", welcome_message)
         state.initialized = True
         
-        return welcome_message
+        # Return the welcome message in the format expected by Chatbot
+        return [[None, welcome_message]]
         
     except Exception as e:
         import traceback
@@ -410,6 +411,9 @@ with gr.Blocks(title="49ers FanAI Hub", theme=gr.themes.Soft(), css=css) as demo
 
     # Update clear outputs - only need msg and chatbot
     clear_btn.click(clear_chat, None, [msg, chatbot])
+
+    # Trigger initialization function on app load
+    demo.load(initialize_chat, inputs=None, outputs=chatbot)
 
 # Launch the app
 if __name__ == "__main__":
