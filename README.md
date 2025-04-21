@@ -1,9 +1,13 @@
 ---
-title: ifx-sandbox
-app_file: gradio_app.py
+title: IFX-sandbox
+emoji: 🏈
+colorFrom: red
+colorTo: gray
 sdk: gradio
-sdk_version: 5.24.0
+app_file: gradio_app.py
+pinned: false
 ---
+
 # 49ers FanAI Hub - Gradio Version
 
 This is a Gradio-based chatbot application that provides information about the San Francisco 49ers, players, games, and fans. The application uses LangChain, Neo4j, and Zep for memory management.
