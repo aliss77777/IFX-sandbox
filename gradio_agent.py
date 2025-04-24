@@ -131,13 +131,13 @@ Do NOT use for any 49ers-specific questions.""",
     )
 ]
 
-session_id = "241b3478c7634492abee9f178b5341cb"
+memory_session_id = "241b3478c7634492abee9f178b5341cb"
 
 # Create the memory manager
 def get_memory(session_id):
     """Get the chat history from Zep for the given session"""
     return ZepCloudChatMessageHistory(
-        session_id=session_id,
+        session_id=memory_session_id,
         api_key=os.environ.get("ZEP_API_KEY")
         # No memory_type parameter
     )
@@ -169,7 +169,8 @@ def initialize_memory_from_zep(session_id):
     try:
         # Get history from Zep
         zep = Zep(api_key=os.environ.get("ZEP_API_KEY"))
-        memory = zep.memory.get(session_id=session_id)
+        print(f"Attempting to get memory for hardcoded session ID: {memory_session_id}")
+        memory = zep.memory.get(session_id=memory_session_id)
         
         # Create a conversation memory with the history
         conversation_memory = ConversationBufferMemory(
@@ -178,7 +179,7 @@ def initialize_memory_from_zep(session_id):
         )
         
         if memory and memory.messages:
-            print(f"Loading {len(memory.messages)} messages from Zep for session {session_id}")
+            print(f"Loading {len(memory.messages)} messages from Zep for Casual Fan persona")
             
             # Add messages to the conversation memory
             for msg in memory.messages:
