@@ -6,6 +6,7 @@ import os
 import json
 from dotenv import load_dotenv
 from zep_cloud.client import Zep
+from langchain_core.messages import HumanMessage, AIMessage
 
 # Load environment variables from .env file
 load_dotenv()
@@ -40,6 +41,34 @@ def retrieve_chat_history(session_id):
     except Exception as e:
         print(f"Error retrieving chat history: {e}")
         return None
+
+def get_zep_history(session_id):
+    """
+    Retrieve chat history directly from Zep using the client.
+    
+    Args:
+        session_id (str): The session ID to retrieve history for
+        
+    Returns:
+        list: Formatted messages for LangChain
+    """
+    try:
+        zep = Zep(api_key=os.environ.get("ZEP_API_KEY"))
+        memory = zep.memory.get(session_id=session_id)
+        
+        # Convert Zep messages to LangChain format
+        formatted_messages = []
+        if memory and memory.messages:
+            for msg in memory.messages:
+                if msg.role_type == "user":
+                    formatted_messages.append(HumanMessage(content=msg.content))
+                elif msg.role_type == "assistant":
+                    formatted_messages.append(AIMessage(content=msg.content))
+        
+        return formatted_messages
+    except Exception as e:
+        print(f"Error retrieving Zep history: {e}")
+        return []
 
 def main():
     print(f"Retrieving chat history for session ID: {SESSION_ID}")

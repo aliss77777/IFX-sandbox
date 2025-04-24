@@ -6,10 +6,14 @@ import os
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_core.prompts import PromptTemplate
 from langchain.tools import Tool
+from langchain_community.chat_message_histories import ZepCloudChatMessageHistory
+from langchain_community.memory.zep_cloud_memory import ZepCloudMemory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_neo4j import Neo4jChatMessageHistory
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain.memory import ConversationBufferMemory
 
 # Import Gradio-specific modules directly
 from gradio_llm import llm
@@ -38,6 +42,9 @@ chat_prompt = ChatPromptTemplate.from_messages(
 # Create a non-streaming LLM for the agent
 from langchain_openai import ChatOpenAI
 
+# Import Zep client
+from zep_cloud.client import Zep
+
 # Get API key from environment only (no Streamlit)
 def get_api_key(key_name):
     """Get API key from environment variables only (no Streamlit)"""
@@ -58,11 +65,12 @@ if not OPENAI_API_KEY:
     else:
         raise ValueError(f"OPENAI_API_KEY not found in environment variables")
 
+
 agent_llm = ChatOpenAI(
     openai_api_key=OPENAI_API_KEY,
     model=OPENAI_MODEL,
     temperature=0.1,
-    streaming=True  # Enable streaming for agent
+    streaming=True,  # Enable streaming for agent
 )
 
 movie_chat = chat_prompt | llm | StrOutputParser()
@@ -123,10 +131,16 @@ Do NOT use for any 49ers-specific questions.""",
     )
 ]
 
+session_id = "241b3478c7634492abee9f178b5341cb"
+
 # Create the memory manager
 def get_memory(session_id):
-    """Get the chat history from Neo4j for the given session"""
-    return Neo4jChatMessageHistory(session_id=session_id, graph=graph)
+    """Get the chat history from Zep for the given session"""
+    return ZepCloudChatMessageHistory(
+        session_id=session_id,
+        api_key=os.environ.get("ZEP_API_KEY")
+        # No memory_type parameter
+    )
 
 # Create the agent prompt
 agent_prompt = PromptTemplate.from_template(AGENT_SYSTEM_PROMPT)
@@ -149,6 +163,43 @@ chat_agent = RunnableWithMessageHistory(
     history_messages_key="chat_history",
 )
 
+# Create a function to initialize memory with Zep history
+def initialize_memory_from_zep(session_id):
+    """Initialize a LangChain memory object with history from Zep"""
+    try:
+        # Get history from Zep
+        zep = Zep(api_key=os.environ.get("ZEP_API_KEY"))
+        memory = zep.memory.get(session_id=session_id)
+        
+        # Create a conversation memory with the history
+        conversation_memory = ConversationBufferMemory(
+            memory_key="chat_history",
+            return_messages=True
+        )
+        
+        if memory and memory.messages:
+            print(f"Loading {len(memory.messages)} messages from Zep for session {session_id}")
+            
+            # Add messages to the conversation memory
+            for msg in memory.messages:
+                if msg.role_type == "user":
+                    conversation_memory.chat_memory.add_user_message(msg.content)
+                elif msg.role_type == "assistant":
+                    conversation_memory.chat_memory.add_ai_message(msg.content)
+            
+            print("Successfully loaded message history from Zep")
+        else:
+            print("No message history found in Zep, starting fresh")
+            
+        return conversation_memory
+    except Exception as e:
+        print(f"Error loading history from Zep: {e}")
+        # Return empty memory if there's an error
+        return ConversationBufferMemory(
+            memory_key="chat_history",
+            return_messages=True
+        )
+
 def generate_response(user_input, session_id=None):
     """
     Generate a response using the agent and tools
@@ -167,17 +218,27 @@ def generate_response(user_input, session_id=None):
     if not session_id:
         session_id = get_session_id()
         print(f'Generated new session ID: {session_id}')
-        
+    
+    # Initialize memory with Zep history
+    memory = initialize_memory_from_zep(session_id)
+    
+    # Create an agent executor with memory for this session
+    session_agent_executor = AgentExecutor(
+        agent=agent,
+        tools=tools,
+        verbose=True,
+        memory=memory,  # Use the memory we initialized
+        handle_parsing_errors=True,
+        max_iterations=5
+    )
+    
     # Add retry logic
     max_retries = 3
     for attempt in range(max_retries):
         try:
-            print('Invoking chat_agent...')
-            response = chat_agent.invoke(
-                {"input": user_input},
-                {"configurable": {"session_id": session_id}},
-            )
-            print(f'Raw response from chat_agent: {response}')
+            print('Invoking session agent executor...')
+            # The agent will now have access to the loaded history
+            response = session_agent_executor.invoke({"input": user_input})
             
             # Extract the output and format it for Streamlit
             if isinstance(response, dict):
