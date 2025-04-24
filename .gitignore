@@ -63,3 +63,6 @@ logs/
 **/niners_output/game_summary_embeddings.csv
 **/niners_output/schedule_with_result_embedding.csv
 **/niners_output/schedule_with_result_embedding.gsheet
+
+Utilility files
+z_utils/
