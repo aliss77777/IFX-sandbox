@@ -64,5 +64,5 @@ logs/
 **/niners_output/schedule_with_result_embedding.csv
 **/niners_output/schedule_with_result_embedding.gsheet
 
-Utilility files
+# Utility files
 z_utils/
