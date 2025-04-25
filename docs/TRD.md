@@ -202,84 +202,7 @@ Each component follows a modular design pattern:
 | Deployment | Set up GitHub+HF Spaces config for clean deployment cycle |
 | CSS | Embed or reference the custom stylesheet for theme |
 
-## 10. Prompt Template for AI SWE Instructions
 
-When requesting a new AI development task, execute in two phases: planning and coding. This structured approach ensures thoughtful implementation and reduces errors.
-
-### Phase 1: Planning
-The user supplies the instructions below and asks the AI to develop a comprehensive plan before any code is written. This plan should include:
-- Data flow diagrams
-- Component structure
-- Implementation strategy
-- Potential risks and mitigations
-- Test approach
-
-### Phase 2: Execution
-Once the plan has been approved, the AI proceeds with implementation, making changes in a slow and careful manner in line with the First Principles below.
-
-### Context Template
-
-```
-## Context
-
-You are an expert at UI/UX design and software front-end development and architecture. You are allowed to NOT know an answer. You are allowed to be uncertain. You are allowed to disagree with your task. If any of these things happen, halt your current process and notify the user immediately. You should not hallucinate. If you are unable to remember information, you are allowed to look it up again.
-
-You are not allowed to hallucinate. You may only use data that exists in the files specified. You are not allowed to create new data if it does not exist in those files.
-
-You MUST plan extensively before each function call, and reflect extensively on the outcomes of the previous function calls. DO NOT do this entire process by making function calls only, as this can impair your ability to solve the problem and think insightfully.
-
-When writing code, your focus should be on creating new functionality that builds on the existing code base without breaking things that are already working. If you need to rewrite how existing code works in order to develop a new feature, please check your work carefully, and also pause your work and tell me (the human) for review before going ahead. We want to avoid software regression as much as possible.
-
-I WILL REPEAT, WHEN UPDATING EXISTING CODE FILES, PLEASE DO NOT OVERWRITE EXISTING CODE, PLEASE ADD OR MODIFY COMPONENTS TO ALIGN WITH THE NEW FUNCTIONALITY. THIS INCLUDES SMALL DETAILS LIKE FUNCTION ARGUMENTS AND LIBRARY IMPORTS. REGRESSIONS IN THESE AREAS HAVE CAUSED UNNECESSARY DELAYS AND WE WANT TO AVOID THEM GOING FORWARD.
-
-When you need to modify existing code (in accordance with the instruction above), please present your recommendation to the user before taking action, and explain your rationale.
-
-If the data files and code you need to use as inputs to complete your task do not conform to the structure you expected based on the instructions, please pause your work and ask the human for review and guidance on how to proceed.
-
-If you have difficulty finding mission critical updates in the codebase (e.g. .env files, data files) ask the user for help in finding the path and directory.
-```
-
-### First Principles for AI Development
-
-| Principle | Description | Example |
-|-----------|-------------|---------|
-| Code Locality | Keep related code together for improved readability and maintenance | Placing event handlers immediately after their components |
-| Development Workflow | Follow a structured pattern: read instructions → develop plan → review with user → execute after approval | Presented radio button implementation plan before making changes |
-| Minimal Surgical Changes | Make the smallest possible changes to achieve the goal with minimal risk | Added only the necessary code for the radio button without modifying existing functionality |
-| Rigorous Testing | Test changes immediately after implementation to catch issues early | Ran the application after adding the radio button to verify it works |
-| Clear Documentation | Document design decisions and patterns | Added comments explaining why global variables are declared before functions that use them |
-| Consistent Logging | Use consistent prefixes for log messages to aid debugging | Added prefixes like "[PERSONA CHANGE]" and "[MEMORY LOAD]" |
-| Sequential Approval Workflow | Present detailed plans, wait for explicit approval on each component, implement one change at a time, and provide clear explanations of data flows | Explained how the persona instructions flow from selection to prompt generation before implementing changes |
-| Surgical Diff Principle | Show only the specific changes being made rather than reprinting entire code blocks | Highlighted just the 2 key modifications to implement personalization rather than presenting a large code block |
-| Progressive Enhancement | Layer new functionality on top of existing code rather than replacing it; design features to work even if parts fail | Adding persona-specific instructions while maintaining default behavior when persona selection is unavailable |
-| Documentation In Context | Add inline comments explaining *why* not just *what* code is doing; document edge cases directly in the code | Adding comments explaining persona state management and potential memory retrieval failures |
-| Risk-Based Approval Scaling | Level of user approval should scale proportionately to the risk level of the task - code changes require thorough review; document edits can proceed with less oversight | Implementing a new function in the agent required step-by-step approval, while formatting improvements to markdown files could be completed in a single action |
-
-> **Remember:** *One tiny change → test → commit. Repeat.*
-
-### Instructions [to be updated for each task]
-
-```
-## Instruction Steps (example – update with user input below)
-
-1. Review the player roster which is located from the workspace root at ./niners_players_headshots_with_socials_merged.csv
-2. Review the 2024 game schedule located from the workspace root at ./nfl-2024-san-francisco-49ers-with-results.csv
-3. Review the video highlights located from the workspace root at ./youtube_highlights.csv
-4. Determine which videos are associated with which players and which games.
-5. Verify the ./llm_output directory exists from the workspace root. If it does not, create it.
-6. Create the players_highlights_{unix timestamp}.csv file in the llm_output directory. This is the original player roster with an additional column named "highlights" that represents an array of video URLs associated with that player
-7. Create the games_highlights_{unix_timestamp}.csv file in the llm_output directory. This is the original game schedule csv with an additional column named "highlights" that represents an array of video URLs associated with that game
-8. If any video(s) is neither associated with a player or a game, create a no_associations_{unix_timestamp}.csv file in the llm_output directory. This is a single column of highlights. Each line is a video that is not associated with either a player or a game.
-9. Report your results to me via the completion process.
-
-## Failure Condition
-
-If you are unable to complete any step after 3 attempts, immediately halt the process and consult with the user on how to continue.
-
-## Completion 
-
-1. A markdown file providing a detailed set of instructions to the AI coding agent to execute this workflow as a next step
-2. A list of challenges / potential concerns you have based on the users instructions and the current state of the code base of the app. These challenges will be passed to the AI coding agent along with the markdowns to ensure potential bottlenecks and blockers can be navigated appropriately, INCLUDING HOW YOU PLAN TO AVOID REGRESSION BUGS WHEN IMPLEMENTING NEW COMPONENTS AND FUNCTIONALITY
 
 ## 11. Detailed Work Plan
 
@@ -425,55 +348,6 @@ Based on a review of the existing codebase and requirements, here's a structured
 | Deployment constraints | Test with Hugging Face resource limits early |
 | Memory persistence | Implement simple local fallback if Zep has issues |
 
-## Appendix: Project File Structure
-
-This outlines the main files and directories in the `ifx-sandbox` project, highlighting those critical for the current Gradio application and noting potentially outdated ones.
-
-```
-ifx-sandbox/
-├── .env                    # **CRITICAL**: API keys and environment variables (OpenAI, Neo4j, Zep etc.)
-├── .env.example            # Example environment file structure.
-├── .git/                   # Git repository data.
-├── .github/                # GitHub specific files (e.g., workflows - check if used).
-├── .gitignore              # Specifies intentionally untracked files that Git should ignore.
-├── .gradio/                # Gradio cache/temporary files.
-├── components/             # **CRITICAL**: Directory for Gradio UI components.
-│   ├── __init__.py
-│   ├── game_recap_component.py # **CRITICAL**: Component for displaying game recaps.
-│   ├── player_card_component.py # **CRITICAL**: Component for displaying player cards.
-│   └── team_story_component.py  # **CRITICAL**: Component for displaying team news stories.
-├── data/
-│   └── april_11_multimedia_data_collect/ # Contains various data ingestion scripts.
-│       ├── team_news_articles.csv      # **CRITICAL DATA**: Source for team news uploads.
-│       ├── team_news_scraper.py        # Script to scrape team news (moved here).
-│       ├── get_player_socials.py       # **ARCHIVABLE?**: One-off data collection?
-│       ├── player_headshots.py         # **ARCHIVABLE?**: One-off data collection?
-│       └── get_youtube_playlist_videos.py # **ARCHIVABLE?**: One-off data collection?
-│       └── ... (other potential one-off scripts)
-├── docs/
-│   ├── requirements.md       # **CRITICAL DOC**: This file (Product/Technical Requirements).
-│   └── Phase 1/
-│       └── Task 1.2.3 Team Search Implementation.md # **CRITICAL DOC**: Implementation plan/notes for recent task.
-│       └── ... (Other phase/task docs - check relevance)
-├── tools/
-│   ├── __init__.py
-│   ├── cypher.py             # **CRITICAL**: Tool for generic Cypher QA.
-│   ├── game_recap.py         # **CRITICAL**: Tool logic for game recaps.
-│   ├── neo4j_article_uploader.py # Tool to upload team news CSV (depends on data folder).
-│   ├── player_search.py      # **CRITICAL**: Tool logic for player search.
-│   ├── team_story.py         # **CRITICAL**: Tool logic for team news search.
-│   └── vector.py             # **CRITICAL?**: Tool for game summary search (check if used by agent).
-├── gradio_app.py           # **CRITICAL**: Main Gradio application entry point and UI definition.
-├── gradio_agent.py         # **CRITICAL**: LangChain agent definition, tool integration, response generation.
-├── gradio_graph.py         # **CRITICAL**: Neo4j graph connection setup for Gradio.
-├── gradio_llm.py           # **CRITICAL**: OpenAI LLM setup for Gradio.
-├── gradio_requirements.txt # **OLD?**: Specific Gradio requirements? Check if needed alongside main requirements.txt.
-├── gradio_utils.py         # **CRITICAL**: Utility functions for the Gradio app (e.g., session IDs).
-├── prompts.py              # **CRITICAL**: System prompts for the agent and LLM chains.
-├── requirements.txt        # **CRITICAL**: Main Python package dependencies.
-├── README.md               # Main project README (check if up-to-date vs GRADIO_README).
-├── __pycache__/            # Python bytecode cache.
-└── .DS_Store               # macOS folder metadata.
 ```## 11. Prompt Template for AI SWE Instructions
 
 When requesting a new AI development task, execute in two phases: planning and coding. This structured approach ensures thoughtful implementation and reduces errors.
@@ -551,5 +425,58 @@ If you are unable to complete any step after 3 attempts, immediately halt the pr
 
 1. A markdown file providing a detailed set of instructions to the AI coding agent to execute this workflow as a next step
 2. A list of challenges / potential concerns you have based on the users instructions and the current state of the code base of the app. These challenges will be passed to the AI coding agent along with the markdowns to ensure potential bottlenecks and blockers can be navigated appropriately, INCLUDING HOW YOU PLAN TO AVOID REGRESSION BUGS WHEN IMPLEMENTING NEW COMPONENTS AND FUNCTIONALITY
+
+
+## Appendix: Project File Structure
+
+This outlines the main files and directories in the `ifx-sandbox` project, highlighting those critical for the current Gradio application and noting potentially outdated ones.
+
+```
+ifx-sandbox/
+├── .env                    # **CRITICAL**: API keys and environment variables (OpenAI, Neo4j, Zep etc.)
+├── .env.example            # Example environment file structure.
+├── .git/                   # Git repository data.
+├── .github/                # GitHub specific files (e.g., workflows - check if used).
+├── .gitignore              # Specifies intentionally untracked files that Git should ignore.
+├── .gradio/                # Gradio cache/temporary files.
+├── components/             # **CRITICAL**: Directory for Gradio UI components.
+│   ├── __init__.py
+│   ├── game_recap_component.py # **CRITICAL**: Component for displaying game recaps.
+│   ├── player_card_component.py # **CRITICAL**: Component for displaying player cards.
+│   └── team_story_component.py  # **CRITICAL**: Component for displaying team news stories.
+├── data/
+│   └── april_11_multimedia_data_collect/ # Contains various data ingestion scripts.
+│       ├── team_news_articles.csv      # **CRITICAL DATA**: Source for team news uploads.
+│       ├── team_news_scraper.py        # Script to scrape team news (moved here).
+│       ├── get_player_socials.py       # **ARCHIVABLE?**: One-off data collection?
+│       ├── player_headshots.py         # **ARCHIVABLE?**: One-off data collection?
+│       └── get_youtube_playlist_videos.py # **ARCHIVABLE?**: One-off data collection?
+│       └── ... (other potential one-off scripts)
+├── docs/
+│   ├── requirements.md       # **CRITICAL DOC**: This file (Product/Technical Requirements).
+│   └── Phase 1/
+│       └── Task 1.2.3 Team Search Implementation.md # **CRITICAL DOC**: Implementation plan/notes for recent task.
+│       └── ... (Other phase/task docs - check relevance)
+├── tools/
+│   ├── __init__.py
+│   ├── cypher.py             # **CRITICAL**: Tool for generic Cypher QA.
+│   ├── game_recap.py         # **CRITICAL**: Tool logic for game recaps.
+│   ├── neo4j_article_uploader.py # Tool to upload team news CSV (depends on data folder).
+│   ├── player_search.py      # **CRITICAL**: Tool logic for player search.
+│   ├── team_story.py         # **CRITICAL**: Tool logic for team news search.
+│   └── vector.py             # **CRITICAL?**: Tool for game summary search (check if used by agent).
+├── gradio_app.py           # **CRITICAL**: Main Gradio application entry point and UI definition.
+├── gradio_agent.py         # **CRITICAL**: LangChain agent definition, tool integration, response generation.
+├── gradio_graph.py         # **CRITICAL**: Neo4j graph connection setup for Gradio.
+├── gradio_llm.py           # **CRITICAL**: OpenAI LLM setup for Gradio.
+├── gradio_requirements.txt # **OLD?**: Specific Gradio requirements? Check if needed alongside main requirements.txt.
+├── gradio_utils.py         # **CRITICAL**: Utility functions for the Gradio app (e.g., session IDs).
+├── prompts.py              # **CRITICAL**: System prompts for the agent and LLM chains.
+├── requirements.txt        # **CRITICAL**: Main Python package dependencies.
+├── README.md               # Main project README (check if up-to-date vs GRADIO_README).
+├── __pycache__/            # Python bytecode cache.
+└── .DS_Store               # macOS folder metadata.
+
+
 
 
