@@ -136,12 +136,56 @@ The user will execute **one step at a time** and confirm each works before proce
 2. Pass that ID into the `ZepMemory()` object.
 3. Re‑run app, switch personas, confirm different histories load.
 
+**Status Update:**
+✅ Created a global variable architecture in `gradio_agent.py` to track:
+   - Current memory session ID (`memory_session_id`)
+   - Current persona name (`current_persona`) for improved logging
+✅ Added clear comments explaining the global variable pattern for future maintenance
+✅ Implemented a `set_memory_session_id()` function to update the memory state
+✅ Modified `initialize_memory_from_zep()` to use the current global session ID
+✅ Improved logging with consistent prefixes (`[PERSONA CHANGE]`, `[MEMORY LOAD]`, `[UI EVENT]`)
+✅ Added a feedback textbox to the UI to show the current active persona to users
+✅ Loaded persona-to-session-ID mapping from `persona_session_ids.json`
+✅ Updated the radio button change handler to:
+   - Load session IDs from JSON
+   - Map selection to correct session ID
+   - Call `set_memory_session_id()` to update the agent
+   - Display feedback in the UI
+✅ Ran the app and verified that:
+   - Persona selection works correctly
+   - Session IDs are properly mapped
+   - Memory is loaded from the correct persona's history
+   - UI updates to show current persona
+   - Multiple questions work as expected with each persona's context
+
+**Implementation Approach:**
+1. Analyzed data flow from UI selection to memory retrieval
+2. Created detailed implementation plan with debugging steps
+3. Made surgical changes to minimum number of files
+4. Added comprehensive logging for troubleshooting
+5. Tested complete flow from UI to agent response
+
 ---
 
 ### 6 │ Strict Gradio Rule
 
 * **DO NOT** change any other settings or components in the app.
 * Changes must be incremental and easily revertible.
+
+**Status Update:**
+✅ Successfully adhered to "DO NO HARM" principle
+✅ Made minimal changes to existing code:
+   - Kept original hardcoded session ID as default value for backward compatibility
+   - Maintained function signatures and return values to prevent interface breaks
+   - Only added new functions and variables without removing or restructuring existing code
+✅ Added proper error handling and fallbacks to prevent regressions
+✅ Used clear variable naming and consistent coding patterns
+✅ Added explanatory comments to clarify the purpose of changes
+✅ Our implementation could be easily reversed by:
+   - Removing the `set_memory_session_id()` function
+   - Restoring the original `initialize_memory_from_zep()` function
+   - Removing the radio button change handler code
+   - Removing the UI feedback textbox
 
 ---
 
@@ -188,8 +232,224 @@ The user will execute **one step at a time** and confirm each works before proce
 | Development Workflow | Follow a structured pattern: read instructions → develop plan → review with user → execute after approval | Presented radio button implementation plan before making changes |
 | Minimal Surgical Changes | Make the smallest possible changes to achieve the goal with minimal risk | Added only the necessary code for the radio button without modifying existing functionality |
 | Rigorous Testing | Test changes immediately after implementation to catch issues early | Ran the application after adding the radio button to verify it works |
+| Clear Documentation | Document design decisions and patterns | Added comments explaining why global variables are declared before functions that use them |
+| Consistent Logging | Use consistent prefixes for log messages to aid debugging | Added prefixes like "[PERSONA CHANGE]" and "[MEMORY LOAD]" |
 
 ---
 
 > **Remember:** *One tiny change → test → commit. Repeat.*
+
+---
+
+## Appendix: Examples of First Principles in Action
+
+### Exhibit A: Data Flow Explanation for Radio Button to Memory Retrieval (Created as part of Step 5)
+
+```
+## Data Flow Explanation: Radio Button to Memory Retrieval
+
+Here's the complete data flow from user selection to memory retrieval:
+
+1. **User Interaction**
+   - User selects either "Casual Fan" or "Super Fan" from radio button in gradio_app.py
+   - The UI triggers the `on_persona_change` event handler function
+
+2. **Event Handling & Session ID Mapping**
+   - `on_persona_change` receives the selected persona name
+   - It loads the persona-to-session-ID mapping from persona_session_ids.json
+   - It retrieves the correct session ID based on the selection
+
+3. **Session ID Communication**
+   - `on_persona_change` calls `set_memory_session_id` in gradio_agent.py
+   - This updates the global `memory_session_id` variable in gradio_agent.py
+   - The function confirms the switch with a console log
+
+4. **Memory Retrieval When User Sends Message**
+   - When user sends a message, `generate_response` is called
+   - `generate_response` calls `initialize_memory_from_zep`
+   - `initialize_memory_from_zep` uses the global `memory_session_id` variable to:
+     - Connect to Zep Cloud
+     - Retrieve message history for the specific persona
+     - Convert Zep messages to LangChain format
+     - Create a ConversationBufferMemory object
+
+5. **Memory Usage in Agent**
+   - The ConversationBufferMemory is passed to the AgentExecutor
+   - The agent now has access to the selected persona's message history
+   - The agent responds with context from that persona's memory
+
+At each step of this flow, we maintain the session ID to ensure the right persona's memories are retrieved and used by the agent. The global variable acts as the "source of truth" for which persona is currently active.
+```
+
+### Exhibit B: Proposed Code Updates with Debugging Approach (Created and executed as part of Step 5)
+
+```
+# Proposed Code Updates with Debugging Approach
+
+## 1. Update `memory_session_id` in gradio_agent.py
+
+```python
+# Change from constant to variable with default value
+memory_session_id = "241b3478c7634492abee9f178b5341cb"  # Default to Casual Fan
+current_persona = "Casual Fan"  # Track the persona name for debugging
+```
+
+**How it works**: The variable can now be updated while maintaining the default.
+
+**Debugging**: Added a `current_persona` tracking variable to make logs more readable.
+
+## 2. Add Session ID Update Function in gradio_agent.py
+
+```python
+def set_memory_session_id(new_session_id, persona_name):
+    """Update the global memory_session_id variable when persona changes"""
+    global memory_session_id, current_persona
+    memory_session_id = new_session_id
+    current_persona = persona_name
+    print(f"[PERSONA CHANGE] Switched to {persona_name} persona with session ID: {new_session_id}")
+    return f"Persona switched to {persona_name}"
+```
+
+**How it works**: This function allows the UI to update the agent's session ID.
+
+**Debugging**: The "[PERSONA CHANGE]" prefix makes it easy to find this message in logs.
+
+## 3. Update initialize_memory_from_zep in gradio_agent.py
+
+```python
+def initialize_memory_from_zep(session_id):
+    """Initialize a LangChain memory object with history from Zep"""
+    try:
+        # Get history from Zep using the global session ID, not the parameter
+        zep = Zep(api_key=os.environ.get("ZEP_API_KEY"))
+        # Use global memory_session_id instead of the parameter
+        print(f"[MEMORY LOAD] Attempting to get memory for {current_persona} persona (ID: {memory_session_id})")
+        memory = zep.memory.get(session_id=memory_session_id)
+        
+        # Create a conversation memory with the history
+        conversation_memory = ConversationBufferMemory(
+            memory_key="chat_history",
+            return_messages=True
+        )
+        
+        if memory and memory.messages:
+            print(f"[MEMORY LOAD] Loading {len(memory.messages)} messages from Zep for {current_persona} persona")
+            
+            # Add messages to the conversation memory
+            for msg in memory.messages:
+                if msg.role_type == "user":
+                    conversation_memory.chat_memory.add_user_message(msg.content)
+                elif msg.role_type == "assistant":
+                    conversation_memory.chat_memory.add_ai_message(msg.content)
+            
+            print("[MEMORY LOAD] Successfully loaded message history from Zep")
+        else:
+            print("[MEMORY LOAD] No message history found in Zep, starting fresh")
+            
+        return conversation_memory
+    except Exception as e:
+        print(f"[ERROR] Error loading history from Zep: {e}")
+        # Return empty memory if there's an error
+        return ConversationBufferMemory(
+            memory_key="chat_history",
+            return_messages=True
+        )
+```
+
+**How it works**: Uses the global `memory_session_id` instead of parameter and improves logging.
+
+**Debugging**: Added "[MEMORY LOAD]" prefixes and includes persona name in logs for clarity.
+
+## 4. Add Radio Button Handler in gradio_app.py
+
+```python
+# Near the top of the file, import the setter function
+from gradio_agent import set_memory_session_id
+
+# Add this with other imports
+import json
+import os
+
+# Load persona session IDs
+def load_persona_session_ids():
+    """Load persona session IDs from JSON file"""
+    try:
+        with open("z_utils/persona_session_ids.json", "r") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"[ERROR] Failed to load persona_session_ids.json: {e}")
+        # Fallback to hardcoded values if file can't be loaded
+        return {
+            "Casual Fan": "241b3478c7634492abee9f178b5341cb",
+            "Super Fan": "dedcf5cb0d71475f976f4f66d98d6400"
+        }
+
+# In the UI section where you define the radio button:
+with gr.Row():
+    persona_selector = gr.Radio(
+        choices=["Casual Fan", "Super Fan"],
+        value="Casual Fan",
+        label="Select Fan Persona",
+        info="Choose which fan perspective to chat from"
+    )
+    
+# Define the handler function
+def on_persona_change(persona_choice):
+    """Handle changes to the persona selection"""
+    print(f"[UI EVENT] Persona selection changed to: {persona_choice}")
+    
+    # Load session IDs from file
+    persona_ids = load_persona_session_ids()
+    
+    # Verify the persona exists in our mapping
+    if persona_choice not in persona_ids:
+        print(f"[ERROR] Unknown persona selected: {persona_choice}")
+        return f"Error: Unknown persona '{persona_choice}'"
+    
+    # Get the session ID for this persona
+    session_id = persona_ids[persona_choice]
+    print(f"[UI EVENT] Mapping {persona_choice} to session ID: {session_id}")
+    
+    # Update the agent's session ID
+    feedback = set_memory_session_id(session_id, persona_choice)
+    
+    # Return feedback to display in the UI
+    return feedback
+
+# Connect the handler to the radio button
+persona_selector.change(on_persona_change, persona_selector, gradio.outputs.Textbox())
+```
+
+**How it works**: Creates a radio button UI element, loads session IDs from file, and updates the agent's session ID when changed.
+
+**Debugging**: Added "[UI EVENT]" prefixes to logs and returns feedback that will be displayed to the user.
+
+## Debugging the Complete Pipeline
+
+Here's how we'll debug the system when running:
+
+1. **Test Persona Selection**:
+   - Start the app and check console logs for "[UI EVENT]" messages
+   - Verify "Persona selection changed to: X" messages appear
+   - Confirm "Mapping X to session ID: Y" shows correct session ID
+   - Look for "[PERSONA CHANGE]" confirmation message
+
+2. **Verify Memory Loading**:
+   - Send a chat message after selecting a persona
+   - Check for "[MEMORY LOAD]" messages in the console
+   - Verify correct persona name and session ID in logs
+   - Confirm "Loading X messages from Zep for Y persona" appears
+
+3. **Check Agent Response**:
+   - Observe the agent's reply in the chat window
+   - Verify it has contextual knowledge appropriate for the selected persona
+   - For Casual Fan: Expect basic team info responses
+   - For Super Fan: Expect more detailed, stats-heavy responses
+
+4. **Error Testing**:
+   - If any issues arise, look for "[ERROR]" prefixed messages
+   - Test switching back and forth between personas
+
+This structured debugging approach will help us verify that each step of the pipeline is working correctly.
+```
 

@@ -131,7 +131,20 @@ Do NOT use for any 49ers-specific questions.""",
     )
 ]
 
-memory_session_id = "241b3478c7634492abee9f178b5341cb"
+# Global variables are declared before functions that use them
+# This creates clarity about shared state and follows the pattern:
+# "declare shared state first, then define functions that interact with it"
+# Change from constant to variable with default value
+memory_session_id = "241b3478c7634492abee9f178b5341cb"  # Default to Casual Fan
+current_persona = "Casual Fan"  # Track the persona name for debugging
+
+def set_memory_session_id(new_session_id, persona_name):
+    """Update the global memory_session_id variable when persona changes"""
+    global memory_session_id, current_persona
+    memory_session_id = new_session_id
+    current_persona = persona_name
+    print(f"[PERSONA CHANGE] Switched to {persona_name} persona with session ID: {new_session_id}")
+    return f"Persona switched to {persona_name}"
 
 # Create the memory manager
 def get_memory(session_id):
@@ -167,9 +180,10 @@ chat_agent = RunnableWithMessageHistory(
 def initialize_memory_from_zep(session_id):
     """Initialize a LangChain memory object with history from Zep"""
     try:
-        # Get history from Zep
+        # Get history from Zep using the global session ID, not the parameter
         zep = Zep(api_key=os.environ.get("ZEP_API_KEY"))
-        print(f"Attempting to get memory for hardcoded session ID: {memory_session_id}")
+        # Use global memory_session_id instead of the parameter
+        print(f"[MEMORY LOAD] Attempting to get memory for {current_persona} persona (ID: {memory_session_id})")
         memory = zep.memory.get(session_id=memory_session_id)
         
         # Create a conversation memory with the history
@@ -179,7 +193,7 @@ def initialize_memory_from_zep(session_id):
         )
         
         if memory and memory.messages:
-            print(f"Loading {len(memory.messages)} messages from Zep for Casual Fan persona")
+            print(f"[MEMORY LOAD] Loading {len(memory.messages)} messages from Zep for {current_persona} persona")
             
             # Add messages to the conversation memory
             for msg in memory.messages:
@@ -188,13 +202,13 @@ def initialize_memory_from_zep(session_id):
                 elif msg.role_type == "assistant":
                     conversation_memory.chat_memory.add_ai_message(msg.content)
             
-            print("Successfully loaded message history from Zep")
+            print("[MEMORY LOAD] Successfully loaded message history from Zep")
         else:
-            print("No message history found in Zep, starting fresh")
+            print("[MEMORY LOAD] No message history found in Zep, starting fresh")
             
         return conversation_memory
     except Exception as e:
-        print(f"Error loading history from Zep: {e}")
+        print(f"[ERROR] Error loading history from Zep: {e}")
         # Return empty memory if there's an error
         return ConversationBufferMemory(
             memory_key="chat_history",

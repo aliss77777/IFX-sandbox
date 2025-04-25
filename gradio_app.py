@@ -1,6 +1,7 @@
 import os
 import uuid
 import asyncio
+import json
 import gradio as gr
 from zep_cloud.client import AsyncZep
 from zep_cloud.types import Message
@@ -15,7 +16,7 @@ from components.team_story_component import create_team_story_component
 
 # Import the Gradio-compatible agent instead of the original agent
 import gradio_agent
-from gradio_agent import generate_response
+from gradio_agent import generate_response, set_memory_session_id
 
 # Import cache getter functions
 from tools.game_recap import get_last_game_data
@@ -24,6 +25,20 @@ from tools.team_story import get_last_team_story_data
 
 # --- IMPORTANT: Need access to the lists themselves to clear them --- #
 from tools import game_recap, player_search, team_story
+
+# Load persona session IDs
+def load_persona_session_ids():
+    """Load persona session IDs from JSON file"""
+    try:
+        with open("z_utils/persona_session_ids.json", "r") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"[ERROR] Failed to load persona_session_ids.json: {e}")
+        # Fallback to hardcoded values if file can't be loaded
+        return {
+            "Casual Fan": "241b3478c7634492abee9f178b5341cb",
+            "Super Fan": "dedcf5cb0d71475f976f4f66d98d6400"
+        }
 
 # Define CSS directly
 css = """
@@ -322,16 +337,39 @@ with gr.Blocks(title="49ers FanAI Hub", css=css) as demo:
             scale=6
         )
         submit_btn = gr.Button("Send", scale=1) # Renamed for clarity
+    
+    # Feedback area for persona changes
+    persona_feedback = gr.Textbox(
+        label="Persona Status",
+        value="Current Persona: Casual Fan",
+        interactive=False
+    )
 
     # Handle persona selection changes - Step 4 (skeleton only)
     def on_persona_change(persona_choice):
-        """Handle changes to the persona selection radio button - Step 4 (skeleton only)"""
-        print(f"Persona changed to: {persona_choice}")
-        # In Step 4, this doesn't actually do anything yet, just logs the selection
-        return persona_choice
+        """Handle changes to the persona selection radio button"""
+        print(f"[UI EVENT] Persona selection changed to: {persona_choice}")
+        
+        # Load session IDs from file
+        persona_ids = load_persona_session_ids()
+        
+        # Verify the persona exists in our mapping
+        if persona_choice not in persona_ids:
+            print(f"[ERROR] Unknown persona selected: {persona_choice}")
+            return f"Error: Unknown persona '{persona_choice}'"
+        
+        # Get the session ID for this persona
+        session_id = persona_ids[persona_choice]
+        print(f"[UI EVENT] Mapping {persona_choice} to session ID: {session_id}")
+        
+        # Update the agent's session ID
+        feedback = set_memory_session_id(session_id, persona_choice)
+        
+        # Return feedback to display in the UI
+        return feedback
 
     # Set up persona change event listener
-    persona_radio.change(on_persona_change, inputs=[persona_radio], outputs=[])
+    persona_radio.change(on_persona_change, inputs=[persona_radio], outputs=[persona_feedback])
 
     # Define a combined function for user input and bot response
     async def process_and_respond(message, history):
