@@ -277,6 +277,7 @@ The user will execute **one step at a time** and confirm each works before proce
 | Surgical Diff Principle | Show only the specific changes being made rather than reprinting entire code blocks | Highlighted just the 2 key modifications to implement personalization rather than presenting a large code block |
 | Progressive Enhancement | Layer new functionality on top of existing code rather than replacing it; design features to work even if parts fail | Adding persona-specific instructions while maintaining default behavior when persona selection is unavailable |
 | Documentation In Context | Add inline comments explaining *why* not just *what* code is doing; document edge cases directly in the code | Adding comments explaining persona state management and potential memory retrieval failures |
+| Risk-Based Approval Scaling | Level of user approval should scale proportionately to the risk level of the task - code changes require thorough review; document edits can proceed with less oversight | Implementing a new function in the agent required step-by-step approval, while formatting improvements to markdown files could be completed in a single action |
 
 ---
 
