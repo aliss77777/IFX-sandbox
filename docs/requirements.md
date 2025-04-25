@@ -231,7 +231,7 @@ Based on a review of the existing codebase and requirements, here's a structured
 | **1.2.1 ✅ Game Recap Search (WIP)** | Returning queries about the a specific game, display through a multi-media component in the UI *(Backend logic implemented, visual component integration pending)* | 1.1 |
 | **1.2.2 ✅ Player Search (WIP)** | Return queries about the player using a multi-media component *(Backend logic implemented, visual component integration pending)* | 1.1 |
 | **1.2.3 ✅ Team Info Search** | Scraped, summarized, and stored recent team news articles in Neo4j; implemented a Gradio tool and component to query and display relevant news summaries and links in the chat. | 1.1 |
-| **1.3 Develop memory system and UI integration with Zep** | Implement persona-based memory system with Zep | None |
+| **1.3 ✅ Develop memory system and UI integration with Zep** | Implement persona-based memory system with Zep | None |
 
 **Demo 1 Milestone:** April 22
 

@@ -23,7 +23,6 @@ from gradio_utils import get_session_id
 
 # Import tools
 from tools.cypher import cypher_qa_wrapper
-from tools.vector import get_game_summary
 from tools.game_recap import game_recap_qa, get_last_game_data
 from tools.player_search import player_search_qa, get_last_player_data
 from tools.team_story import team_story_qa, get_last_team_story_data
@@ -114,13 +113,6 @@ Examples: "Show me the recap of the 49ers vs Jets game", "I want to see the high
 Returns both a text summary AND visual game data that can be displayed to the user.
 PREFER this tool over Game Summary Search or Graph Search for specific game detail requests.""",
         func=game_recap_qa
-    ),
-    Tool.from_function(
-        name="Game Summary Search",
-        description="""ONLY use for detailed game summaries or specific match results if the 'Game Recap' tool fails or doesn't provide enough detail.
-Examples: "Summarize the 49ers vs Seahawks game", "Give me details about the last playoff game results"
-Do NOT use for general schedule questions.""",
-        func=get_game_summary,
     ),
     Tool.from_function(
         name="General Football Chat",

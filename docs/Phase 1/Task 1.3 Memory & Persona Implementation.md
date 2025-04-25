@@ -275,6 +275,8 @@ The user will execute **one step at a time** and confirm each works before proce
 | Consistent Logging | Use consistent prefixes for log messages to aid debugging | Added prefixes like "[PERSONA CHANGE]" and "[MEMORY LOAD]" |
 | Sequential Approval Workflow | Present detailed plans, wait for explicit approval on each component, implement one change at a time, and provide clear explanations of data flows | Explained how the persona instructions flow from selection to prompt generation before implementing changes |
 | Surgical Diff Principle | Show only the specific changes being made rather than reprinting entire code blocks | Highlighted just the 2 key modifications to implement personalization rather than presenting a large code block |
+| Progressive Enhancement | Layer new functionality on top of existing code rather than replacing it; design features to work even if parts fail | Adding persona-specific instructions while maintaining default behavior when persona selection is unavailable |
+| Documentation In Context | Add inline comments explaining *why* not just *what* code is doing; document edge cases directly in the code | Adding comments explaining persona state management and potential memory retrieval failures |
 
 ---
 
