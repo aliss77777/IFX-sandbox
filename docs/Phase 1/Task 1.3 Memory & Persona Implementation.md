@@ -100,7 +100,7 @@ The user will execute **one step at a time** and confirm each works before proce
    - "Successfully loaded message history from Zep"
 ✅ Agent now has access to the pre-existing context in Zep, and the application works without errors
 
-**TODO:**
+**TODO for later / backlog:**
 - Implement persona-specific behavior based on user context
 - Currently we're loading conversation history successfully, but the agent's responses aren't explicitly personalized based on the casual/super fan persona context
 - We should update agent system prompts to explicitly use facts from Zep memory when responding to questions
@@ -112,6 +112,21 @@ The user will execute **one step at a time** and confirm each works before proce
 
 * Insert a Gradio **Radio** with options **Casual Fan** / **Super Fan**.
 * Initially the button **does nothing**—just proves the UI renders.
+
+**Status Update:**
+✅ Successfully added a Radio button component to the UI with "Casual Fan" and "Super Fan" options
+✅ Placed the component in the input row alongside the text input and send button
+✅ Added an event handler function that logs selection changes but doesn't modify functionality yet
+✅ Ensured the component is interactive and clickable by connecting the change event
+✅ Verified the implementation works without affecting existing functionality
+✅ Followed the principle of keeping related code together (implementing handler function immediately after component definition)
+
+**Implementation Approach:**
+1. Added the radio button to the existing input row with appropriate scaling
+2. Created a simple event handler function directly after the component definition
+3. Connected the handler to the radio button's change event
+4. Tested to ensure the radio component is interactive and logs selections
+5. Confirmed no impact to existing features
 
 ---
 
@@ -161,7 +176,18 @@ The user will execute **one step at a time** and confirm each works before proce
 | 5 | Missing env variables | At startup, assert `ZEP_API_KEY` is set; show clear error if not. |
 | 6 | Session ID mismatch | Verify that session IDs in code match those actually created in Zep Cloud. |
 | 7 | Message history creation | Ensure messages follow proper format for Zep; implement fallbacks if message history retrieval fails. |
-| 8 | Library compatibility issues | Use direct API calls to workaround parameter inconsistencies; maintain fallbacks for memory initialization to avoid breaking the application when parameters change. |
+| 8 | Library compatibility issues | Use direct API calls to workaround LangChain <-> Zep parameter inconsistencies; maintain fallbacks for memory initialization to avoid breaking the application when parameters change. |
+
+---
+
+## First Principles for AI Development
+
+| Principle | Description | Example |
+|-----------|-------------|---------|
+| Code Locality | Keep related code together for improved readability and maintenance | Placing event handlers immediately after their components |
+| Development Workflow | Follow a structured pattern: read instructions → develop plan → review with user → execute after approval | Presented radio button implementation plan before making changes |
+| Minimal Surgical Changes | Make the smallest possible changes to achieve the goal with minimal risk | Added only the necessary code for the radio button without modifying existing functionality |
+| Rigorous Testing | Test changes immediately after implementation to catch issues early | Ran the application after adding the radio button to verify it works |
 
 ---
 

@@ -309,12 +309,29 @@ with gr.Blocks(title="49ers FanAI Hub", css=css) as demo:
 
     # Input components
     with gr.Row():
+        # Add persona selection radio button (Step 4) - initially doesn't do anything
+        persona_radio = gr.Radio(
+            choices=["Casual Fan", "Super Fan"],
+            value="Casual Fan",  # Default to Casual Fan
+            label="Select Persona",
+            scale=3
+        )
         msg = gr.Textbox(
             placeholder="Ask me about the 49ers...",
             show_label=False,
-            scale=9
+            scale=6
         )
         submit_btn = gr.Button("Send", scale=1) # Renamed for clarity
+
+    # Handle persona selection changes - Step 4 (skeleton only)
+    def on_persona_change(persona_choice):
+        """Handle changes to the persona selection radio button - Step 4 (skeleton only)"""
+        print(f"Persona changed to: {persona_choice}")
+        # In Step 4, this doesn't actually do anything yet, just logs the selection
+        return persona_choice
+
+    # Set up persona change event listener
+    persona_radio.change(on_persona_change, inputs=[persona_radio], outputs=[])
 
     # Define a combined function for user input and bot response
     async def process_and_respond(message, history):
