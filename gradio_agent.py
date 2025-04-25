@@ -155,6 +155,51 @@ def get_memory(session_id):
         # No memory_type parameter
     )
 
+# New function to generate persona-specific instructions
+def get_persona_instructions():
+    """Generate personalized instructions based on current persona"""
+    if current_persona == "Casual Fan":
+        return """
+PERSONA DIRECTIVE: CASUAL FAN MODE - YOU MUST FOLLOW THESE RULES
+
+YOU MUST speak to a casual 49ers fan with surface-level knowledge. This means you MUST:
+1. Keep explanations BRIEF and under 3-4 sentences whenever possible
+2. Use EVERYDAY LANGUAGE instead of technical football terms
+3. EMPHASIZE exciting plays, scoring, and player personalities
+4. FOCUS on "big moments" and "highlight-reel plays" in your examples
+5. AVOID detailed strategic analysis or technical football concepts
+6. CREATE a feeling of inclusion by using "we" and "our team" language
+7. INCLUDE at least one exclamation point in longer responses to convey excitement!
+
+Casual fans don't know or care about: blocking schemes, defensive alignments, or salary cap details.
+Casual fans DO care about: star players, touchdowns, big hits, and feeling connected to the team.
+
+EXAMPLE RESPONSE FOR CASUAL FAN (about the draft):
+"The 49ers did a great job finding exciting new players in the draft! They picked up a speedy receiver who could make some highlight-reel plays for us next season. The team focused on adding talent that can make an immediate impact, which is exactly what we needed!"
+"""
+    elif current_persona == "Super Fan":
+        return """
+PERSONA DIRECTIVE: SUPER FAN MODE - YOU MUST FOLLOW THESE RULES
+
+YOU MUST speak to a die-hard 49ers super fan with detailed football knowledge. This means you MUST:
+1. Provide DETAILED analysis that goes beyond surface-level information
+2. Use SPECIFIC football terminology and scheme concepts confidently
+3. REFERENCE role players and their contributions, not just star players
+4. ANALYZE strategic elements of plays, drafts, and team construction
+5. COMPARE current scenarios to historical team contexts when relevant
+6. INCLUDE specific stats, metrics, or technical details in your analysis
+7. ACKNOWLEDGE the complexity of football decisions rather than simplifying
+
+Super fans expect: scheme-specific analysis, salary cap implications, and detailed player evaluations.
+Super fans value: strategic insights, historical context, and acknowledgment of role players.
+
+EXAMPLE RESPONSE FOR SUPER FAN (about the draft):
+"The 49ers' draft strategy reflected their commitment to Shanahan's outside zone running scheme while addressing defensive depth issues. Their 3rd round selection provides versatility in the secondary with potential for both slot corner and safety roles, similar to how they've historically valued positional flexibility. The late-round offensive line selections show a continuing emphasis on athletic linemen who excel in zone blocking rather than power schemes, though they'll need development in pass protection techniques to become three-down players."
+"""
+    else:
+        # Default case - should not happen, but provides a fallback
+        return ""
+
 # Create the agent prompt
 agent_prompt = PromptTemplate.from_template(AGENT_SYSTEM_PROMPT)
 
@@ -226,20 +271,47 @@ def generate_response(user_input, session_id=None):
     Returns:
         dict: The full response object from the agent
     """
-    print('Starting generate_response function...')
-    print(f'User input: {user_input}')
-    print(f'Session ID: {session_id}')
+    print('[RESPONSE GEN] Starting generate_response function...')
+    print(f'[RESPONSE GEN] User input: {user_input}')
+    print(f'[RESPONSE GEN] Session ID: {session_id}')
+    print(f'[RESPONSE GEN] Current persona: {current_persona}')
 
     if not session_id:
         session_id = get_session_id()
-        print(f'Generated new session ID: {session_id}')
+        print(f'[RESPONSE GEN] Generated new session ID: {session_id}')
     
     # Initialize memory with Zep history
     memory = initialize_memory_from_zep(session_id)
     
-    # Create an agent executor with memory for this session
+    # DEBUG: Print conversation memory content
+    print(f"[DEBUG MEMORY] Memory type: {type(memory)}")
+    if hasattr(memory, 'chat_memory') and hasattr(memory.chat_memory, 'messages'):
+        print(f"[DEBUG MEMORY] Number of messages: {len(memory.chat_memory.messages)}")
+        for idx, msg in enumerate(memory.chat_memory.messages):
+            print(f"[DEBUG MEMORY] Message {idx}: {msg.type} - {msg.content[:100]}...")
+    
+    # Get persona-specific instructions for the prompt
+    persona_instructions = get_persona_instructions()
+    print(f'[RESPONSE GEN] Using persona instructions for: {current_persona}')
+    
+    # DEBUG: Print the persona instructions being used
+    print(f"[DEBUG INSTRUCTIONS] Persona instructions:\n{persona_instructions}")
+    
+    # Create a personalized prompt by modifying the template with the current persona instructions
+    # Keep the original prompt format but insert the persona instructions at the appropriate place
+    persona_tag = f"[ACTIVE PERSONA: {current_persona}]"
+    highlighted_instructions = f"{persona_tag}\n\n{persona_instructions}\n\n{persona_tag}"
+    agent_system_prompt_with_persona = AGENT_SYSTEM_PROMPT.replace(
+        "{persona_instructions}", highlighted_instructions
+    )
+    personalized_prompt = PromptTemplate.from_template(agent_system_prompt_with_persona)
+    
+    # Create a personalized agent with the updated prompt
+    personalized_agent = create_react_agent(agent_llm, tools, personalized_prompt)
+    
+    # Create an agent executor with memory for this session and personalized prompt
     session_agent_executor = AgentExecutor(
-        agent=agent,
+        agent=personalized_agent,
         tools=tools,
         verbose=True,
         memory=memory,  # Use the memory we initialized
@@ -253,7 +325,9 @@ def generate_response(user_input, session_id=None):
         try:
             print('Invoking session agent executor...')
             # The agent will now have access to the loaded history
-            response = session_agent_executor.invoke({"input": user_input})
+            persona_prefix = f"[RESPOND AS {current_persona.upper()}]: "
+            augmented_input = f"{persona_prefix}{user_input}"
+            response = session_agent_executor.invoke({"input": augmented_input})
             
             # Extract the output and format it for Streamlit
             if isinstance(response, dict):

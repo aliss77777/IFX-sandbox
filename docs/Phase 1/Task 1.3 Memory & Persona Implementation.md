@@ -189,10 +189,49 @@ The user will execute **one step at a time** and confirm each works before proce
 
 ---
 
-### 7 │ Documentation Update
+### 7 │ Changing App Responses to Provide User Personalization
 
-* Explain *why* the simple, surgical approach avoided regressions.
-* Update project docs to reflect the new persona‑memory workflow.
+* Review the context provided as Zep memoery in the zep_test.py file
+* create an LLM function to summarize this information into concise and declarative content, e.g. TELL THE 49ers FAN APP how to personalize its outgoing messages to deliver exactly the kind of content and experience this fan is looking for! 
+* review the structure of gradio_agent.py and identify where and how the AI agent can receive the instructions to personalize, using the  Minimal Surgical Changes rule
+* present the plan to the user and explain your rationale in detail. Prepare to debate and be open to new ideas
+* once a plan has been reviewed and approved, execute along the lines of the Appendix - First Principles in Action 
+
+**Status Update:**
+✅ Successfully reviewed the Zep memory contexts for both personas:
+   - Casual Fan persona has surface-level knowledge and is motivated by feeling included
+   - Super Fan persona has detailed knowledge and is motivated by strategic understanding
+✅ Created a new `get_persona_instructions()` function in gradio_agent.py to return different instructions based on the current persona
+✅ Updated prompts.py to include a placeholder for persona-specific instructions
+✅ Modified generate_response() to incorporate persona instructions into the agent prompt
+✅ Implemented two surgical changes to enhance persona-specific behavior:
+   - Enhanced persona instructions with more directive language and specific examples
+   - Added persona tag emphasizers around instructions and in user inputs
+
+**Implementation Details:**
+1. **Made Instructions More Direct and Prescriptive**:
+   - Rewritten instructions using "YOU MUST" language instead of suggestions
+   - Added numbered lists of specific behaviors to exhibit for each persona
+   - Included concrete examples of how responses should look for each persona
+   - Added "do/don't" sections to clarify expectations
+
+2. **Enhanced Instruction Visibility in the Agent Context**:
+   - Added emphasis tags around persona instructions: `[ACTIVE PERSONA: {current_persona}]`
+   - Added persona-specific prefix to user inputs: `[RESPOND AS {current_persona.upper()}]:`
+   - These small but effective changes helped ensure the instructions weren't lost in context
+
+**Results:**
+✅ Successfully implemented personalization with distinctly different responses for each persona:
+   - **Casual Fan responses** became shorter, used inclusive "we/our" language, included excitement markers (exclamation points), and focused on big moments and star players
+   - **Super Fan responses** became more detailed, used technical terminology, included structured analysis, and referenced role players alongside stars
+   - Example: When asked about draft news, the casual fan received a brief, excited summary focusing on star players and big moments, while the super fan received a detailed, categorized analysis with specific prospect evaluations
+
+**Future Improvements (Backlog):**
+- Further enhance personalization by integrating more facts from the Zep memory context into responses
+- Create a more sophisticated prompt that explicitly references relevant facts based on the current query
+- Add a mechanism to track and adapt to the user's knowledge level over time
+- Implement a feedback loop where users can indicate if responses are appropriately personalized
+- Explore ways to make persona-specific language settings persistent across sessions
 
 ---
 
@@ -234,6 +273,8 @@ The user will execute **one step at a time** and confirm each works before proce
 | Rigorous Testing | Test changes immediately after implementation to catch issues early | Ran the application after adding the radio button to verify it works |
 | Clear Documentation | Document design decisions and patterns | Added comments explaining why global variables are declared before functions that use them |
 | Consistent Logging | Use consistent prefixes for log messages to aid debugging | Added prefixes like "[PERSONA CHANGE]" and "[MEMORY LOAD]" |
+| Sequential Approval Workflow | Present detailed plans, wait for explicit approval on each component, implement one change at a time, and provide clear explanations of data flows | Explained how the persona instructions flow from selection to prompt generation before implementing changes |
+| Surgical Diff Principle | Show only the specific changes being made rather than reprinting entire code blocks | Highlighted just the 2 key modifications to implement personalization rather than presenting a large code block |
 
 ---
 

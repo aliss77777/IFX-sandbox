@@ -4,6 +4,7 @@ This follows step 2 of Task 1.3 Memory & Persona Implementation.
 """
 import os
 import json
+import argparse
 from dotenv import load_dotenv
 from zep_cloud.client import Zep
 from langchain_core.messages import HumanMessage, AIMessage
@@ -18,11 +19,6 @@ if not ZEP_API_KEY:
 
 # Initialize Zep client
 zep = Zep(api_key=ZEP_API_KEY)
-
-# Use one of the session IDs from the task document
-# Casual fan: 241b3478c7634492abee9f178b5341cb
-# Super fan: dedcf5cb0d71475f976f4f66d98d6400
-SESSION_ID = "241b3478c7634492abee9f178b5341cb"  # Using Casual fan session ID
 
 def retrieve_chat_history(session_id):
     """
@@ -71,10 +67,19 @@ def get_zep_history(session_id):
         return []
 
 def main():
-    print(f"Retrieving chat history for session ID: {SESSION_ID}")
+    # Set up command line argument parsing
+    parser = argparse.ArgumentParser(description='Retrieve chat history from Zep')
+    parser.add_argument('--session_id', type=str, 
+                        default="241b3478c7634492abee9f178b5341cb",
+                        help='Session ID to retrieve (default: Casual Fan)')
+    args = parser.parse_args()
+    
+    session_id = args.session_id
+    
+    print(f"Retrieving chat history for session ID: {session_id}")
     
     # Get the memory for the session
-    memory = retrieve_chat_history(SESSION_ID)
+    memory = retrieve_chat_history(session_id)
     
     if memory:
         print("\n===== MEMORY CONTEXT =====")
