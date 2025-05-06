@@ -1,0 +1,24 @@
+Player #,Name,Position,Age,Nationality,Shirt #,Preferred Foot,Role
+1,Noah Martin,Goalkeeper,21,Canada,1,Left,Starter
+2,Liam Thompson,Left Back,23,Canada,2,Right,Starter
+3,Dylan Tremblay,Center Back,30,Canada,3,Right,Starter
+4,Jacob Thompson,Center Back,23,Canada,4,Left,Starter
+5,Aiden Smith,Right Back,27,Canada,5,Left,Starter
+6,Logan Gagnon,Defensive Mid,31,Canada,6,Right,Starter
+7,Thomas Brown,Central Mid,30,Canada,7,Left,Starter
+8,Mason Walker,Central Mid,21,Canada,8,Left,Starter
+9,Dylan Walker,Left Wing,30,Canada,9,Right,Starter
+10,Thomas Walker,Striker,30,Canada,10,Left,Starter
+11,Lucas Harris,Right Wing,32,Canada,11,Left,Starter
+12,Mason Lee,Goalkeeper,21,Canada,12,Right,Bench
+13,Carter Lee,Center Back,24,Canada,13,Right,Bench
+14,William Harris,Full Back,23,Canada,14,Right,Bench
+15,Aiden Brown,Defensive Mid,17,Canada,15,Left,Bench
+16,Logan Clark,Central Mid,26,Canada,16,Right,Bench
+17,Owen Campbell,Attacking Mid,23,Canada,17,Right,Bench
+18,Thomas Walker,Forward/Winger,32,Canada,18,Right,Bench
+19,Elijah Gagnon,Striker,23,Canada,19,Right,Bench
+20,Thomas MacDonald,Left Wing,21,Canada,20,Right,Bench
+21,Jacob Gagnon,Right Wing,23,Canada,21,Right,Bench
+22,William Taylor,Various,27,Canada,22,Left,Reserve/Prospect
+23,Aiden Campbell,Various,17,Canada,23,Left,Reserve/Prospect
