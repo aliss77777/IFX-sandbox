@@ -1,11 +1,12 @@
 import os
 import json
 from pydantic import BaseModel, Field, ValidationError
-from typing import Literal, Optional
+from typing import Literal, Optional, ClassVar
 import hashlib
 
 
 class Player(BaseModel):
+    teams: ClassVar[list[str]] = ['Fraser Valley United', 'Everglade FC', 'Yucatan Force', 'Tierra Alta FC']
     number: int
     name: str
     age: int
@@ -87,9 +88,12 @@ class Player(BaseModel):
             return cls.model_validate(data)
 
     @classmethod
-    def get_players(cls):
+    def get_players(cls, team=None):
         for filename in os.listdir("/workspace/data/huge-league/players"):
-            yield cls.load(filename)
+            player = cls.load(filename)
+            if team and player.team != team:
+                continue
+            yield player
 
     def save_image(self, image_bytes):
         filename = self.filename.replace(".json", ".png")

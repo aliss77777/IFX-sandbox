@@ -1,0 +1,72 @@
+[
+    {
+        "description": "Ram\u00f3n Jim\u00e9nez scored with a powerful left-footed strike from the edge of the box.",
+        "event": "Goal",
+        "minute": "12",
+        "player": "Ram\u00f3n Jim\u00e9nez #10",
+        "team": "Yucatan Force"
+    },
+    {
+        "description": "Ricardo Cordero received a yellow card for a late tackle on Jos\u00e9 Delgado.",
+        "event": "Yellow Card",
+        "minute": "28",
+        "player": "Ricardo Cordero #5",
+        "team": "Tierra Alta FC"
+    },
+    {
+        "description": "Felipe Z\u00fa\u00f1iga equalized with a header from a cross by Gabriel Fonseca.",
+        "event": "Goal",
+        "minute": "34",
+        "player": "Felipe Z\u00fa\u00f1iga #10",
+        "team": "Tierra Alta FC"
+    },
+    {
+        "description": "Javier Mart\u00ednez replaced Ram\u00f3n S\u00e1nchez to add more width to the attack.",
+        "event": "Substitution",
+        "minute": "45+1",
+        "player": "Javier Mart\u00ednez #20",
+        "team": "Yucatan Force"
+    },
+    {
+        "description": "Jos\u00e9 Delgado curled in a stunning right-foot shot from outside the box.",
+        "event": "Goal",
+        "minute": "54",
+        "player": "Jos\u00e9 Delgado #11",
+        "team": "Yucatan Force"
+    },
+    {
+        "description": "Leonardo Salazar came on for Esteban Camacho to inject fresh energy into the attack.",
+        "event": "Substitution",
+        "minute": "67",
+        "player": "Leonardo Salazar #18",
+        "team": "Tierra Alta FC"
+    },
+    {
+        "description": "Santiago Ortega was booked for a tactical foul on Joaqu\u00edn Araya.",
+        "event": "Yellow Card",
+        "minute": "70",
+        "player": "Santiago Ortega #7",
+        "team": "Yucatan Force"
+    },
+    {
+        "description": "Sebasti\u00e1n Alvarado replaced Mauricio P\u00e9rez to bolster the midfield.",
+        "event": "Substitution",
+        "minute": "79",
+        "player": "Sebasti\u00e1n Alvarado #20",
+        "team": "Tierra Alta FC"
+    },
+    {
+        "description": "Emilio Navarro came on for H\u00e9ctor L\u00f3pez to help secure the lead.",
+        "event": "Substitution",
+        "minute": "85",
+        "player": "Emilio Navarro #18",
+        "team": "Yucatan Force"
+    },
+    {
+        "description": "Pablo Ure\u00f1a received a caution for dissent after a disputed throw-in call.",
+        "event": "Yellow Card",
+        "minute": "90+3",
+        "player": "Pablo Ure\u00f1a #8",
+        "team": "Tierra Alta FC"
+    }
+]
