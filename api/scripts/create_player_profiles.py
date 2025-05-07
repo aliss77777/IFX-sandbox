@@ -1,12 +1,9 @@
 from openai import OpenAI
 import os
 import csv
-from pydantic import BaseModel, Field, ValidationError
-from typing import Literal, Optional
-import hashlib
 import json
 from pprint import pprint
-
+from model_player import Player
 
 client = OpenAI()
 
@@ -63,92 +60,13 @@ team_descriptions = {
 }
 
 
-class Player(BaseModel):
-    number: int
-    name: str
-    age: int
-    nationality: str
-    shirt_number: int
-    position: Literal[
-        "Goalkeeper", "Left Back", "Center Back", "Right Back",
-        "Full Back", "Defensive Mid", "Central Mid", "Attacking Mid",
-        "Left Wing", "Right Wing", "Forward/Winger", "Striker", "Various"
-    ]
-    preferred_foot: Literal["Left", "Right", "Mixed"]
-    role: Literal["Starter", "Bench", "Reserve/Prospect"]
-
-    @property
-    def id(self):
-        if not self.team:
-            raise ValueError("Team must not be empty")
-        return hashlib.sha256(f"{self.team}_{self.number}".encode()).hexdigest()
-
-    @property
-    def filename(self):
-        return f'{self.team.replace(" ", "_")}_{self.number}.json'
-    
-    # Optional flair / simulation fields
-    team: Optional[str] = None
-    height_cm: Optional[int] = Field(None, ge=150, le=210)
-    weight_kg: Optional[int] = Field(None, ge=50, le=110)
-    overall_rating: Optional[int] = Field(None, ge=1, le=100)
-    is_injured: Optional[bool] = False
-    form: Optional[int] = Field(None, ge=1, le=10)  # recent performance (1-10)
-
-    # Stats placeholder — useful if you want to track across games
-    goals: Optional[int] = 0
-    assists: Optional[int] = 0
-    yellow_cards: Optional[int] = 0
-    red_cards: Optional[int] = 0
-
-    # Narrative hook
-    bio: Optional[str] = None
-
-    @classmethod
-    def from_row(cls, row):
-        if len(row) != 8:
-            raise ValueError("Row must have 8 elements")
-        return cls(
-            number=row[0],
-            name=row[1],
-            position=row[2],
-            age=row[3],
-            nationality=row[4],
-            shirt_number=row[5],
-            preferred_foot=row[6],
-            role=row[7],
-        )
-
-    def player_info(self):
-        return {
-            "number": self.number,
-            "name": self.name,
-            "position": self.position,
-            "age": self.age,
-            "nationality": self.nationality,
-            "shirt_number": self.shirt_number,
-            "preferred_foot": self.preferred_foot,
-            "role": self.role,
-        }
-
-    def save(self):
-        with open(os.path.join("/workspace/data/huge-league/players", self.filename), 'w') as f:
-            json.dump(self.model_dump(), f)
-
-    @classmethod
-    def load(cls, filename):
-        with open(os.path.join("/workspace/data/huge-league/players", filename), 'r') as f:
-            data = json.load(f)
-            return cls.model_validate(data)
-
-
-
-for filename in os.listdir("/workspace/data/huge-league/rosters"):
-    with open(os.path.join("/workspace/data/huge-league/rosters", filename), 'r') as f:
-        print(f"Processing {filename}")
-        team_description = team_descriptions.get(filename)
-        team_name = " ".join(filename.split("_")[:-1])
-        reader = csv.reader(f)
+if __name__ == "__main__":
+    for filename in os.listdir("/workspace/data/huge-league/rosters"):
+        with open(os.path.join("/workspace/data/huge-league/rosters", filename), 'r') as f:
+            print(f"Processing {filename}")
+            team_description = team_descriptions.get(filename)
+            team_name = " ".join(filename.split("_")[:-1])
+            reader = csv.reader(f)
         next(reader)  # skip header
         for row in reader:
             player = Player.from_row(row)
