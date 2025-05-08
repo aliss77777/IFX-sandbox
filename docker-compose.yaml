@@ -14,9 +14,10 @@ services:
     tty: true
     ports:
       - "8000:8000" # serving site
+    env_file:
+      - .env
     environment:
       DEBUG: false
-      OPENAI_API_KEY: 
     command: uvicorn server:app --reload --host 0.0.0.0 --port 8000 --reload --log-level debug
 
 volumes:
