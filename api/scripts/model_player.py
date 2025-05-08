@@ -3,6 +3,7 @@ import json
 from pydantic import BaseModel, Field, ValidationError
 from typing import Literal, Optional, ClassVar
 import hashlib
+from slugify import slugify
 
 
 class Player(BaseModel):
@@ -24,7 +25,8 @@ class Player(BaseModel):
     def id(self):
         if not self.team:
             raise ValueError("Team must not be empty")
-        return hashlib.sha256(f"{self.team}_{self.number}".encode()).hexdigest()
+        # return hashlib.sha256(f"{self.team}_{self.number}".encode()).hexdigest()
+        return slugify(f"{self.team}_{self.number}")
 
     @property
     def filename(self):
@@ -75,6 +77,20 @@ class Player(BaseModel):
             "shirt_number": self.shirt_number,
             "preferred_foot": self.preferred_foot,
             "role": self.role,
+        }
+
+    def player_vector_metadata(self):
+        return {
+            "type": "player",
+            "number": self.number,
+            "name": slugify(self.name),
+            "position": slugify(self.position),
+            "age": self.age,
+            "nationality": slugify(self.nationality),
+            "shirt_number": self.shirt_number,
+            "preferred_foot": slugify(self.preferred_foot),
+            "role": slugify(self.role),
+            "team": slugify(self.team),
         }
 
     def save(self):
