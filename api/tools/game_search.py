@@ -1,8 +1,11 @@
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 from langchain_core.documents import Document
-from typing import Type, List
-
+from typing import Type, List, Optional
+from langchain.callbacks.manager import (
+    AsyncCallbackManagerForToolRun,
+    CallbackManagerForToolRun,
+)
 from data.vectorstore_singleton import get_vector_store
 
 vector_store = get_vector_store()
@@ -23,9 +26,11 @@ class GameSearchTool(BaseTool):
     name: str = "game_search"
     description: str = "Search for games in the vector store"
     args_schema: Type[BaseModel] = GameSearchSchema 
-    description: str = ""
-    
-    def _run(self, query: str) -> List[Document]:
+
+    def _run(self,
+             query: str,
+             run_manager: Optional[CallbackManagerForToolRun] = None,
+             ) -> List[Document]:    
         result = vector_store.similarity_search(
             "",
             k=20,
@@ -33,7 +38,10 @@ class GameSearchTool(BaseTool):
         )
         return sorted(result, key=lambda doc: int(doc.id.split("_")[-1]))
     
-    async def _arun(self, query: str) -> List[Document]:
+    async def _arun(self,
+                    query: str,
+                    run_manager: Optional[AsyncCallbackManagerForToolRun] = None,
+                    ) -> List[Document]:
         result = await vector_store.asimilarity_search(
             "",
             k=20,

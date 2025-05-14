@@ -8,8 +8,13 @@ vector_store = InMemoryVectorStore.load("/code/data/vectorstore.json", embedding
 
 # query = "ryan brown"
 # query = "defensive midfielder"
-query = "goaly"
+query = "* FC Everglade"
 results = vector_store.similarity_search(query, k=3)
+results = vector_store.similarity_search(
+    query,
+    k=3,
+    filter=lambda doc: doc.metadata.get("type") == "player",
+)
 
 for result in results:
     pprint(result.page_content)

@@ -1,0 +1,134 @@
+import asyncio
+import datetime
+import operator
+from functools import partial
+from typing import TypedDict, Annotated, Sequence
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import (
+    BaseMessage,
+    AIMessage,
+    FunctionMessage,
+    HumanMessage,
+    SystemMessage,
+    ToolMessage,
+)
+from langgraph.graph import StateGraph, END
+from langchain_core.callbacks import AsyncCallbackHandler
+from langgraph.prebuilt import ToolNode
+
+
+from utils.zep_helpers import (
+    get_zep_client,
+    record_session,
+)
+from prompts import (
+    casual_fan_prompt,
+)
+from tools import (
+    PlayerSearchTool,
+    GameSearchTool,
+)
+
+
+available_tools = [
+    GameSearchTool(),
+    PlayerSearchTool(),
+]
+tool_node = ToolNode(available_tools)
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+llm_with_tools = llm.bind_tools(tools=available_tools)
+
+zep_client = get_zep_client()
+
+
+class AgentState(TypedDict):
+    session_id: str
+    messages: Annotated[Sequence[BaseMessage], operator.add]
+
+
+async def call_model(state: AgentState, handler: AsyncCallbackHandler) -> dict:
+    session_id = state["session_id"]
+    memory = await zep_client.memory.get(session_id=session_id)
+    messages = state["messages"]
+    
+    prompt = casual_fan_prompt.format(
+        zep_context=memory.context,
+        input=messages,
+        now=datetime.datetime.now(datetime.UTC).strftime('%Y-%m-%d'),
+    )
+
+    # response = await llm_with_tools.ainvoke(prompt, stream=True,
+    #                                     config={"callbacks" :[handler]})
+    response = await llm_with_tools.with_config(callbacks=[handler]).ainvoke(prompt, stream=True)
+
+    return {'messages': [response]}
+
+
+async def call_tool(state: AgentState, handler: AsyncCallbackHandler) -> dict:
+    messages = state["messages"]
+    last_message = messages[-1]
+    tools_by_name = {tool.name: tool for tool in available_tools}
+
+    observations = []
+    for tool_call in last_message.tool_calls:
+        tool = tools_by_name[tool_call["name"]]
+        observations.append(
+            tool.with_config(callbacks=[handler]).ainvoke(tool_call["args"])
+        )
+
+    # await all observations
+    observations = await asyncio.gather(*observations)
+
+    results = []
+    for observation, tool_call in zip(observations, last_message.tool_calls):
+        results.append(ToolMessage(content=observation, tool_call_id=tool_call["id"]))
+    return {"messages": results}
+
+
+async def should_continue(state):
+    messages = state["messages"]
+    last_message = messages[-1]
+    if 'tool_calls' not in last_message.additional_kwargs:
+        # inform zep of final response
+        await record_session(state["session_id"], messages)
+        return 'end'
+    return 'continue'
+
+
+def build_workflow(handler: AsyncCallbackHandler):
+    workflow = StateGraph(AgentState)
+    workflow.add_node('agent', partial(call_model, handler=handler))
+    workflow.add_node('tools', partial(call_tool, handler=handler))
+    workflow.set_entry_point('agent')
+
+    workflow.add_conditional_edges(
+        'agent',
+        should_continue,
+        {
+            'continue': 'tools',
+            'end': END,
+        }   
+    )
+
+    workflow.add_edge('tools', 'agent')
+
+    return workflow.compile()
+
+
+def build_workflow_with_state(handler: AsyncCallbackHandler, session_id: str, messages=None):
+    """
+    Utility to build workflow and initial state in one step.
+    Args:
+        handler: AsyncCallbackHandler for this workflow
+        session_id: unique session identifier
+        messages: optional initial message list
+    Returns:
+        (workflow, state) tuple ready for execution
+    """
+    workflow = build_workflow(handler)
+    state = {
+        "session_id": session_id,
+        "messages": messages or [],
+    }
+    return workflow, state
