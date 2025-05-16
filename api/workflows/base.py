@@ -18,6 +18,7 @@ from langgraph.prebuilt import ToolNode
 
 
 from utils.zep_helpers import (
+    AsyncZep,
     get_zep_client,
     record_session,
 )
@@ -39,15 +40,13 @@ tool_node = ToolNode(available_tools)
 llm = ChatOpenAI(model="gpt-4o-mini")
 llm_with_tools = llm.bind_tools(tools=available_tools)
 
-zep_client = get_zep_client()
-
 
 class AgentState(TypedDict):
     session_id: str
     messages: Annotated[Sequence[BaseMessage], operator.add]
 
 
-async def call_model(state: AgentState, handler: AsyncCallbackHandler) -> dict:
+async def call_model(state: AgentState, handler: AsyncCallbackHandler, zep_client: AsyncZep) -> dict:
     session_id = state["session_id"]
     memory = await zep_client.memory.get(session_id=session_id)
     messages = state["messages"]
@@ -86,25 +85,28 @@ async def call_tool(state: AgentState, handler: AsyncCallbackHandler) -> dict:
     return {"messages": results}
 
 
-async def should_continue(state):
+async def should_continue(state: AgentState, handler: AsyncCallbackHandler, zep_client: AsyncZep) -> str:
     messages = state["messages"]
     last_message = messages[-1]
     if 'tool_calls' not in last_message.additional_kwargs:
         # inform zep of final response
         await record_session(state["session_id"], messages)
+        if hasattr(handler, 'on_workflow_end'):
+            await handler.on_workflow_end(state)
         return 'end'
     return 'continue'
 
 
 def build_workflow(handler: AsyncCallbackHandler):
     workflow = StateGraph(AgentState)
-    workflow.add_node('agent', partial(call_model, handler=handler))
+    zep_client = get_zep_client()
+    workflow.add_node('agent', partial(call_model, handler=handler, zep_client=zep_client))
     workflow.add_node('tools', partial(call_tool, handler=handler))
     workflow.set_entry_point('agent')
 
     workflow.add_conditional_edges(
         'agent',
-        should_continue,
+        partial(should_continue, handler=handler, zep_client=zep_client),
         {
             'continue': 'tools',
             'end': END,

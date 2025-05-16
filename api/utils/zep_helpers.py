@@ -4,7 +4,7 @@ from zep_cloud.client import AsyncZep
 from zep_cloud.types import Message
 
 
-@lru_cache(maxsize=1)
+# @lru_cache(maxsize=1)
 def get_zep_client():
     return AsyncZep()
 

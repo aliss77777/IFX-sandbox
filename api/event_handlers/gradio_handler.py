@@ -1,38 +1,50 @@
+import queue
 from colorama import Fore, Style
 from langchain_core.callbacks import AsyncCallbackHandler
 from langchain_core.outputs.llm_result import LLMResult
 from typing import List
 from langchain_core.messages import BaseMessage
 
-class PrintEventHandler(AsyncCallbackHandler):
+
+class GradioEventHandler(AsyncCallbackHandler):
     """
     Example async event handler: prints streaming tokens and tool results.
     Replace with websocket or other side effects as needed.
     """
 
     def __init__(self, *args, **kwargs):
-        print('[INIT]')
         super().__init__(*args, **kwargs)
+        self.queue = queue.Queue()
+
+    def info_box(self, message: str):
+        self.queue.put(
+            {
+                "type": "info",
+                "message": message,
+            }
+        )
 
     async def on_chat_model_start(self, *args, **kwargs):
-        print('[CHAT START]')
+        self.info_box('[CHAT START]')
 
     async def on_llm_new_token(self, token: str, **kwargs):
         if token:
-            print(Fore.YELLOW + token + Style.RESET_ALL, end="", flush=True)
+            self.queue.put(token) 
 
     async def on_llm_end(self, result: LLMResult, *args, **kwargs):
         if self.is_chat_stream_end(result):
-            print('\n[END]')
+            self.queue.put(None)
 
     async def on_tool_end(self, output: any, **kwargs):
         print(f"\n{Fore.CYAN}[TOOL RESULT] {output}{Style.RESET_ALL}")
 
     async def on_tool_start(self, input: any, *args, **kwargs):
-        print(f"\n{Fore.CYAN}[TOOL START]{Style.RESET_ALL}")
+        self.info_box(f"[TOOL START]")
 
     async def on_workflow_end(self, state, *args, **kwargs):
         print(f"\n{Fore.CYAN}[WORKFLOW END]{Style.RESET_ALL}")
+        for msg in state["messages"]:
+            print(f'{Fore.YELLOW}{msg.content}{Style.RESET_ALL}')
 
     @staticmethod
     def is_chat_stream_end(result: LLMResult) -> bool:
@@ -41,12 +53,3 @@ class PrintEventHandler(AsyncCallbackHandler):
             return bool(content and content.strip())
         except (IndexError, AttributeError):
             return False
-
-    # def __getattribute__(self, name):
-    #     attr = super().__getattribute__(name)
-    #     if callable(attr) and name.startswith("on_"):
-    #         async def wrapper(*args, **kwargs):
-    #             print(f"[EVENT] {name} args={args} kwargs={kwargs}")
-    #             return await attr(*args, **kwargs)
-    #         return wrapper
-    #     return attr

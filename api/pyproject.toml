@@ -23,6 +23,8 @@ zep-cloud = "^2.12.1"
 colorama = "^0.4.6"
 langchain = "^0.3.25"
 langgraph = "^0.4.3"
+freeplay = "^0.3.21"
+gradio = "^5.29.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
