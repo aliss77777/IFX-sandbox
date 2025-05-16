@@ -28,4 +28,16 @@ command-raw:
 
 clean-requirements:
 	rm -f poetry.lock
-	
+
+# Build the Docker image for the 'runtime' stage in api/Dockerfile, tagged as huge-ifx-api:prod
+build-prod:
+	cd api && docker build -f Dockerfile --target runtime -t huge-ifx-api:prod .
+
+# Build the prod image and run it locally, mapping ports 7860 and 8000
+up-build-prod: build-prod
+	docker run --rm -it -p 7860:7860 -p 8000:8000 --env-file .env -e DEV_MODE=true huge-ifx-api:prod
+
+# Push the prod image to GitHub Container Registry
+push-prod-ghcr:
+	docker tag huge-ifx-api:prod ghcr.io/rbalch/huge-ifx-api:prod
+	docker push ghcr.io/rbalch/huge-ifx-api:prod

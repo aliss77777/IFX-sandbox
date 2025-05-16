@@ -1,6 +1,7 @@
 import asyncio
 import gradio as gr
 import time
+import os
 from pydantic import BaseModel
 from threading import Thread
 from langchain_core.messages import HumanMessage, AIMessage
@@ -9,6 +10,7 @@ from workflows.base import build_workflow
 
 lorem_ipsum = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."""
 show_state = True
+dev_mode = os.getenv("DEV_MODE", "").lower() == "true"
 
 
 class AppState(BaseModel):
@@ -131,4 +133,7 @@ with gr.Blocks() as demo:
 
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=8000)
+    if dev_mode:
+        demo.launch(server_name="0.0.0.0", server_port=8000)
+    else:
+        demo.launch(server_name="0.0.0.0")
