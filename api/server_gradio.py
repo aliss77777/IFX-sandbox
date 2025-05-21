@@ -1,6 +1,5 @@
 import asyncio
 import gradio as gr
-import time
 import os
 from pydantic import BaseModel
 from threading import Thread
@@ -12,6 +11,7 @@ from utils.zep_helpers import ZepClient
 
 lorem_ipsum = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."""
 show_state = True
+fake_response = False
 dev_mode = os.getenv("DEV_MODE", "").lower() == "true"
 
 
@@ -44,11 +44,13 @@ def submit_helper(state, handler, user_query):
     state = AppState(**state.dict())
     yield state, ""
 
-    # result = ""
-    # for i in range(0, len(lorem_ipsum), 4):
-    #     time.sleep(0.1)
-    #     result += lorem_ipsum[i:i+4]
-    #     yield state, result
+    if fake_response:
+        result = lorem_ipsum
+        for i in range(0, len(lorem_ipsum), 4):
+            time.sleep(0.1)
+            result += lorem_ipsum[i:i+4]
+            yield state, result
+        return
 
     def start_async_loop():
         workflow_bundle, workflow_state = build_workflow_with_state(
@@ -165,135 +167,20 @@ with gr.Blocks() as demo:
         new_state = AppState()
         return new_state, "", new_state.persona, "", new_state.email, new_state.first_name, new_state.last_name
 
-    # @submit_btn.click(inputs=[state, user_query], outputs=[state, llm_response])
-    # def submit(state, user_query):
-    #     state.count += 1
-    #     state.ensure_sessions()
-    #     state = AppState(**state.dict())
-
-    #     user_query = user_query or "tell me about some players in everglade fc"
-    #     message = HumanMessage(content=user_query)
-    #     state.history.append(message)
-
-    #     result = ""
-    #     yield state, result
-    #     for i in range(0, len(lorem_ipsum), 4):
-    #         time.sleep(0.1)
-    #         result += lorem_ipsum[i:i+4]
-    #         yield state, result
-
-
     @submit_btn.click(inputs=[state, user_query], outputs=[state, llm_response])
     def submit(state, user_query):
         user_query = user_query or "tell me about some players in everglade fc"
         yield from submit_helper(state, handler, user_query)
         
-    
-    # @submit_btn.click(inputs=[user_query, state], outputs=[llm_response, zep_session_id_disp, freeplay_session_id_disp])
-    # def submit(user_query, state):
-    #     state.ensure_sessions()
-    #     state.user_query = user_query or "tell me about some players in everglade fc"
-    #     message = HumanMessage(content=state.user_query)
-    #     state.history.append(message)
-    #     # workflow_state["messages"] = state.history
-
-    #     def start_async_loop():
-    #         workflow, workflow_state = build_workflow_with_state(
-    #             handler=handler,
-    #             zep_session_id=state.zep_session_id,
-    #             freeplay_session_id=state.freeplay_session_id,
-    #             email=state.email,
-    #             first_name=state.first_name,
-    #             last_name=state.last_name,
-    #             persona=state.persona,
-    #             messages=state.history,
-    #         )
-
-    #         async def run_workflow():
-    #             await workflow.ainvoke(workflow_state)
-            
-    #         asyncio.run(run_workflow())
-
-    #     thread = Thread(target=start_async_loop, daemon=True)
-    #     thread.start()
-
-    #     result = ""
-    #     while True:
-    #         token = handler.queue.get()
-    #         # from colorama import Fore, Style
-    #         # print(f'{Fore.GREEN}{token}{Style.RESET_ALL}')
-    #         if token is None:
-    #             break
-    #         if isinstance(token, dict):
-    #             if token["type"] == "info":
-    #                 gr.Info(token["message"])
-    #                 continue
-    #         result += token
-    #         yield result, state.zep_session_id, state.freeplay_session_id
-
-    #     state.history.append(AIMessage(content=result))
-
-    # @user_query.submit(inputs=[user_query, state], outputs=[llm_response, state])
-    # def user_query_change(user_query, state):
-    #     state.user_query = user_query
-    #     state.zep_session_id = f"zep_{int(time.time())}"
-    #     state.freeplay_session_id = f"freeplay_{int(time.time())}"
-
-    #     result = state.user_query 
-    #     for i in range(0, len(lorem_ipsum), 4):
-    #         time.sleep(0.1)
-    #         result += lorem_ipsum[i:i+4]
-    #         yield result, state
+    @user_query.submit(inputs=[state, user_query], outputs=[state, llm_response])
+    def user_query_change(state, user_query):
+        user_query = user_query or "tell me about some players in everglade fc"
+        yield from submit_helper(state, handler, user_query)
 
     @persona.change(inputs=[persona, state], outputs=[persona_disp])
     def persona_change(persona, state):
         state.persona = persona
         return persona
-
-    # @submit_btn.click(inputs=[state], outputs=[state, llm_response])
-    # def submit(state):
-    #     state.count += 1
-    #     new_state = AppState(**state.dict()) 
-    #     result = 'hello'
-    #     for i in range(0, len(lorem_ipsum), 4):
-    #         time.sleep(0.1)
-    #         result += lorem_ipsum[i:i+4]
-    #         yield new_state, result
-
-    # @user_query.submit(inputs=[state], outputs=[count_disp, user_query])
-    # def user_query_change(state):
-    #     state.count += 1
-    #     return state.count, ''
-
-    # @clear_state_btn.click(inputs=[state], outputs=[count_disp, persona_disp, user_query, llm_response, zep_session_id_disp, freeplay_session_id_disp])
-    # def clear_state(state):
-    #     state.clear()
-    #     return state.count, state.persona, state.user_query, "", state.zep_session_id, state.freeplay_session_id
-
-    # @email.change(inputs=[email, state])
-    # def email_change(email, state):
-    #     state.email = email
-
-    # @first_name.change(inputs=[first_name, state])
-    # def first_name_change(first_name, state):
-    #     state.first_name = first_name
-
-    # @last_name.change(inputs=[last_name, state])
-    # def last_name_change(last_name, state):
-    #     state.last_name = last_name
-
-    # @state.change(inputs=[state], outputs=[gr.ParamViewer()])
-    # def state_change(state):
-    #     # return state.zep_session_id, state.freeplay_session_id
-    #     docs = {
-    #         "zep_session_id_ZZZZ": {
-    #             "default": "None\n",
-    #             "type": "str | None\n",
-    #             "description": "Zep session ID.",
-    #         },
-    #     }
-
-    #     return gr.ParamViewer(docs)
 
 
 if __name__ == "__main__":
