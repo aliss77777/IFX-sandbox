@@ -1,3 +1,12 @@
+"""
+Player Search Tool
+
+This module defines the PlayerSearchTool, a LangChain-compatible tool for searching soccer players in the fictional Huge League
+using the project's vector store. It includes a schema for flexible player queries (by name, position, team, or number), supports
+random/team-based queries, and provides both synchronous and asynchronous search methods. Used by the agent workflow to retrieve
+player profiles, stats, and related data for downstream processing.
+"""
+
 from pydantic import BaseModel, Field
 from langchain.tools import BaseTool, StructuredTool, tool
 from langchain_core.documents import Document

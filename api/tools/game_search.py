@@ -1,3 +1,11 @@
+"""
+Game Search Tool
+
+This module defines the GameSearchTool, a LangChain-compatible tool for searching soccer games and their related events
+from the project's vector store. It includes a schema for specifying game queries, and provides both synchronous and
+asynchronous search methods. Used by the agent workflow to retrieve structured game/event data for downstream processing.
+"""
+
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 from langchain_core.documents import Document
