@@ -1,9 +1,9 @@
 import asyncio
 import gradio as gr
 import os
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 from threading import Thread
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import BaseMessage, HumanMessage, AIMessage
 from event_handlers.gradio_handler import GradioEventHandler
 from workflows.base import build_workflow_with_state
 from utils.freeplay_helpers import FreeplayClient
@@ -13,6 +13,11 @@ lorem_ipsum = """Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 show_state = True
 fake_response = False
 dev_mode = os.getenv("DEV_MODE", "").lower() == "true"
+MESSAGE_TYPE_MAP = {
+    "human": HumanMessage,
+    "ai": AIMessage,
+    # Add other message types as needed
+}
 
 
 class AppState(BaseModel):
@@ -34,6 +39,20 @@ class AppState(BaseModel):
         if not self.freeplay_session_id:
             self.freeplay_session_id = FreeplayClient().create_session().session_id
 
+    @field_validator("history", mode="before")
+    @classmethod
+    def validate_history(cls, v):
+        out = []
+        for item in v:
+            if isinstance(item, BaseMessage):
+                out.append(item)
+            elif isinstance(item, dict):
+                out.append(MESSAGE_TYPE_MAP[item["type"]](**item))
+            else:
+                raise TypeError(f"Invalid type in history: {type(item)}")
+        return out
+            
+
 ### Helpers ###
 
 def submit_helper(state, handler, user_query):
@@ -41,7 +60,7 @@ def submit_helper(state, handler, user_query):
     state.ensure_sessions()
     message = HumanMessage(content=user_query)
     state.history.append(message)
-    state = AppState(**state.dict())
+    state = AppState(**state.model_dump())
     yield state, ""
 
     if fake_response:
@@ -109,7 +128,10 @@ with gr.Blocks() as demo:
                                lines=1,
                                interactive=True,
                                value=state.value.last_name)
-    llm_response = gr.Textbox(label="LLM Response", lines=10)
+
+    with gr.Row():
+        llm_response = gr.Textbox(label="LLM Response", lines=10)
+        ots_box = gr.Textbox(label="OTS", lines=10)
 
     with gr.Row(scale=1):
         with gr.Column(scale=1):
@@ -158,9 +180,9 @@ with gr.Blocks() as demo:
 
     ### Events
 
-    @state.change(inputs=[state], outputs=[count_disp, persona_disp, zep_session_id_disp, freeplay_session_id_disp])
+    @state.change(inputs=[state], outputs=[count_disp, persona_disp, zep_session_id_disp, freeplay_session_id_disp, user_query])
     def state_change(state):
-        return state.count, state.persona, state.zep_session_id, state.freeplay_session_id
+        return state.count, state.persona, state.zep_session_id, state.freeplay_session_id, ""
     
     @clear_state_btn.click(outputs=[state, llm_response, persona, user_query, email, first_name, last_name])
     def clear_state():
