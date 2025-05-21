@@ -41,20 +41,19 @@ An AI-powered sports fan assistant that creates natural language, multimodal, an
 
 ## Architecture
 
-```mermaid
-flowchart TD
-    UI[Gradio UI (HuggingFace Spaces)]
-    API[FastAPI (server.py)]
-    Workflow[LangGraph Agent Workflow]
-    Freeplay[Prompt Management (Freeplay)]
-    Zep[Memory (Zep)]
-    OpenAI[LLM (OpenAI)]
-    Tools[Custom Tools]
-    UI --> Workflow
-    Workflow --> Freeplay
-    Workflow --> Zep
-    Workflow --> OpenAI
-    Workflow --> Tools
+```
++------------------------+
+|   Gradio UI (Spaces)   |
++-----------+------------+
+            |
+            v
++------------------------+
+|  LangGraph Agent Flow  |
++-----------+------------+
+    |      |      |     |
+    v      v      v     v
+ Freeplay  Zep  OpenAI  Tools
+(Prompts) (Memory) (LLM) (Custom)
 ```
 
 - **UI:** Gradio-based, runs via `server_gradio.py`
