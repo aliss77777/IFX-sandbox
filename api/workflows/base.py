@@ -124,8 +124,7 @@ async def should_continue(state: AgentState,
             messages=messages,
         )
         # inform freeplay of final response
-        # TODO: wait for feedback from freeplay about tool messages
-        # freeplay_client.record_session(state)
+        freeplay_client.record_session(state)
         # trigger on_workflow_end callback
         if hasattr(handler, 'on_workflow_end'):
             await handler.on_workflow_end(state)

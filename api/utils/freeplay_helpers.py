@@ -5,10 +5,14 @@ from functools import lru_cache
 from typing import Union, Optional, List
 from freeplay import Freeplay, RecordPayload, ResponseInfo, CallInfo
 from freeplay.resources.prompts import FormattedPrompt
-from langchain_core.messages import BaseMessage
+from langchain_core.messages import BaseMessage, ToolMessage
 
 FREEPLAY_PROJECT_ID = os.getenv("FREEPLAY_PROJECT_ID")
-
+_role_map = {
+    'human': 'user',
+    'ai': 'assistant',
+    'tool': 'tool',
+}
 
 # @lru_cache(maxsize=1)
 def _get_fp_client():
@@ -102,9 +106,19 @@ class FreeplayClient:
 
         # convert messages to Freeplay format
         if state['messages'] and isinstance(state['messages'][0], dict):
+            # if it's a dict leave it alone and just send it on
             all_messages = state['messages']
         else:
-            all_messages = [{'role': m.type, 'content': m.content} for m in state['messages'] if m.content]
+            # otherwise assume it's langchain messages and we need to parse them for freeplay
+            # all_messages = [{'role': _role_map[m.type], 'content': m.content} for m in state['messages'] if m.content]
+            all_messages = [
+                {
+                    'role': _role_map[m.type],
+                    'content': m.content,
+                    **({'tool_call_id': m.tool_call_id} if isinstance(m, ToolMessage) else {})
+                }
+                for m in state['messages'] if m.content
+            ]
 
         # fix session if we landed here and it's missing
         if not self.session:

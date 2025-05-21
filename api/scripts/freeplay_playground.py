@@ -36,9 +36,7 @@ variables = {
 # ]
 history = [
     {'role': 'user', 'content': 'tell me about some players in everglade fc'},
-    # {'role': 'assistant', 'content': ''},
-    {'role': 'tool_call', 'content': '{"number": 23, "name": "Brian Davis", "age": 27, "nationality": "USA", "shirt_number"...c image full of energy and anticipation."}'},
-    # {'role': 'tool', 'content': '{"number": 10, "name": "Matthew Martin", "age": 24, "nationality": "USA", "shirt_numb...he dramatic flair he brings to the game."}'},
+    {'role': 'tool', 'content': '{"number": 23, "name": "Brian Davis", "age": 27, "nationality": "USA", "shirt_number"...c image full of energy and anticipation."}', 'tool_call_id': 'abc123'},
     {'role': 'assistant', 'content': 'Everglade FC is bursting with talent! Here are some standout players to watch:\n\n1. **...rglade FC brings to the field! Go, team! 🌟'},
 ]
 
