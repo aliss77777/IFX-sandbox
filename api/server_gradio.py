@@ -114,13 +114,13 @@ def submit_helper(state, handler, user_query):
                 gr.Info(token["message"])
                 continue
             if token["type"] == "ots":
+                print('OTS: ' + token["message"])
                 state.ots_content = ots_default.format(content=token["message"])
                 state = AppState(**state.model_dump())
-                yield state, result
                 continue
         result += token
         yield state, result
-
+    
     state.history.append(AIMessage(content=result))
 
 ### Interface ###
@@ -210,12 +210,14 @@ with gr.Blocks() as demo:
 
     @submit_btn.click(inputs=[state, user_query], outputs=[state, llm_response])
     def submit(state, user_query):
-        user_query = user_query or "tell me about some players in everglade fc"
+        # user_query = user_query or "tell me about some players in everglade fc"
+        user_query = user_query or "tell me about Ryan Martinez of everglade fc"
         yield from submit_helper(state, handler, user_query)
         
     @user_query.submit(inputs=[state, user_query], outputs=[state, llm_response])
     def user_query_change(state, user_query):
-        user_query = user_query or "tell me about some players in everglade fc"
+        # user_query = user_query or "tell me about some players in everglade fc"
+        user_query = user_query or "tell me about Ryan Martinez of everglade fc"
         yield from submit_helper(state, handler, user_query)
 
     @persona.change(inputs=[persona, state], outputs=[persona_disp])

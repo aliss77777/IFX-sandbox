@@ -31,6 +31,10 @@ class PlayerSearchSchema(BaseModel):
         "  • Everglade FC (Miami, USA): Flashy, wild, South Florida flair.\n"
         "  • Fraser Valley United (Abbotsford, Canada): Vineyard roots, top youth academy."
     ))
+    show_profile_card: bool = Field(description=(
+        "If true, only the best-matching player will be returned. The UI will display a player profile card for this result, in addition to the LLM's response."
+        "The LLM should use this flag when the user expects a single, specific player and a card UI."
+    ))
 
 
 class PlayerSearchTool(BaseTool):
@@ -43,22 +47,34 @@ class PlayerSearchTool(BaseTool):
     
     def _run(self,
              query: str,
+             show_profile_card: bool = False,
              run_manager: Optional[CallbackManagerForToolRun] = None,
              ) -> List[Document]:
         k = 5 if query[0] == "*" else 3
-        return vector_store.similarity_search(
+        if show_profile_card:
+            k = 1
+        results = vector_store.similarity_search(
             query,
             k=k,
             filter=lambda doc: doc.metadata.get("type") == "player",
         )
+        for result in results:
+            result.metadata["show_profile_card"] = show_profile_card
+        return results
     
     async def _arun(self,
                     query: str,
+                    show_profile_card: bool = False,
                     run_manager: Optional[AsyncCallbackManagerForToolRun] = None,
                     ) -> List[Document]:
         k = 5 if query[0] == "*" else 3
-        return await vector_store.asimilarity_search(
+        if show_profile_card:
+            k = 1
+        results = await vector_store.asimilarity_search(
             query,
             k=k,
             filter=lambda doc: doc.metadata.get("type") == "player",
         )
+        for result in results:
+            result.metadata["show_profile_card"] = show_profile_card
+        return results

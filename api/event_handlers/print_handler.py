@@ -4,6 +4,19 @@ from langchain_core.outputs.llm_result import LLMResult
 from typing import List
 from langchain_core.messages import BaseMessage
 
+image_base = """
+<img 
+    src="https://huggingface.co/spaces/ryanbalch/IFX-huge-league/resolve/main/assets/profiles/{filename}"
+    style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;"
+/>
+"""
+team_image_map = {
+    'everglade-fc': 'Everglade_FC',
+    'fraser-valley-united': 'Fraser_Valley_United',
+    'tierra-alta-fc': 'Tierra_Alta_FC',
+    'yucatan-force': 'Yucatan_Force',
+}
+
 class PrintEventHandler(AsyncCallbackHandler):
     """
     Example async event handler: prints streaming tokens and tool results.
@@ -26,7 +39,12 @@ class PrintEventHandler(AsyncCallbackHandler):
             print('\n[END]')
 
     async def on_tool_end(self, output: any, **kwargs):
-        print(f"\n{Fore.CYAN}[TOOL RESULT] {output}{Style.RESET_ALL}")
+        for doc in output:
+            if doc.metadata.get("show_profile_card"):
+                img = image_base.format(filename=self.get_image_filename(doc))
+                print(f"\n{Fore.CYAN}[TOOL RESULT] {img}{Style.RESET_ALL}")
+            else:
+                print(f"\n{Fore.CYAN}[TOOL RESULT] {doc}{Style.RESET_ALL}")
 
     async def on_tool_start(self, input: any, *args, **kwargs):
         print(f"\n{Fore.CYAN}[TOOL START]{Style.RESET_ALL}")
@@ -41,6 +59,10 @@ class PrintEventHandler(AsyncCallbackHandler):
             return bool(content and content.strip())
         except (IndexError, AttributeError):
             return False
+
+    @staticmethod
+    def get_image_filename(doc):
+        return f'{team_image_map.get(doc.metadata.get("team"))}_{doc.metadata.get("number")}.png'
 
     # def __getattribute__(self, name):
     #     attr = super().__getattribute__(name)

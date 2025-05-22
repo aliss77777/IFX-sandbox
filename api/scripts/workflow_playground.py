@@ -36,8 +36,9 @@ workflow_bundle, state = build_workflow_with_state(
     last_name="Bigly",
     persona="Casual Fan",
     messages=[
-        HumanMessage(content="tell me about some players in everglade fc"),
+        # HumanMessage(content="tell me about some players in everglade fc"),
         # HumanMessage(content="tell me about the league")
+        HumanMessage(content="tell me about Ryan Martinez of everglade fc")
     ],
 )
 
