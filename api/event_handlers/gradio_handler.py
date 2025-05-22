@@ -67,7 +67,7 @@ class GradioEventHandler(AsyncCallbackHandler):
     async def on_tool_end(self, output: any, **kwargs):
         print(f"\n{Fore.CYAN}[TOOL END] {output}{Style.RESET_ALL}")
         for doc in output:
-            if True:#doc.metadata.get("show_profile_card"):
+            if doc.metadata.get("show_profile_card"):
                 img = image_base.format(filename=self.get_image_filename(doc))
                 print(f"\n{Fore.YELLOW}[TOOL END] {img}{Style.RESET_ALL}")
                 self.ots_box(img)
