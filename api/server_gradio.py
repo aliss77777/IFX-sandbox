@@ -18,6 +18,11 @@ MESSAGE_TYPE_MAP = {
     "ai": AIMessage,
     # Add other message types as needed
 }
+ots_default = """
+<div style="display: flex; justify-content: center; align-items: center; width: 100%; max-width: 727px; height: 363px; margin: 0 auto;">
+    {content}
+</div>
+"""
 
 
 class AppState(BaseModel):
@@ -29,6 +34,12 @@ class AppState(BaseModel):
     history: list = []
     zep_session_id: str = ""
     freeplay_session_id: str = ""
+    ots_content: str = ots_default.format(content="""
+    <img 
+        src="https://huggingface.co/spaces/ryanbalch/IFX-huge-league/resolve/main/assets/huge_landing.png"
+        style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;"
+    />
+    """)
     
     def ensure_sessions(self):
         if not self.zep_session_id:
@@ -102,6 +113,11 @@ def submit_helper(state, handler, user_query):
             if token["type"] == "info":
                 gr.Info(token["message"])
                 continue
+            if token["type"] == "ots":
+                state.ots_content = ots_default.format(content=token["message"])
+                state = AppState(**state.model_dump())
+                yield state, result
+                continue
         result += token
         yield state, result
 
@@ -130,8 +146,11 @@ with gr.Blocks() as demo:
                                value=state.value.last_name)
 
     with gr.Row():
-        llm_response = gr.Textbox(label="LLM Response", lines=10)
-        ots_box = gr.Textbox(label="OTS", lines=10)
+        llm_response = gr.Textbox(label="LLM Response", lines=15)
+        ots_box = gr.HTML(
+            label="OTS",
+            value=state.value.ots_content,
+        )
 
     with gr.Row(scale=1):
         with gr.Column(scale=1):
@@ -180,9 +199,9 @@ with gr.Blocks() as demo:
 
     ### Events
 
-    @state.change(inputs=[state], outputs=[count_disp, persona_disp, zep_session_id_disp, freeplay_session_id_disp, user_query])
+    @state.change(inputs=[state], outputs=[count_disp, persona_disp, zep_session_id_disp, freeplay_session_id_disp, user_query, ots_box])
     def state_change(state):
-        return state.count, state.persona, state.zep_session_id, state.freeplay_session_id, ""
+        return state.count, state.persona, state.zep_session_id, state.freeplay_session_id, "", state.ots_content
     
     @clear_state_btn.click(outputs=[state, llm_response, persona, user_query, email, first_name, last_name])
     def clear_state():

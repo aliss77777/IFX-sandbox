@@ -24,8 +24,22 @@ class GradioEventHandler(AsyncCallbackHandler):
             }
         )
 
+    def ots_box(self, message: str):
+        self.queue.put(
+            {
+                "type": "ots",
+                "message": message,
+            }
+        )
+
     async def on_chat_model_start(self, *args, **kwargs):
         self.info_box('[CHAT START]')
+        self.ots_box("""
+        <img 
+            src="https://huggingface.co/spaces/ryanbalch/IFX-huge-league/resolve/main/assets/landing.png"
+            style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;"
+        />
+        """)
 
     async def on_llm_new_token(self, token: str, **kwargs):
         if token:
