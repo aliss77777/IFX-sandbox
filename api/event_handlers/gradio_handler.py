@@ -8,7 +8,7 @@ from langchain_core.messages import BaseMessage
 TEAM_LOGO_BASE_URL = "https://huggingface.co/spaces/yamilsteven/ifx-assets/resolve/main/assets/team_logos/"
 
 image_base = """
-<div style="background-color: #2C2C2C; border-radius: 10px; padding: 25px; display: flex; align-items: center; width: 450px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+<div style="background-color: #1f2937; border-radius: 10px; padding: 25px; display: flex; align-items: center; width: 450px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
   <div style="margin-right: 25px;">
     <img src="https://huggingface.co/spaces/ryanbalch/IFX-huge-league/resolve/main/assets/profiles/players_pics/{filename}" alt="{filename} Pic" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #444;">
   </div>
@@ -23,7 +23,7 @@ image_base = """
 """
 
 game_card_html = """
-<div style="text-align: center; padding: 20px; margin: 10px 0; border-radius: 8px; background-color: #3A3B3C; color: #FFFFFF; font-family: Arial, sans-serif; max-width: 500px; margin-left: auto; margin-right: auto;">
+<div style="text-align: center; padding: 20px; margin: 10px 0; border-radius: 8px; background-color: #1f2937; color: #FFFFFF; font-family: Arial, sans-serif; max-width: 500px; margin-left: auto; margin-right: auto;">
   <h3 style="margin-top: 0; margin-bottom: 10px; font-size: 20px; color: #E0E0E0;">{game_title}</h3>
   <div style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 15px;">
     <div style="text-align: center; width: 40%;">
@@ -52,10 +52,10 @@ game_card_html = """
 """
 
 team_info_card_html = """
-<div style="text-align: center; padding: 50px; margin:10px 0; border-radius: 8px; background-color: #FFFFFF; color: #333333; font-family: Arial, sans-serif; max-width: 450px; margin-left: auto; margin-right: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+<div style="text-align: center; padding: 50px; margin:10px 0; border-radius: 8px; background-color: #1f2937; color: #333333; max-width: 450px; margin-left: auto; margin-right: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
   <img src="{team_logo_url}" alt="{team_display_name} Logo" style="max-width: 80px; max-height: 80px; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; border-radius: 5px;" onerror="this.onerror=null; this.src='{default_logo_url}';">
-  <h3 style="margin-top: 0; margin-bottom: 8px; font-size: 22px; color: #000000;">{team_display_name}</h3>
-  <p style="font-size: 15px; color: #333333; margin-bottom: 15px;">{city_display}</p>
+  <h3 style="margin-top: 0; margin-bottom: 8px; font-size: 22px; color: #FFFFFF;">{team_display_name}</h3>
+  <p style="font-size: 15px; color: #FFFFFF; margin-bottom: 15px;">{city_display}</p>
   {team_page_cta_html}
 </div>
 """

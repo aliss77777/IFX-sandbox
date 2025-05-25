@@ -125,76 +125,80 @@ def submit_helper(state, handler, user_query):
 
 ### Interface ###
 
-with gr.Blocks() as demo:
+with gr.Blocks(theme="soft") as demo:
     state = gr.State(AppState())
     handler = GradioEventHandler()
 
     gr.Markdown("# Huge League Soccer")
-    with gr.Row(scale=1):
+    with gr.Row():
         email = gr.Textbox(label="Email",
                            type="email",
                            interactive=True,
                            lines=1,
-                           value=state.value.email)
+                           value=state.value.email,
+                           scale=1)
         first_name = gr.Textbox(label="First Name",
                                 lines=1,
                                 interactive=True,
-                                value=state.value.first_name)
+                                value=state.value.first_name,
+                                scale=1)
         last_name = gr.Textbox(label="Last Name",
                                lines=1,
                                interactive=True,
-                               value=state.value.last_name)
+                               value=state.value.last_name,
+                               scale=1)
 
     with gr.Row():
-        llm_response = gr.Textbox(label="LLM Response", lines=15)
-        ots_box = gr.HTML(
-            label="OTS",
-            value=state.value.ots_content,
-        )
+        with gr.Column(scale=3):
+            llm_response = gr.Textbox(label="LLM Response", lines=15)
+        with gr.Column(scale=2):
+            ots_box = gr.HTML(
+                label="OTS",
+                value=state.value.ots_content,
+            )
 
-    with gr.Row(scale=1):
-        with gr.Column(scale=1):
+    with gr.Row():
+        with gr.Column(scale=1, min_width=200):
             persona = gr.Radio(
                 choices=["Casual Fan", "Super Fan"],
                 value="Casual Fan",
                 label="Select Persona",
             )
-        with gr.Column(scale=2):
+        with gr.Column(scale=3):
             user_query = gr.Textbox(
                 label="User Query",
                 placeholder="Ask me about Huge League Soccer...",
-                # lines=3,
                 autofocus=True,
                 show_label=False,
             )
-            submit_btn = gr.Button("Submit", variant="primary", scale=0)
+            with gr.Row():
+                submit_btn = gr.Button("Submit", variant="primary", scale=1)
+                clear_state_btn = gr.Button("Clear State", scale=1)
 
-    clear_state_btn = gr.Button("Clear State", variant="stop", scale=1)
-
-    with gr.Row(visible=show_state, variant="compact", scale=1):
+    with gr.Row(visible=show_state, variant="compact"):
         count_disp = gr.Number(
             label="Count",
             interactive=False,
             value=state.value.count,
-            scale=0,
+            scale=1,
         )
         persona_disp = gr.Text(
             label="Persona",
             interactive=False,
             value=state.value.persona,
-            scale=0
+            scale=1
         )
         zep_session_id_disp = gr.Text(
             label="Zep Session ID",
             interactive=False,
             value=state.value.zep_session_id,
-            scale=1
+            scale=2
         )
         freeplay_session_id_disp = gr.Text(
             label="Freeplay Session ID",
             interactive=False,
             value=state.value.freeplay_session_id,
-            scale=1
+            scale=2
         )
 
     ### Events
