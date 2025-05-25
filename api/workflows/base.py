@@ -28,12 +28,14 @@ from tools import (
     Document,
     PlayerSearchTool,
     GameSearchTool,
+    TeamSearchTool,
 )
 
 
 available_tools = [
     GameSearchTool(),
     PlayerSearchTool(),
+    TeamSearchTool(),
 ]
 tool_node = ToolNode(available_tools)
 
