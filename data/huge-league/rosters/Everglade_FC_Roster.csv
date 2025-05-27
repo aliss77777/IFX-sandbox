@@ -1,0 +1,24 @@
+Player #,Name,Position,Age,Nationality,Shirt #,Preferred Foot,Role
+1,Eric Miller,Goalkeeper,28,USA,1,Right,Starter
+2,Matthew Garcia,Left Back,32,USA,2,Left,Starter
+3,Brandon Jones,Center Back,21,USA,3,Right,Starter
+4,Zachary Garcia,Center Back,29,USA,4,Right,Starter
+5,Brandon Hernandez,Right Back,17,USA,5,Right,Starter
+6,Austin Jackson,Defensive Mid,23,USA,6,Right,Starter
+7,Ryan Williams,Central Mid,25,USA,7,Right,Starter
+8,Nicholas Jackson,Central Mid,32,USA,8,Right,Starter
+9,Andrew Anderson,Left Wing,24,USA,9,Right,Starter
+10,Matthew Martin,Striker,24,USA,10,Left,Starter
+11,Michael Smith,Right Wing,20,USA,11,Right,Starter
+12,Eric Johnson,Goalkeeper,30,USA,12,Left,Bench
+13,Michael Martin,Center Back,22,USA,13,Left,Bench
+14,Nicholas Gonzalez,Full Back,19,USA,14,Left,Bench
+15,Joseph Thomas,Defensive Mid,27,USA,15,Right,Bench
+16,Michael Martin,Central Mid,26,USA,16,Left,Bench
+17,Zachary Johnson,Attacking Mid,22,USA,17,Left,Bench
+18,Ryan Martinez,Forward/Winger,28,USA,18,Left,Bench
+19,Ryan Moore,Striker,29,USA,19,Right,Bench
+20,Andrew Davis,Left Wing,19,USA,20,Right,Bench
+21,Ryan Brown,Right Wing,21,USA,21,Left,Bench
+22,Ryan Martinez,Various,25,USA,22,Right,Reserve/Prospect
+23,Brian Davis,Various,27,USA,23,Right,Reserve/Prospect

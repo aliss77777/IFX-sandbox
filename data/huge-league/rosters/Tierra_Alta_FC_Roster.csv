@@ -1,0 +1,24 @@
+Player #,Name,Position,Age,Nationality,Shirt #,Preferred Foot,Role
+1,Marco Araya,Goalkeeper,17,Costa Rica,1,Left,Starter
+2,José Chacón,Left Back,22,Costa Rica,2,Left,Starter
+3,David Alvarado,Center Back,24,Costa Rica,3,Left,Starter
+4,Marco Salazar,Center Back,21,Costa Rica,4,Right,Starter
+5,Ricardo Cordero,Right Back,19,Costa Rica,5,Left,Starter
+6,Mauricio Pérez,Defensive Mid,23,Costa Rica,6,Right,Starter
+7,Joaquín Araya,Central Mid,20,Costa Rica,7,Left,Starter
+8,Pablo Ureña,Central Mid,23,Costa Rica,8,Left,Starter
+9,Esteban Camacho,Left Wing,30,Costa Rica,9,Left,Starter
+10,Felipe Zúñiga,Striker,25,Costa Rica,10,Right,Starter
+11,Gabriel Fonseca,Right Wing,30,Costa Rica,11,Right,Starter
+12,Alonso Camacho,Goalkeeper,26,Costa Rica,12,Left,Bench
+13,Carlos Pérez,Center Back,27,Costa Rica,13,Right,Bench
+14,Erick Zúñiga,Full Back,32,Costa Rica,14,Right,Bench
+15,Cristian Salazar,Defensive Mid,22,Costa Rica,15,Left,Bench
+16,Daniel Araya,Central Mid,24,Costa Rica,16,Left,Bench
+17,Carlos Solano,Attacking Mid,29,Costa Rica,17,Right,Bench
+18,Leonardo Salazar,Forward/Winger,25,Costa Rica,18,Left,Bench
+19,Sebastián Mora,Striker,29,Costa Rica,19,Right,Bench
+20,Sebastián Alvarado,Left Wing,27,Costa Rica,20,Right,Bench
+21,Rafael Cordero,Right Wing,24,Costa Rica,21,Right,Bench
+22,Andrés Zúñiga,Various,29,Costa Rica,22,Left,Reserve/Prospect
+23,Gabriel Chacón,Various,25,Costa Rica,23,Right,Reserve/Prospect

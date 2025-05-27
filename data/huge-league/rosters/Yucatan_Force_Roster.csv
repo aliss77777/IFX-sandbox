@@ -1,0 +1,24 @@
+Player #,Name,Position,Age,Nationality,Shirt #,Preferred Foot,Role
+1,Carlos Hernández,Goalkeeper,17,Mexico,1,Right,Starter
+2,César Navarro,Left Back,30,Mexico,2,Right,Starter
+3,Luis Navarro,Center Back,25,Mexico,3,Right,Starter
+4,Arturo Sánchez,Center Back,32,Mexico,4,Left,Starter
+5,Ramón Sánchez,Right Back,31,Mexico,5,Right,Starter
+6,Miguel Vargas,Defensive Mid,31,Mexico,6,Left,Starter
+7,Santiago Ortega,Central Mid,19,Mexico,7,Left,Starter
+8,Juan Reyes,Central Mid,29,Mexico,8,Left,Starter
+9,Héctor López,Left Wing,28,Mexico,9,Left,Starter
+10,Ramón Jiménez,Striker,26,Mexico,10,Left,Starter
+11,José Delgado,Right Wing,32,Mexico,11,Right,Starter
+12,Miguel Morales,Goalkeeper,22,Mexico,12,Right,Bench
+13,Ricardo Hernández,Center Back,19,Mexico,13,Right,Bench
+14,Fernando Flores,Full Back,22,Mexico,14,Left,Bench
+15,Fernando Rodríguez,Defensive Mid,24,Mexico,15,Right,Bench
+16,Alonso Ramos,Central Mid,21,Mexico,16,Left,Bench
+17,Ramón Jiménez,Attacking Mid,17,Mexico,17,Right,Bench
+18,Emilio Navarro,Forward/Winger,24,Mexico,18,Left,Bench
+19,Emilio Martínez,Striker,24,Mexico,19,Right,Bench
+20,Javier Martínez,Left Wing,28,Mexico,20,Right,Bench
+21,Eduardo Castillo,Right Wing,24,Mexico,21,Left,Bench
+22,Santiago Jiménez,Various,21,Mexico,22,Left,Reserve/Prospect
+23,Pablo Vargas,Various,24,Mexico,23,Right,Reserve/Prospect

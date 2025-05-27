@@ -1,0 +1,31 @@
+services:
+  huge-ifx-api:
+    container_name: huge-ifx-api
+    build:
+      context: ./api 
+      target: base
+    volumes:
+      - ./api:/code
+      - .:/workspace
+      - root_hist:/root/history # i keep roots history across everything
+      - huggingface-cache:/root/.cache/huggingface
+      # - ~/.config/gcloud:/.config/gcloud
+    stdin_open: true
+    tty: true
+    ports:
+      - "8000:8000" # serving site
+    env_file:
+      - .env
+    environment:
+      DEBUG: false
+      DEV_MODE: true
+    # command: uvicorn server:app --reload --host 0.0.0.0 --port 8000 --reload --log-level debug
+    command: gradio server_gradio.py
+
+volumes:
+  root_hist:
+    name: root_hist
+    external: true
+  huggingface-cache:
+    name: huggingface-cache
+    external: true

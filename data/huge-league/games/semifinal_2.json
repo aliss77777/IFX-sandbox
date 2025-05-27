@@ -1,0 +1,100 @@
+[
+    {
+        "description": "Lucas Harris cuts in from the right wing and curls a shot into the far corner.",
+        "event": "Goal",
+        "minute": "5",
+        "player": "Lucas Harris 11",
+        "team": "Fraser Valley United"
+    },
+    {
+        "description": "Brandon Hernandez receives a yellow card for a late tackle on Mason Walker.",
+        "event": "Yellow Card",
+        "minute": "16",
+        "player": "Brandon Hernandez 5",
+        "team": "Everglade FC"
+    },
+    {
+        "description": "Ryan Williams equalizes with a powerful header from a corner delivered by Michael Smith.",
+        "event": "Goal",
+        "minute": "28",
+        "player": "Ryan Williams 7",
+        "team": "Everglade FC"
+    },
+    {
+        "description": "Elijah Gagnon comes on for Thomas Walker to add fresh legs up front.",
+        "event": "Substitution",
+        "minute": "33",
+        "player": "Elijah Gagnon 19",
+        "team": "Fraser Valley United"
+    },
+    {
+        "description": "Andrew Anderson gives Everglade FC the lead with a finesse shot from the left side.",
+        "event": "Goal",
+        "minute": "41",
+        "player": "Andrew Anderson 9",
+        "team": "Everglade FC"
+    },
+    {
+        "description": "Jacob Thompson is booked for dissent following a controversial foul call.",
+        "event": "Yellow Card",
+        "minute": "45+1",
+        "player": "Jacob Thompson 4",
+        "team": "Fraser Valley United"
+    },
+    {
+        "description": "Thomas Brown levels the score with a spectacular long-range strike.",
+        "event": "Goal",
+        "minute": "56",
+        "player": "Thomas Brown 7",
+        "team": "Fraser Valley United"
+    },
+    {
+        "description": "Ryan Brown replaces Michael Smith to add energy on the right wing.",
+        "event": "Substitution",
+        "minute": "63",
+        "player": "Ryan Brown 21",
+        "team": "Everglade FC"
+    },
+    {
+        "description": "Owen Campbell is brought on for Mason Walker to bolster the midfield.",
+        "event": "Substitution",
+        "minute": "74",
+        "player": "Owen Campbell 17",
+        "team": "Fraser Valley United"
+    },
+    {
+        "description": "Elijah Gagnon puts Fraser Valley United ahead with a close-range finish.",
+        "event": "Goal",
+        "minute": "80",
+        "player": "Elijah Gagnon 19",
+        "team": "Fraser Valley United"
+    },
+    {
+        "description": "Matthew Martin equalizes in dramatic fashion with a header from a free-kick.",
+        "event": "Goal",
+        "minute": "87",
+        "player": "Matthew Martin 10",
+        "team": "Everglade FC"
+    },
+    {
+        "description": "Joseph Thomas enters for Austin Jackson to strengthen the team's defense.",
+        "event": "Substitution",
+        "minute": "90+3",
+        "player": "Joseph Thomas 15",
+        "team": "Everglade FC"
+    },
+    {
+        "description": "Ryan Williams receives a yellow card for time-wasting.",
+        "event": "Yellow Card",
+        "minute": "90+5",
+        "player": "Ryan Williams 7",
+        "team": "Everglade FC"
+    },
+    {
+        "description": "Everglade FC wins the penalty shootout 4-2, securing a spot in the final.",
+        "event": "Penalty Shootout",
+        "minute": "Full-Time",
+        "player": "Various",
+        "team": "Everglade FC"
+    }
+]
