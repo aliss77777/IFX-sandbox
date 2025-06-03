@@ -31,7 +31,7 @@ clean-requirements:
 
 # Build the Docker image for the 'runtime' stage in api/Dockerfile, tagged as huge-ifx-api:prod
 build-prod:
-	cd api && docker build -f Dockerfile --target runtime -t huge-ifx-api:prod .
+	cd api && docker build --platform linux/amd64 -f Dockerfile --target runtime -t huge-ifx-api:prod .
 
 # Build the prod image and run it locally, mapping ports 7860 and 8000
 up-build-prod: build-prod
@@ -39,5 +39,5 @@ up-build-prod: build-prod
 
 # Push the prod image to GitHub Container Registry
 push-prod-ghcr:
-	docker tag huge-ifx-api:prod ghcr.io/rbalch/huge-ifx-api:prod
-	docker push ghcr.io/rbalch/huge-ifx-api:prod
+	docker tag huge-ifx-api:prod ghcr.io/ylassohugeinc/ifx-huge-league-api:prod
+	docker push ghcr.io/ylassohugeinc/ifx-huge-league-api:prod

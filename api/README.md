@@ -109,7 +109,7 @@ To deploy:
 2. **Deployment Targets:**
     - GitHub: [aliss77777/IFX-sandbox](https://github.com/aliss77777/IFX-sandbox/tree/huge-league)
     - HuggingFace: [ryanbalch/IFX-huge-league](https://huggingface.co/spaces/ryanbalch/IFX-huge-league/tree/main)
-    - Docker images: `ghcr.io/rbalch/huge-ifx-api:prod`
+    - Docker images: `ghcr.io/ylassohugeinc/ifx-huge-league-api:prod`
 
 3. **Deployment Steps:**
 
@@ -196,7 +196,7 @@ The following `make` commands are available for development, build, and deployme
 | `make extract-lock`   | Extract the `poetry.lock` file from a built container to your local directory. **Note:** This is only needed if you've been deleting the lock file because build will not have access to local lock file. |
 | `make build-prod`     | Build the Docker image for the `runtime` stage in `api/Dockerfile`, tagged as `huge-ifx-api:prod`. Used for production deploys. |
 | `make up-build-prod`  | Build and run the production image locally, mapping ports 7860 and 8000, with `.env` and `DEV_MODE=true`. |
-| `make push-prod-ghcr` | Tag and push the production image to GitHub Container Registry at `ghcr.io/rbalch/huge-ifx-api:prod`. |
+| `make push-prod-ghcr` | Tag and push the production image to GitHub Container Registry at `ghcr.io/ylassohugeinc/ifx-huge-league-api:prod`. |
 
 **Typical workflow:**
 - Use `make build` and `make up` for local development.

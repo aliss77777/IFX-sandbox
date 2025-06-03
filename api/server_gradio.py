@@ -18,6 +18,12 @@ MESSAGE_TYPE_MAP = {
     "ai": AIMessage,
     # Add other message types as needed
 }
+INITIAL_OTS_IMAGE_HTML = """
+    <img 
+        src="https://huggingface.co/spaces/ryanbalch/IFX-huge-league/resolve/main/assets/huge_landing.png"
+        style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;"
+    />
+    """
 ots_default = """
 <div style="display: flex; justify-content: center; align-items: center; width: 100%; max-width: 727px; height: 363px; margin: 0 auto;">
     {content}
@@ -34,12 +40,7 @@ class AppState(BaseModel):
     history: list = []
     zep_session_id: str = ""
     freeplay_session_id: str = ""
-    ots_content: str = ots_default.format(content="""
-    <img 
-        src="https://huggingface.co/spaces/ryanbalch/IFX-huge-league/resolve/main/assets/huge_landing.png"
-        style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: 0 auto;"
-    />
-    """)
+    ots_content: str = ots_default.format(content=INITIAL_OTS_IMAGE_HTML)
     
     def ensure_sessions(self):
         if not self.zep_session_id:
@@ -67,6 +68,7 @@ class AppState(BaseModel):
 ### Helpers ###
 
 def submit_helper(state, handler, user_query):
+    state.ots_content = ots_default.format(content=INITIAL_OTS_IMAGE_HTML)
     state.count += 1
     state.ensure_sessions()
     message = HumanMessage(content=user_query)
@@ -117,17 +119,18 @@ def submit_helper(state, handler, user_query):
                 print('OTS: ' + token["message"])
                 state.ots_content = ots_default.format(content=token["message"])
                 state = AppState(**state.model_dump())
+                yield state, result
                 continue
         result += token
         yield state, result
     
     state.history.append(AIMessage(content=result))
+    yield state, result
 
 ### Interface ###
 
 with gr.Blocks(theme="soft") as demo:
     state = gr.State(AppState())
-    handler = GradioEventHandler()
 
     gr.Markdown("# Huge League Soccer")
     with gr.Row():
@@ -207,21 +210,33 @@ with gr.Blocks(theme="soft") as demo:
     def state_change(state):
         return state.count, state.persona, state.zep_session_id, state.freeplay_session_id, "", state.ots_content
     
-    @clear_state_btn.click(outputs=[state, llm_response, persona, user_query, email, first_name, last_name])
-    def clear_state():
-        new_state = AppState()
+    @clear_state_btn.click(inputs=[state], outputs=[state, llm_response, persona, user_query, email, first_name, last_name])
+    def clear_state(current_app_state: AppState):
+        # Preserve session IDs
+        existing_zep_session_id = current_app_state.zep_session_id
+        existing_freeplay_session_id = current_app_state.freeplay_session_id
+
+        # Create new AppState, passing preserved session IDs
+        # Other fields will get their default values from AppState definition
+        new_state = AppState(
+            zep_session_id=existing_zep_session_id,
+            freeplay_session_id=existing_freeplay_session_id
+        )
+        # The email, first_name, last_name, persona will be the defaults from new_state
         return new_state, "", new_state.persona, "", new_state.email, new_state.first_name, new_state.last_name
 
     @submit_btn.click(inputs=[state, user_query], outputs=[state, llm_response])
     def submit(state, user_query):
         # user_query = user_query or "tell me about some players in everglade fc"
         user_query = user_query or "tell me about Ryan Martinez of everglade fc"
+        handler = GradioEventHandler()
         yield from submit_helper(state, handler, user_query)
         
     @user_query.submit(inputs=[state, user_query], outputs=[state, llm_response])
     def user_query_change(state, user_query):
         # user_query = user_query or "tell me about some players in everglade fc"
         user_query = user_query or "tell me about Ryan Martinez of everglade fc"
+        handler = GradioEventHandler()
         yield from submit_helper(state, handler, user_query)
 
     @persona.change(inputs=[persona, state], outputs=[persona_disp])
