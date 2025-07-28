@@ -2,10 +2,35 @@
 import os
 import time
 from functools import lru_cache
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Any
 from freeplay import Freeplay, RecordPayload, ResponseInfo, CallInfo
 from freeplay.resources.prompts import FormattedPrompt
 from langchain_core.messages import BaseMessage, ToolMessage
+
+
+def safe_get_content(obj: Any) -> Any:
+    """
+    Safely get the 'content' from an object whether it's a dictionary or an object with attributes.
+    
+    Args:
+        obj: An object that might have 'content' as either a dictionary key or an attribute
+        
+    Returns:
+        The content value if available
+        
+    Raises:
+        AttributeError: If content cannot be accessed either as a dict key or object attribute
+    """
+    # Try dictionary access first
+    if isinstance(obj, dict) and "content" in obj:
+        return obj["content"]
+    
+    # Try attribute access next
+    if hasattr(obj, "content"):
+        return obj.content
+    
+    # If neither works, raise an exception
+    raise AttributeError(f"Cannot access 'content' on {type(obj).__name__} object. It's neither a dict with 'content' key nor an object with 'content' attribute.")
 
 FREEPLAY_PROJECT_ID = os.getenv("FREEPLAY_PROJECT_ID")
 _role_map = {
@@ -28,15 +53,28 @@ class FreeplayClient:
         self.fp_client = fp_client or _get_fp_client()
         self.session = None
         self.session_id = None
+        self.trace = None
         # cache variables for recording
         self._prompt_cache = {}
         self._prompt_vars = None
         self._formatted_prompt = None
-
+    
     def create_session(self):
         # create a Freeplay session
         self.session = self.fp_client.sessions.create()
         self.session_id = self.session.session_id
+        return self
+
+    def create_trace(self, input: str, agent_name: str, custom_metadata: dict = {}):
+        # make sure we have a session
+        if not self.session:
+            self.create_session()
+        # create the trace
+        self.trace = self.session.create_trace(
+            input=input,
+            agent_name=agent_name,
+            custom_metadata=custom_metadata,
+        )
         return self
 
     @staticmethod
@@ -104,21 +142,9 @@ class FreeplayClient:
         prompt_vars = prompt_vars or self._prompt_vars
         formatted_prompt = formatted_prompt or self._formatted_prompt
 
-        # convert messages to Freeplay format
-        if state['messages'] and isinstance(state['messages'][0], dict):
-            # if it's a dict leave it alone and just send it on
-            all_messages = state['messages']
-        else:
-            # otherwise assume it's langchain messages and we need to parse them for freeplay
-            # all_messages = [{'role': _role_map[m.type], 'content': m.content} for m in state['messages'] if m.content]
-            all_messages = [
-                {
-                    'role': _role_map[m.type],
-                    'content': m.content,
-                    **({'tool_call_id': m.tool_call_id} if isinstance(m, ToolMessage) else {})
-                }
-                for m in state['messages'] if m.content
-            ]
+        all_messages = formatted_prompt.all_messages(
+            new_message={'role': 'assistant', 'content': safe_get_content(state['messages'][-1])}
+        )
 
         # fix session if we landed here and it's missing
         if not self.session:
@@ -135,9 +161,39 @@ class FreeplayClient:
             response_info=ResponseInfo(
                 # is_complete=chat_response.choices[0].finish_reason == 'stop'
                 is_complete=True
-            )
+            ),
+            trace_info=self.trace
         )
         self.fp_client.recordings.create(payload)
+
+    def record_trace(
+        self,
+        state,
+        agent_name: Optional[str] = None,
+        custom_metadata: dict = {},
+        end: Optional[float] = time.time(),
+        formatted_prompt: Optional[FormattedPrompt] = None,
+        prompt_vars: Optional[dict] = None,
+    ):
+        """
+        Create and record a trace with Freeplay.
+        """
+        input = safe_get_content(state['messages'][0])
+        self.create_trace(
+            input=input,
+            agent_name=agent_name,
+            custom_metadata=custom_metadata,
+        )
+        self.record_session(
+            state=state,
+            end=end,
+            formatted_prompt=formatted_prompt,
+            prompt_vars=prompt_vars,
+        )
+        self.trace.record_output(
+            FREEPLAY_PROJECT_ID,
+            safe_get_content(state['messages'][-1])
+        )
 
     def get_prompt_by_persona(self,
                               persona: str,
