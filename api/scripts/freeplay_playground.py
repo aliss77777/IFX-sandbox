@@ -1,3 +1,4 @@
+import os
 import asyncio
 from pprint import pprint
 from utils.freeplay_helpers import FreeplayClient
@@ -8,6 +9,8 @@ from tools import (
     PlayerSearchTool,
     GameSearchTool,
 )
+
+project_id = os.getenv("FREEPLAY_PROJECT_ID")
 
 
 available_tools = [
@@ -34,6 +37,7 @@ variables = {
 #     # {'role': 'tool', 'content': '{"number": 10, "name": "Matthew Martin", "age": 24, "nationality": "USA", "shirt_numb...he dramatic flair he brings to the game."}'},
 #     {'role': 'ai', 'content': 'Everglade FC is bursting with talent! Here are some standout players to watch:\n\n1. **...rglade FC brings to the field! Go, team! 🌟'},
 # ]
+
 history = [
     {'role': 'user', 'content': 'tell me about some players in everglade fc'},
     {'role': 'tool', 'content': '{"number": 23, "name": "Brian Davis", "age": 27, "nationality": "USA", "shirt_number"...c image full of energy and anticipation."}', 'tool_call_id': 'abc123'},
@@ -47,11 +51,11 @@ formatted_prompt = prompt.bind(variables, history=history).format()
 
 
 def main():
-    print(formatted_prompt.llm_prompt)
-    print('================')
-    tool_schema = [tool.input_schema.schema_json() for tool in available_tools]
-    print(tool_schema)
-    print('================')
+    # print(formatted_prompt.llm_prompt)
+    # print('================')
+    tool_schema = [tool.input_schema.model_json_schema() for tool in available_tools]
+    # print(tool_schema)
+    # print('================')
 
     state = {
         "start_time": time.time(),
@@ -59,12 +63,33 @@ def main():
     }
     # variables['history'] = history
 
-    fp_client.create_session()
-    fp_client.record_session(
+    # fp_client.create_session()
+
+    # fp_client.create_trace(
+    #     input="test trace bit",
+    #     agent_name="test_agent",
+    #     custom_metadata={
+    #         "custom_metadata": "asdf"
+    #     }
+    # )
+
+    # fp_client.record_session(
+    #     state=state,
+    #     prompt_vars=variables,
+    #     formatted_prompt=formatted_prompt,
+    # )
+
+    fp_client.record_trace(
         state=state,
+        agent_name="your_daddy",
+        custom_metadata={
+            "custom_metadata": "asdf"
+        },
         prompt_vars=variables,
         formatted_prompt=formatted_prompt,
     )
+
+
 
 if __name__ == "__main__":
     main()
