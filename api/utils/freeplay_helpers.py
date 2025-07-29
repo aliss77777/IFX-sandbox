@@ -2,10 +2,11 @@
 import os
 import time
 from functools import lru_cache
-from typing import Union, Optional, List, Any
+from typing import Union, Optional, List, Any, Dict
 from freeplay import Freeplay, RecordPayload, ResponseInfo, CallInfo
 from freeplay.resources.prompts import FormattedPrompt
-from langchain_core.messages import BaseMessage, ToolMessage
+from langchain_core.messages import BaseMessage, ToolMessage, HumanMessage, AIMessage, SystemMessage
+from langchain_core.tools import BaseTool
 
 
 def safe_get_content(obj: Any) -> Any:
@@ -49,11 +50,17 @@ def _get_fp_client():
 
 class FreeplayClient:
 
-    def __init__(self, fp_client: Freeplay = None):
+    def __init__(
+        self,
+        fp_client: Freeplay = None,
+        tools: List[BaseTool] = None,
+    ):
         self.fp_client = fp_client or _get_fp_client()
         self.session = None
         self.session_id = None
         self.trace = None
+        self.tools = tools
+        self.tool_schema = self._convert_tool_schema(self.tools) if tools else None
         # cache variables for recording
         self._prompt_cache = {}
         self._prompt_vars = None
@@ -142,9 +149,16 @@ class FreeplayClient:
         prompt_vars = prompt_vars or self._prompt_vars
         formatted_prompt = formatted_prompt or self._formatted_prompt
 
-        all_messages = formatted_prompt.all_messages(
-            new_message={'role': 'assistant', 'content': safe_get_content(state['messages'][-1])}
-        )
+        # all_messages = formatted_prompt.all_messages(
+        #     new_message={'role': 'assistant', 'content': safe_get_content(state['messages'][-1])}
+        # )
+
+        # convert messages to Freeplay format
+        if state['messages'] and isinstance(state['messages'][0], dict):
+            # if it's a dict leave it alone and just send it on
+            all_messages = state['messages']
+        else:
+            all_messages = self._convert_messages(state['messages'])
 
         # fix session if we landed here and it's missing
         if not self.session:
@@ -155,14 +169,15 @@ class FreeplayClient:
         payload = RecordPayload(
             all_messages=all_messages,
             inputs=prompt_vars,
-            session_info=self.session, 
+            session_info=self.session.session_info, 
             prompt_info=formatted_prompt.prompt_info,
             call_info=CallInfo.from_prompt_info(formatted_prompt.prompt_info, start_time=state['start_time'], end_time=end), 
             response_info=ResponseInfo(
                 # is_complete=chat_response.choices[0].finish_reason == 'stop'
                 is_complete=True
             ),
-            trace_info=self.trace
+            trace_info=self.trace,
+            tool_schema=self.tool_schema,
         )
         self.fp_client.recordings.create(payload)
 
@@ -211,3 +226,70 @@ class FreeplayClient:
         self._formatted_prompt = formatted_prompt
 
         return formatted_prompt
+
+    def _convert_messages(self, messages: List[BaseMessage]) -> List[Dict[str, Any]]:
+        """Convert LangChain messages to dictionary format. Note this maps to OpenAI's message format."""
+        converted = []
+        role_map = {
+            HumanMessage: "user",
+            AIMessage: "assistant",
+            SystemMessage: "system",
+            ToolMessage: "tool",
+        }
+
+        for msg in messages:
+            # Get role, default to "user" if unknown type
+            role = role_map.get(type(msg), "user")
+
+            # Create message dict with special handling for tool messages
+            if role == "tool":
+                msg_dict = {
+                    "role": role,
+                    "content": msg.content,
+                    "tool_call_id": msg.tool_call_id,
+                    "name": msg.name,
+                }
+            else:
+                msg_dict = {
+                    "role": role,
+                    "content": msg.content,
+                }
+
+            # Add tool calls if present
+            if (
+                hasattr(msg, "additional_kwargs")
+                and msg.additional_kwargs
+                and "tool_calls" in msg.additional_kwargs
+            ):
+                msg_dict["tool_calls"] = msg.additional_kwargs["tool_calls"]
+
+            converted.append(msg_dict)
+
+        return converted
+
+    def _convert_tool_schema(self, tools: List[BaseTool]) -> List[Dict[str, Any]]:
+        """Convert LangChain tools to Freeplay tool schema format."""
+        tool_schema = []
+        for tool in tools:
+            # Extract parameters from tool's args_schema
+            parameters = {"type": "object", "properties": {}, "required": []}
+            if hasattr(tool, "args_schema") and tool.args_schema:
+                schema = tool.args_schema.model_json_schema()
+                parameters.update(
+                    {
+                        "properties": schema.get("properties", {}),
+                        "required": schema.get("required", []),
+                    }
+                )
+
+            tool_schema.append(
+                {
+                    "type": "function",
+                    "function": {
+                        "name": tool.name,
+                        "description": tool.description or tool.name,
+                        "parameters": parameters,
+                    },
+                }
+            )
+        return tool_schema

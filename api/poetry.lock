@@ -441,14 +441,14 @@ typing = ["typing-extensions (>=4.12.2) ; python_version < \"3.11\""]
 
 [[package]]
 name = "freeplay"
-version = "0.3.21"
+version = "0.3.25"
 description = ""
 optional = false
 python-versions = "<4,>=3.8"
 groups = ["main"]
 files = [
-    {file = "freeplay-0.3.21-py3-none-any.whl", hash = "sha256:963d2046bc656de840303a987942a3fc5d60ce706ce9b9adb8a199a8ca70106d"},
-    {file = "freeplay-0.3.21.tar.gz", hash = "sha256:19418e4b5c469e766262c3d4e027af2d58f06e591b59c307a089ab74e7e16496"},
+    {file = "freeplay-0.3.25-py3-none-any.whl", hash = "sha256:381563f38256f8a43e81be80e6ddb15cf1512e90f8b5a68542a8f3d203534d6c"},
+    {file = "freeplay-0.3.25.tar.gz", hash = "sha256:cd6c009b76768aefe21fa2d05eb017ad4413a4e8f0971169b82dd828c60508d7"},
 ]
 
 [package.dependencies]

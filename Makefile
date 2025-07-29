@@ -38,6 +38,11 @@ up-build-prod: build-prod
 	docker run --rm -it -p 7860:7860 -p 8000:8000 --env-file .env -e DEV_MODE=true huge-ifx-api:prod
 
 # Push the prod image to GitHub Container Registry
-push-prod-ghcr:
+push-prod-ghcr-ylass:
 	docker tag huge-ifx-api:prod ghcr.io/ylassohugeinc/ifx-huge-league-api:prod
 	docker push ghcr.io/ylassohugeinc/ifx-huge-league-api:prod
+
+# Push the prod image to GitHub Container Registry
+push-prod-ghcr-rbalch:
+	docker tag huge-ifx-api:prod ghcr.io/rbalch/ifx-huge-league-api:prod
+	docker push ghcr.io/rbalch/ifx-huge-league-api:prod
