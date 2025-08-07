@@ -1,0 +1,25 @@
+{
+  "name": "huge-ifx-sandbox",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "huge-ifx-api",
+  "workspaceFolder": "/workspace",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "esbenp.prettier-vscode",
+        "google.geminicodeassist",
+        "charliermarsh.ruff",
+        "googlecloudtools.cloudcode"
+      ],
+      // "postCreateCommand": "make install || true",
+      "remoteEnv": {
+        "PYTHONUNBUFFERED": "1"
+      },
+      "forwardPorts": [
+        8000,
+        5678
+      ]
+    }
+  }
+}

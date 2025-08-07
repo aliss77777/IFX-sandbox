@@ -1,14 +1,20 @@
 # === Builder Stage ===
-FROM python:3.12-slim AS base
-# FROM nvidia/cuda:12.4.1-devel-ubuntu22.04 as base
+FROM python:3.13-slim AS base
 
 # Install build tools and required system packages
 RUN apt update -y && apt install --no-install-recommends -y \
     build-essential \
+    git \
     vim \
     python3-dev \
     python3-pip \
-    curl
+    curl \
+    docker.io \
+    inotify-tools \
+    zsh
+
+# Make git safe
+RUN git config --global --add safe.directory /workspace
 
 WORKDIR /code
 
@@ -26,6 +32,12 @@ ENV PROMPT_COMMAND="history -a"
 RUN mkdir -p /huggingface_cache
 ENV HF_HOME="/huggingface_cache"
 
+# --- Node.js (via NodeSource) ---
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get update && apt-get install -y nodejs \
+    && npm install -g npm \
+    && node -v && npm -v && npx --version
+
 # Install Poetry inside the container
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="/root/.local/bin:$PATH"
@@ -37,15 +49,18 @@ RUN poetry config virtualenvs.create false
 COPY pyproject.toml poetry.lock* ./
 
 # Install dependencies using Poetry into the system environment
-RUN poetry install --no-root --no-interaction --no-ansi --only main
+RUN poetry install --no-root --no-interaction --no-ansi
+
+# Install GeminiCLI
+RUN npm install -g @google/gemini-cli
 
 # === Runtime Stage ===
-FROM python:3.12-slim AS runtime
+FROM python:3.13-slim AS runtime
 
 WORKDIR /code
 
 # Copy installed dependencies from the builder
-COPY --from=base /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=base /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
 COPY --from=base /usr/local/bin /usr/local/bin
 
 # Reapply the environment variables for runtime and module resolution

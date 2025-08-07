@@ -1,15 +1,11 @@
 import asyncio
-from workflows.base import build_workflow_with_state
+
 from event_handlers import PrintEventHandler
 from langchain_core.messages import HumanMessage
 from utils.freeplay_helpers import FreeplayClient
 from utils.zep_helpers import ZepClient
+from workflows.base import build_workflow_with_state
 
-from prompts import (
-    casual_fan_prompt,
-    HumanMessage,
-    AIMessage,
-)
 user_id = "huge@hugeinc.com"
 
 
@@ -21,10 +17,9 @@ user_id = "huge@hugeinc.com"
 #     ],
 # )
 
-zep_session_id = ZepClient() \
-                .get_or_create_user(user_id, "Hugh", "Bigly") \
-                .create_session() \
-                .session_id
+zep_session_id = (
+    ZepClient().get_or_create_user(user_id, "Hugh", "Bigly").create_session().session_id
+)
 freeplay_session_id = FreeplayClient().create_session().session_id
 
 workflow_bundle, state = build_workflow_with_state(
@@ -42,8 +37,10 @@ workflow_bundle, state = build_workflow_with_state(
     ],
 )
 
+
 async def main():
     await workflow_bundle.workflow.ainvoke(state)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
