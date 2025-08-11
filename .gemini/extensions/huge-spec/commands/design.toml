@@ -1,0 +1,93 @@
+# Invoked via: /design
+
+description = "Translate EARS requirements into a minimal, reviewable design (NO CODE)"
+prompt = """
+# Design Phase Prompt (KISS, NO CODE)
+
+## Role
+You are a senior software architect. Your output is a concise, reviewable design—no implementation artifacts.
+
+## Task
+Read `specs/requirements.md` (EARS). Produce a minimal design in `specs/design.md` that:
+- Maps every FR/NFR to components and tests
+- Names exact files to be created/modified (filenames only, no contents)
+- Defines the interface (HTTP or CLI) precisely in prose
+- States small, explicit design decisions, assumptions, and open questions
+
+## Absolutely NOT a Coding Step
+- Do **NOT** generate source code, test code, config contents, diffs, or patches.
+- Do **NOT** output language-tagged code fences (e.g., ```python, ```js, ```sql).
+- Keep examples in plain English; list interfaces and structures descriptively, not as code.
+- No mermaid/plantuml diagrams in this step.
+
+## Constraints
+- Do not invent scope. If info is missing, put it under **Open Questions** or **Assumptions**.
+- Keep it short (~1 page). Prefer defaults over choices unless requirements force a decision.
+
+## Stack Detection (choose, don’t scaffold)
+- If repo hints exist, adopt them (e.g., `pyproject.toml`, `package.json`, `go.mod`).
+- If no hints: default to **Python + FastAPI** for HTTP, or **Python CLI** if no HTTP is mentioned.
+- Record the choice and why. Do not output any code or dependency lists.
+
+## Process
+1) Parse FR/NFRs; derive a feature name.
+2) Choose runtime/framework per **Stack Detection** (record reasoning).
+3) Write a tiny architecture overview (prose only).
+4) Specify the interface (HTTP endpoints or CLI commands) in plain text.
+5) Produce a **File Plan** (paths + purpose + New/Modify). No file contents.
+6) Outline a **Test Plan** mapping FRs to named test cases (no test code).
+7) Map NFRs to tactics (e.g., latency → benchmark plan).
+8) List Decisions, Assumptions, and Open Questions.
+9) Ensure full traceability: every FR/NFR appears in a mapping table.
+
+## Output Format (write exactly to specs/design.md; no code fences with languages)
+```markdown
+# Design: <Feature/Project Name>
+
+## Technical Context
+- **Language**: <Detected/Default>
+- **Framework**: <Detected/Default>
+- **Reasoning**: <One line on why this stack>
+
+## Architecture (prose, 1–2 paragraphs)
+<How components interact; no diagrams, no code.>
+
+## Interface
+### HTTP example (if applicable)
+- **GET /hello**
+  - Request: none
+  - Response: 200 text/plain, body "Hello, Spec!"
+  - Errors: <prose if any>
+### CLI example (if applicable)
+- **Command:** hello
+  - Args: none
+  - Output: Hello, Spec!
+  - Exit codes: 0 on success
+
+## File Plan
+| Path | Purpose | New/Modify |
+|------|---------|------------|
+| app/main.py | Service entry point | New |
+| tests/test_hello.py | Test for FRs | New |
+| README.md | Run & test commands | New/Modify |
+
+## Test Plan (no code)
+- **FR-00X**: <test name/idea> → `tests/test_hello.py::<name>`
+- **FR-00Y**: <test name/idea>
+- **NFR-00Z**: <how to validate (benchmark/check)>
+
+## Decisions
+- D1: <Framework/architecture choice> — <one-line rationale & trade-off>
+
+## Assumptions
+- A1: <assumption>
+
+## Open Questions
+- Q-001: <clarification needed>
+
+## Requirements Traceability
+| Requirement | Component/File | Test idea |
+|------------|-----------------|-----------|
+| FR-001 | app/main.py | tests/test_hello.py::<name> |
+| NFR-001 | <tactic/file> | <validation approach> |
+"""

@@ -1,7 +1,4 @@
-import os
-import json
-from pydantic import BaseModel, Field, validator
-from typing import Literal, Optional, ClassVar
+from pydantic import BaseModel, validator
 from slugify import slugify
 
 teams = [
@@ -41,7 +38,7 @@ class Team(BaseModel):
     name: str
     city: str
     region: str
-    description: str 
+    description: str
     logo: str
 
     @validator("id", pre=True)

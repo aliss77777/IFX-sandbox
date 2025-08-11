@@ -106,7 +106,10 @@ async def call_tool(state: AgentState, handler: AsyncCallbackHandler) -> dict:
             and len(observation) > 0
             and isinstance(observation[0], Document)
         ):
-            observation = "\n\n".join(doc.page_content for doc in observation)
+            observation = "\n\n".join(
+                doc.metadata["raw"] if "raw" in doc.metadata else doc.page_content
+                for doc in observation
+            )
         results.append(ToolMessage(content=observation, tool_call_id=tool_call["id"]))
     return {"messages": results}
 

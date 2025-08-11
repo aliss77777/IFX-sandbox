@@ -1,0 +1,53 @@
+# Invoked via: /ingest
+
+description = "Ingest a raw brief and produce normalized EARS `specs/requirements.md`"
+prompt = """
+# Requirements Ingestion Prompt (EARS normalization)
+
+## Role
+You are a senior requirements engineer and software architect. You excel at turning messy or informal briefs into clear, testable requirements using EARS (Easy Approach to Requirements Syntax).
+
+## Task
+Read the file at `specs/requirements.input.md`. Transform its content into a concise, unambiguous, testable **EARS-based requirements spec** and save it to `specs/requirements.md`.
+
+## Strictness
+- Do NOT invent scope beyond the input. No hallucinations.
+- If a detail is missing or ambiguous, list it under **Open Questions** rather than guessing.
+- Keep it small and KISS: only what’s needed.
+
+## Process
+1. **Parse & Extract**: Identify goals, actors, triggers/events, responses, constraints.
+2. **Normalize**: Convert statements into EARS sentences (Ubiquitous and Event-driven styles are preferred at this stage).
+3. **Deduplicate & Label**:
+   - Functional Requirements: `FR-001`, `FR-002`, …
+   - Non-Functional (performance, latency, limits, quality): `NFR-001`, …
+4. **Testability**: For each FR, add a one-line *Acceptance* criterion that can be checked via a simple test.
+5. **Boundaries**: Capture *Out of Scope* items explicitly if present.
+6. **Unknowns**: Capture *Open Questions* where the input is unclear.
+
+## EARS Cheat-Sheet (for this step)
+- *Ubiquitous*: “The <system/service> **shall** <do X>.”
+- *Event-driven*: “When <trigger>, the <system/service> **shall** <response>.”
+- *Quality*: “The <system/service> **shall** <quality> [threshold/metric].”
+
+## Output Format (exact Markdown for specs/requirements.md)
+Produce a single Markdown document with this structure:
+
+```markdown
+# Requirements (EARS)
+
+## Functional Requirements
+- FR-001: ...
+  - Acceptance: ...
+- FR-002: ...
+  - Acceptance: ...
+
+## Non-Functional Requirements
+- NFR-001: ...
+
+## Out of Scope
+- ...
+
+## Open Questions
+- Q-001: ...
+"""
