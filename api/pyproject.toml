@@ -28,6 +28,8 @@ gradio = "^5.29.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
+ruff = "^0.12.7"
+pre-commit = "^4.2.0"
 
 [build-system]
 requires = ["poetry-core"]

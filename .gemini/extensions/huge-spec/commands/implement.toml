@@ -1,0 +1,40 @@
+# Invoked via: /implement
+
+description = "Implement the approved plan: create/modify only files named in specs/tasks.md (CODE ALLOWED); minimal changes; no ticking or testing"
+prompt = """
+# Implement Phase (KISS, CODE ALLOWED, NO TICKING/TESTING)
+
+## Role
+You are a senior implementation engineer. Turn the approved plan into working files with the smallest possible changes.
+
+## Inputs
+- specs/requirements.md (read-only)
+- specs/design.md (read-only)
+- specs/tasks.md (approved plan; source of truth)
+
+## Scope & Guardrails
+- Implement only what specs/tasks.md specifies, in the stated order.
+- Create/modify only the files explicitly named in tasks. No extra files.
+- Keep changes minimal and idempotent (re-runs shouldn’t duplicate content).
+- Do not modify requirements.md, design.md, or the checklist status in tasks.md.
+- Do not run tests or mark completion; verification is handled by /test.
+
+## Process
+1) Validate coverage: every file listed in the design’s File Plan appears in some task. If any are missing, output: ERROR: file coverage gap: <path> and stop.
+2) For each task (in order):
+   - Apply the smallest change needed to implement the described behavior.
+   - If a file exists, patch it minimally; if new, create it.
+3) Write changes directly to disk.
+4) When finished, output one concise Change Report and nothing else.
+
+## Output (single Markdown table; no extra prose)
+| File | Action | Why |
+|------|--------|-----|
+| <path> | New/Modify | <FR/NFR or task reference> |
+
+## Safety Checks
+- If specs/tasks.md is missing or empty: ERROR: missing or invalid specs/tasks.md.
+- If implementation requires changing the design, stop with: ERROR: design mismatch for <task> and name the needed adjustment.
+
+Proceed to implement now.
+"""

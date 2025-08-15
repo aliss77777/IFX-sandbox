@@ -1,10 +1,10 @@
 import uuid
-from functools import lru_cache
+from typing import Optional, Sequence
+
 from langchain_core.messages import BaseMessage
 from zep_cloud.client import AsyncZep, Zep
-from zep_cloud.types import Message
 from zep_cloud.errors import NotFoundError
-from typing import Optional
+from zep_cloud.types import Message
 
 
 # @lru_cache(maxsize=1)
@@ -13,7 +13,6 @@ def _get_zep_client():
 
 
 class ZepClient:
-
     def __init__(self):
         self.zep_client_async = AsyncZep()
         self.zep_client = Zep()
@@ -38,7 +37,12 @@ class ZepClient:
     #         self._user = await self.create_user(email, first_name, last_name)
     #     return self
 
-    def get_or_create_user(self, email: str, first_name: Optional[str] = None, last_name: Optional[str] = None):
+    def get_or_create_user(
+        self,
+        email: str,
+        first_name: Optional[str] = None,
+        last_name: Optional[str] = None,
+    ):
         if self._user and self._user.user_id == email:
             return self
         try:
@@ -48,7 +52,7 @@ class ZepClient:
         return self
 
     def create_session(self):
-        session_id = uuid.uuid4().hex # A new session identifier
+        session_id = uuid.uuid4().hex  # A new session identifier
         self.zep_client.memory.add_session(
             session_id=session_id,
             user_id=self._user.user_id,
@@ -56,7 +60,12 @@ class ZepClient:
         self.session_id = session_id
         return self
 
-    def create_user(self, email: str, first_name: Optional[str] = None, last_name: Optional[str] = None):
+    def create_user(
+        self,
+        email: str,
+        first_name: Optional[str] = None,
+        last_name: Optional[str] = None,
+    ):
         self._user = self.zep_client.user.add(
             user_id=email,
             email=email,
@@ -86,27 +95,27 @@ class ZepClient:
     def get_zep_client() -> AsyncZep:
         return _get_zep_client()
 
-    async def record_session(self,
-                             messages: list[BaseMessage],
-                             session_id: Optional[str] = None):
+    async def record_session(
+        self, messages: Sequence[BaseMessage], session_id: Optional[str] = None
+    ):
         session_id = session_id or self.session_id
         if session_id is None:
             raise ValueError("No session ID provided")
         if len(messages) >= 2:
             user_message = messages[0]
             assistant_message = messages[-1]
-            messages = [
+            messages: Sequence[Message] = [
                 Message(
                     role="user",
-                content=user_message.content,
-                role_type="user",
-            ),
-            Message(
-                role="assistant",
-                content=assistant_message.content,
-                role_type="assistant",
-            ),
-        ]
+                    content=str(user_message.content),
+                    role_type="user",
+                ),
+                Message(
+                    role="assistant",
+                    content=str(assistant_message.content),
+                    role_type="assistant",
+                ),
+            ]
         await self.zep_client_async.memory.add(session_id=session_id, messages=messages)
 
 
@@ -130,4 +139,3 @@ class ZepClient:
 #     ]
 #     zep_client = zep_client or get_zep_client()
 #     await zep_client.memory.add(session_id=session_id, messages=messages)
-    

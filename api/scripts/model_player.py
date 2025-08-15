@@ -1,22 +1,37 @@
-import os
 import json
-from pydantic import BaseModel, Field, ValidationError
-from typing import Literal, Optional, ClassVar
-import hashlib
+import os
+from typing import ClassVar, Literal, Optional
+
+from pydantic import BaseModel, Field
 from slugify import slugify
 
 
 class Player(BaseModel):
-    teams: ClassVar[list[str]] = ['Fraser Valley United', 'Everglade FC', 'Yucatan Force', 'Tierra Alta FC']
+    teams: ClassVar[list[str]] = [
+        "Fraser Valley United",
+        "Everglade FC",
+        "Yucatan Force",
+        "Tierra Alta FC",
+    ]
     number: int
     name: str
     age: int
     nationality: str
     shirt_number: int
     position: Literal[
-        "Goalkeeper", "Left Back", "Center Back", "Right Back",
-        "Full Back", "Defensive Mid", "Central Mid", "Attacking Mid",
-        "Left Wing", "Right Wing", "Forward/Winger", "Striker", "Various"
+        "Goalkeeper",
+        "Left Back",
+        "Center Back",
+        "Right Back",
+        "Full Back",
+        "Defensive Mid",
+        "Central Mid",
+        "Attacking Mid",
+        "Left Wing",
+        "Right Wing",
+        "Forward/Winger",
+        "Striker",
+        "Various",
     ]
     preferred_foot: Literal["Left", "Right", "Mixed"]
     role: Literal["Starter", "Bench", "Reserve/Prospect"]
@@ -30,14 +45,15 @@ class Player(BaseModel):
 
     @property
     def filename(self):
-        return f'{self.team.replace(" ", "_")}_{self.number}.json'
-    
+        return f"{self.team.replace(' ', '_')}_{self.number}.json"
+
     # Optional flair / simulation fields
     team: Optional[str] = None
     height_cm: Optional[int] = Field(None, ge=150, le=210)
     weight_kg: Optional[int] = Field(None, ge=50, le=110)
     overall_rating: Optional[int] = Field(None, ge=1, le=100)
     is_injured: Optional[bool] = False
+    is_captain: Optional[bool] = False
     form: Optional[int] = Field(None, ge=1, le=10)  # recent performance (1-10)
 
     # Stats placeholder — useful if you want to track across games
@@ -77,6 +93,7 @@ class Player(BaseModel):
             "shirt_number": self.shirt_number,
             "preferred_foot": self.preferred_foot,
             "role": self.role,
+            "is_captain": self.is_captain,
         }
 
     def player_vector_metadata(self):
@@ -91,27 +108,63 @@ class Player(BaseModel):
             "preferred_foot": slugify(self.preferred_foot),
             "role": slugify(self.role),
             "team": slugify(self.team),
+            "is_captain": self.is_captain,
         }
 
     def save(self):
-        with open(os.path.join("/workspace/data/huge-league/players", self.filename), 'w') as f:
-            json.dump(self.model_dump(), f)
+        with open(
+            os.path.join("/workspace/data/huge-league/players", self.filename), "w"
+        ) as f:
+            json.dump(self.model_dump(exclude_none=True), f, indent=4)
 
     @classmethod
     def load(cls, filename):
-        with open(os.path.join("/workspace/data/huge-league/players", filename), 'r') as f:
+        with open(
+            os.path.join("/workspace/data/huge-league/players", filename), "r"
+        ) as f:
             data = json.load(f)
             return cls.model_validate(data)
 
     @classmethod
     def get_players(cls, team=None):
         for filename in os.listdir("/workspace/data/huge-league/players"):
+            if not filename.endswith(".json"):
+                continue
             player = cls.load(filename)
             if team and player.team != team:
                 continue
             yield player
 
+    @classmethod
+    def get_player_by_number(cls, team_name: str, player_number: int):
+        for player in cls.get_players(team=team_name):
+            if player.number == player_number:
+                return player
+        return None
+
+    @classmethod
+    def get_captain(cls, team_name: str):
+        for player in cls.get_players(team=team_name):
+            if player.is_captain:
+                return player
+        return None
+
+    def update_captain_status(self, is_captain: bool):
+        self.is_captain = is_captain
+        captain_bio_text = " He is the team captain."
+        if is_captain:
+            if self.bio and captain_bio_text not in self.bio:
+                self.bio += captain_bio_text
+            elif not self.bio:
+                self.bio = f"{self.name}{captain_bio_text}."
+        else:
+            if self.bio and captain_bio_text in self.bio:
+                self.bio = self.bio.replace(captain_bio_text, "").strip()
+        self.save()
+
     def save_image(self, image_bytes):
         filename = self.filename.replace(".json", ".png")
-        with open(os.path.join("/workspace/data/huge-league/players_pics", filename), 'wb') as f:
+        with open(
+            os.path.join("/workspace/data/huge-league/players_pics", filename), "wb"
+        ) as f:
             f.write(image_bytes)

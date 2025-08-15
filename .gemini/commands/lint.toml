@@ -1,0 +1,4 @@
+# Invoked via: /lint
+
+description = "Runs linting on the app"
+prompt = "!ruff check ."
