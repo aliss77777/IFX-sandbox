@@ -136,6 +136,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env*
 .envrc
 .venv
 env/
@@ -205,3 +206,31 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Node.js / JavaScript
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# JS-related logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Misc
+.DS_Store
+*.pem
+.vercel
+*.tsbuildinfo
+
+# Yarn
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions

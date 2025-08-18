@@ -22,7 +22,7 @@ Huge has developed a powerful approach to solve these challenges with our Intell
 
 ### Proposed Solution
 
-Our solution is to create a cutting-edge, publicly-accessible AI demo that serves as a dynamic showcase for Huge's technical and creative capabilities in the AI space. This "Intelligent Fan Experience" (IX) demo, built around a fictional soccer league, will be our playground for innovation and a powerful tool for demonstrating our expertise.
+Our solution is to create a cutting-edge, publicly-accessible AI demo that serves as a dynamic showcase for Huge's technical and creative capabilities in the AI space. This "Intelligent Fan Experience" (IX) demo, built around a fictional soccer league, will be our playground for innovation and a powerful tool for demonstrating our expertise. We focus on demonstrating IX principles through a conversational search experience with multi-modal outputs in a mobile web form factor, as this will resonate with our target audience in category where fan behaviors are increasing shifting to use AI for finding and consuming digital content around sports.
 
 **Core Concept & Approach**
 
@@ -47,7 +47,7 @@ The ultimate vision is to create a standout demonstration of Huge's leadership i
 
 ### Target Users
 
-Our primary focus is on the **Casual Fan**. We aim to demonstrate how we can take someone with little to no knowledge of our fictional league and quickly make them feel informed, engaged, and entertained. This is a more strategic choice than targeting a "hardcore fan," as a convincing hardcore experience is impossible without the real, deep data and shared history that comes with a real league.
+Our primary focus for the initial MVP is the **Casual Fan**. We aim to demonstrate how we can take someone with little to no knowledge of our fictional league and quickly make them feel informed, engaged, and entertained. This is a more strategic choice than targeting a "hardcore fan," as a convincing hardcore experience is impossible without the real, deep data and shared history that comes with a real league. Over time, we will generate more synthetic data to allow for richer use cases that cater to the **Super Fan**.
 
 #### Primary User Segment: The Modern Fan (Millennial & Gen Z)
 

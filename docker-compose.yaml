@@ -16,13 +16,23 @@ services:
     stdin_open: true
     tty: true
     ports:
-      - "8000:8000" # serving site
+      # - "8000:8000" # serving site
       - "5678:5678" # debugger
     env_file:
       - .env
     environment:
       GOOGLE_CLOUD_PROJECT: gemini-code-assist-466218 # used for gemini
     command: ["sleep", "infinity"]
+
+  ifx-app:
+    build:
+      context: ./ifx-app
+    ports:
+      - "8000:3000"
+    volumes:
+      - ./ifx-app:/app
+      - /app/node_modules
+      - /app/.next
 
 volumes:
   root-history:
