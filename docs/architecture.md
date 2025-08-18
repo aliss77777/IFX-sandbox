@@ -57,15 +57,15 @@ The backend is a Python application built with the FastAPI framework, designed f
 graph TD
     subgraph Backend - FastAPI
         direction LR
-        A[WebSocket Endpoint /ws] --> B{Request Orchestrator (Agentic Loop)};
-        B --> C[Zep Service];
-        B --> D[Freeplay Service];
-        B --> E[Vector Search Service];
-        B --> F[LLM Service];
-        C --> G[Zep API];
-        D --> H[Freeplay API];
-        E --> I[In-Memory Vector Store];
-        F --> J[LLM API];
+        A[WebSocket Endpoint /ws] --> B[Request Orchestrator - Agentic Loop]
+        B --> C[Zep Service]
+        B --> D[Freeplay Service]
+        B --> E[Vector Search Service]
+        B --> F[LLM Service]
+        C --> G[Zep API]
+        D --> H[Freeplay API]
+        E --> I[In-Memory Vector Store]
+        F --> J[LLM API]
     end
 ```
 
