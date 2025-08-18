@@ -1,10 +1,9 @@
 # Invoked via: /deploy
 
-description = "Deploys the app to Hugging Face Spaces."
+description = "Deploys the app to..."
 prompt = """
-Deploy the app to Hugging Face Spaces.
+Deploy the app to... 
 
-1. Run `make build-prod` to build the release docker image
-2. Run `make push-prod-ghcr-rbalch` to push the docker image to GitHub Container Registry
-3. Run `cd IFX-huge-league && make trigger-build` to trigger a deployment on Hugging Face Spaces
+1.
+2.
 """

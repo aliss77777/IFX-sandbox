@@ -1,138 +1,55 @@
----
-title: IFX-sandbox
-emoji: 🏈
-colorFrom: red
-colorTo: gray
-sdk: gradio
-app_file: gradio_app.py
-pinned: false
----
+# Docker Dev 
 
-# 49ers FanAI Hub - Gradio Version
-
-This is a Gradio-based chatbot application that provides information about the San Francisco 49ers, players, games, and fans. The application uses LangChain, Neo4j, and Zep for memory management.
+A Docker template for a Python development environment.
 
 ## Features
 
-- Chat interface for asking questions about the 49ers
-- Integration with Neo4j graph database for structured data queries
-- Vector search for finding game summaries
-- Memory management with Zep for conversation history
-- Game Recap component that displays visual information for game-related queries
+- Multi-stage Docker build for optimized image size
+- Poetry-based dependency management
+- *optional* NVIDIA GPU support for machine learning workloads
+- Persistent volumes for history, VS Code server, and HuggingFace cache, etc
+- Gemini CLI support
+- Makefile for simplified Docker operations
 
 ## Prerequisites
 
-- Python 3.9+
-- Neo4j database (local or Aura)
-- OpenAI API key
-- Zep API key
+- Docker and Docker Compose
+- Make (for using the Makefile commands)
+- For GPU support: NVIDIA Container Toolkit
 
-## Installation
+## Getting Started
 
-1. Clone the repository
-2. Install the required packages:
+### Basic Setup
 
-```bash
-pip install -r gradio_requirements.txt
-```
+1. Couple startup tips:
 
-3. Set up your environment variables:
-   - Copy `.env.example` to `.env` in the root directory
-   - Fill in your API keys and credentials
-
-Example `.env` file:
-```
-OPENAI_API_KEY=your_openai_api_key
-OPENAI_MODEL=gpt-4o
-AURA_CONNECTION_URI=your_neo4j_uri
-AURA_USERNAME=your_neo4j_username
-AURA_PASSWORD=your_neo4j_password
-ZEP_API_KEY=your_zep_api_key
-```
-
-> **IMPORTANT**: Never commit your actual API keys or credentials to the repository. The `.env` files are included in `.gitignore` to prevent accidental exposure of sensitive information.
-
-## Running the Application
-
-To run the Gradio application:
+- You may need to create the volumes before running the containers:
 
 ```bash
-python gradio_app.py
+docker volume create root-history
+docker volume create vscode-server
+docker volume create huggingface-cache
+docker volume create google-vscode-extension-cache
 ```
 
-This will start the Gradio server and open the application in your default web browser.
+- You also need a `.env` file to store your environment variables
 
-## Project Structure
+```bash
+touch .env
+```
 
-- `gradio_app.py`: Main Gradio application
-- `gradio_agent.py`: Agent implementation using LangChain for Gradio
-- `gradio_graph.py`: Neo4j graph connection for Gradio
-- `gradio_llm.py`: Language model configuration for Gradio
-- `gradio_utils.py`: Utility functions for Gradio
-- `prompts.py`: System prompts for the agent
-- `tools/`: Specialized tools for the agent
-  - `cypher.py`: Tool for Cypher queries to Neo4j
-  - `vector.py`: Tool for vector search of game summaries
-  - `game_recap.py`: Tool for game recaps with visual component
-- `components/`: UI components
-  - `game_recap_component.py`: Game recap visual component
-- `data/`: Data files and scripts
-  - Various scripts and CSV files with 49ers data
-- `docs/`: Documentation
-  - `requirements.md`: Detailed product and technical requirements
-  - `game_recap_implementation_instructions.md`: Implementation details for the game recap feature
+2. Clone this repository
+3. Update the `pyproject.toml` with your project details and dependencies
+4. Build the Docker image:
 
-## Game Recap Component
+```bash
+make build
+```
 
-The Game Recap feature provides visual information about games in addition to text-based summaries. When a user asks about a specific game, the application:
+5. Extract the lockfile from the container:
 
-1. Identifies the game being referenced
-2. Retrieves game data from the Neo4j database
-3. Displays a visual component with team logos, scores, and other game information
-4. Generates a text summary in the chat
+```bash
+make extract-lock
+```
 
-Note: As mentioned in `docs/game_recap_implementation_instructions.md`, this component is still a work in progress. Currently, it displays above the chat window rather than embedded within chat messages.
-
-## Security Considerations
-
-This repository includes:
-- `.gitignore` file to prevent committing sensitive information
-- `.env.example` files showing required environment variables without actual values
-- No hardcoded API keys or credentials in the code
-
-Before pushing to a public repository:
-1. Ensure all sensitive information is in `.env` files (which are ignored by git)
-2. Verify no API keys or credentials are hardcoded in any files
-3. Check that large data files or binary files are properly ignored if needed
-
-## Usage
-
-1. Start the application
-2. Ask questions about the 49ers, such as:
-   - "Who are the current players on the 49ers roster?"
-   - "Tell me about the 49ers game against the Chiefs"
-   - "Which fan communities have the most members?"
-   - "Show me the recap of the 49ers vs. Vikings game"
-
-The application will use the appropriate tools to answer your questions based on the data in the Neo4j database.
-
-## Deployment
-
-This application has been deployed to HuggingFace Spaces and is publicly available at: 
-[https://huggingface.co/spaces/aliss77777/ifx-sandbox](https://huggingface.co/spaces/aliss77777/ifx-sandbox)
-
-### Deployment Steps
-1. Used Gradio's built-in deployment feature: `gradio deploy --app-file gradio_app.py --title "49ers FanAI Hub"`
-2. Uploaded environment variables securely as Secrets in the HuggingFace Space
-3. Verified all API connections and data access on the deployed version
-
-The deployment process automatically handles:
-- Code upload to HuggingFace Spaces
-- Installing dependencies from requirements.txt
-- Building and serving the Gradio application
-
-### Final Checks
-- Verified UI rendering and responsiveness
-- Confirmed data accuracy and Neo4j connection
-- Tested all features: chat, graph queries, and game recap functionality
-- Documented any deployment-specific issues or limitations
+You should now have a `poetry.lock` file in the `dev` directory.

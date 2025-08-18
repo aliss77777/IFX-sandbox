@@ -3,17 +3,17 @@
 ## Preface 
 
 Perfer someone build the api in a container. This will come up with
-all the dependencies to run the api as well as a debugger, gemini-cli and any 
-other development tools needed.
+all the dependencies to run the api as well as a debugger, gemini-cli and any other development tools needed.
 
-The Makefile contains a number of useful commands for development, deployment,
-and can be viewed for examples.
+### Makefile
+
+The Makefile contains a number of useful commands for development, deployment, and can be viewed for examples.
+
+### Editor
 
 - Editor: VSCode
 - Container: Docker
 - Container Editor: VSCode Remote - Containers
-
-## Context
 
 ## Core Principles
 

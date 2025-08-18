@@ -1,18 +1,18 @@
 services:
-  huge-ifx-api:
-    container_name: huge-ifx-api
+  dev:
     build:
-      context: ./api
-      target: base
+      context: ./dev
+      target: dev
     volumes:
       - ./:/workspace
-      - ./api:/code # TODO: move to devcontainer.json
-      - root-history:/root/history
-      - vscode-server:/root/.vscode-server
-      - huggingface-cache:/root/.cache/huggingface
-      - google-vscode-extension-cache:/root/.cache/google-vscode-extension
-      - ~/.gemini:/root/.gemini
+      - ./app:/code # point to app code/container
+      - root-history:/home/dev/history
+      - vscode-server:/home/dev/.vscode-server
+      - huggingface-cache:/home/dev/.cache/huggingface
+      - google-vscode-extension-cache:/home/dev/.cache/google-vscode-extension
+      - ~/.gemini:/home/dev/.gemini
       - /var/run/docker.sock:/var/run/docker.sock # expose docker socket
+      - ~/.ssh:/home/dev/.ssh
     stdin_open: true
     tty: true
     ports:
@@ -21,10 +21,8 @@ services:
     env_file:
       - .env
     environment:
-      DEBUG: false
-      GOOGLE_CLOUD_PROJECT: gemini-code-assist-466218
-    # command: uvicorn server:app --reload --host 0.0.0.0 --port 8000 --reload --log-level debug
-    command: gradio server_gradio.py
+      GOOGLE_CLOUD_PROJECT: gemini-code-assist-466218 # used for gemini
+    command: ["sleep", "infinity"]
 
 volumes:
   root-history:

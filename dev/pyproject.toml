@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "docker-dev"
+version = "1.0.0"
+description = "Docker based development environment."
+authors = ["Ryan Balch <ryan@balch.io>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.13,<3.14"
+debugpy = "*"
+fastapi = "*"
+httpx = "*"
+python-dotenv = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+websockets = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,13 @@
+{
+    "name": "spec-driven",
+    "version": "1.0.0",
+    "mcpServers": {
+        "github": {
+            "httpUrl": "https://api.githubcopilot.com/mcp/",
+            "headers": {
+                "Authorization": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+            }
+        }
+    },
+    "contextFileName": "SPEC_README.md"
+}
