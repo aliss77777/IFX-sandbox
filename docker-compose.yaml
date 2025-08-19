@@ -28,7 +28,7 @@ services:
     build:
       context: ./ifx-app
     ports:
-      - "8000:3000"
+      - "3000:3000"
     volumes:
       - ./ifx-app:/app
       - /app/node_modules

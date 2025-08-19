@@ -13,6 +13,7 @@ httpx = "*"
 python-dotenv = "*"
 uvicorn = {extras = ["standard"], version = "*"}
 websockets = "*"
+pre-commit = "^4.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"

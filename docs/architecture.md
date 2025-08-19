@@ -69,7 +69,66 @@ graph TD
     end
 ```
 
-### Component Breakdown
+### 5.1. Backend Application Layout
+
+This section outlines the directory structure and component breakdown for the FastAPI backend application located in the `/app` directory.
+
+#### Directory Structure
+
+```
+/app
+├── __init__.py
+├── main.py
+├── services/
+│   ├── __init__.py
+│   ├── orchestrator.py
+│   ├── zep_service.py
+│   ├── freeplay_service.py
+│   ├── vector_search_service.py
+│   └── llm_service.py
+├── core/
+│   ├── __init__.py
+│   └── config.py
+└── data_models/
+    ├── __init__.py
+    └── models.py
+```
+
+#### Component Descriptions
+
+##### `main.py`
+
+This file serves as the main entry point for the FastAPI application.
+
+*   **Responsibilities:**
+    *   Instantiate the FastAPI application.
+    *   Define the WebSocket endpoint (`/ws`) for real-time communication.
+    *   Manage application lifecycle events, such as the startup event to load the in-memory vector store.
+
+##### `services/`
+
+This directory contains the core business logic of the application, with each service encapsulated in its own module.
+
+*   **`orchestrator.py`**: The central agentic loop that orchestrates the calls to the other services.
+*   **`zep_service.py`**: Handles all interactions with the Zep API for context and memory management.
+*   **`freeplay_service.py`**: Manages fetching versioned prompts from the Freeplay API.
+*   **`vector_search_service.py`**: Responsible for loading the data and performing similarity searches on the in-memory vector store.
+*   **`llm_service.py`**: A client for interacting with the chosen Large Language Model.
+
+##### `core/`
+
+This directory is for core application concerns that are not part of the main business logic.
+
+*   **`config.py`**: Manages all application settings and secrets, loading them from environment variables.
+
+##### `data_models/`
+
+This directory contains the Pydantic models used for data validation and serialization.
+
+*   **`models.py`**: Defines the data structures for API requests and responses, including the WebSocket message protocol.
+
+
+### 5.2. Component Breakdown
 
 *   **WebSocket Endpoint (`/ws`):** The single point of entry for all client communication. It manages the persistent connection and hands off incoming messages to the Request Orchestrator. It will also be responsible for sending status updates ("toasts") to the client.
 
@@ -99,7 +158,7 @@ graph TD
         *   Making the streaming API call to the LLM.
         *   Streaming the LLM's response back to the Request Orchestrator.
 
-### Data Flow and Responsive UX
+### 5.3. Data Flow and Responsive UX
 
 The data flow is designed to provide a highly responsive user experience. The backend will use `asyncio` to perform tasks concurrently and send information to the client as soon as it's available.
 
