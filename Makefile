@@ -36,6 +36,9 @@ command:
 command-raw:
 	docker compose run dev zsh
 
+command-ifx-app:
+	docker exec -it ${PROJECT_NAME}-ifx-app-1 sh
+
 command-raw-gpu:
 	docker compose -f docker-compose.yaml -f docker-compose-nvidia.yaml run ${IMAGE_NAME} bash
 
@@ -44,3 +47,6 @@ clean-requirements:
 	
 prune-containers:
 	docker container prune -f
+
+verify-proxy:
+	curl -sS -o /dev/null -w "%{http_code}\n" http://0.0.0.0:3000

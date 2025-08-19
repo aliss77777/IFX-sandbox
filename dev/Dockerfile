@@ -12,6 +12,7 @@ RUN apt-get update -y && apt-get install --no-install-recommends -y \
     build-essential \
     ca-certificates \
     curl \
+    socat \
     docker.io \
     fzf \
     fontconfig \
@@ -136,9 +137,15 @@ RUN poetry install --no-root --no-interaction --no-ansi
 # make dev the default runtime user
 USER root
 RUN chown -R dev:dev $HOME
+
 USER dev
 WORKDIR /workspace
 # run fixuid first; it remaps dev->host UID:GID, then execs your CMD as 'dev'
+USER root
+# Install proxy helper script into the image so compose can invoke it directly
+COPY dev-proxy.sh /usr/local/bin/dev-proxy.sh
+RUN chmod +x /usr/local/bin/dev-proxy.sh && chown dev:dev /usr/local/bin/dev-proxy.sh
+USER dev
 ENTRYPOINT ["fixuid","-q","--"]
 CMD ["zsh"]  # or your app command
 

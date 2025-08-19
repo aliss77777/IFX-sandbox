@@ -32,3 +32,9 @@ We also wanted to test some different technologies:
 This is a temporary file for your notes, ideas, and my intermediate outputs. It's a messy, creative space that can be cleared at any time.
 
 @SCRATCHPAD.md
+
+## Docker + Dev
+
+This file explains some of the details of our docker setup and how to use it.
+
+@../docs/docker-config.md

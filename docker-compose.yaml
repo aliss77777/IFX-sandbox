@@ -18,21 +18,30 @@ services:
     ports:
       # - "8000:8000" # serving site
       - "5678:5678" # debugger
+      - "3000:3000" # expose 3000 from dev for local access / VS Code forwarding
     env_file:
       - .env
     environment:
       GOOGLE_CLOUD_PROJECT: gemini-code-assist-466218 # used for gemini
-    command: ["sleep", "infinity"]
+      # Proxy defaults for dev-proxy.sh
+      PROXY_PORT: "3000"        # listen on dev:3000
+      TARGET_HOST: "ifx-app"    # target Next.js service name
+      TARGET_PORT: "3000"       # target port inside ifx-app
+      PROXY_BIND: "0.0.0.0"     # bind all interfaces so docker-proxy/VS Code can forward
+      PROXY_LOG_FILE: "/home/dev/proxy-3000.log" # log location inside dev
+    # Start the proxy in background (from image), then keep the container alive for VS Code attach
+    # command: ["sh", "-lc", "chmod +x /workspace/dev/dev-proxy.sh && /workspace/dev/dev-proxy.sh >/home/dev/proxy-3000.log 2>&1 & exec sleep infinity"]
+    command: ["sh", "-lc", "/usr/local/bin/dev-proxy.sh >/home/dev/proxy-3000.log 2>&1 & exec sleep infinity"]
 
   ifx-app:
     build:
       context: ./ifx-app
-    ports:
-      - "3000:3000"
+      target: development
     volumes:
       - ./ifx-app:/app
-      - /app/node_modules
-      - /app/.next
+      - /app/node_modules # This line is crucial. It creates an anonymous volume for node_modules, preventing the host's node_modules from overwriting the container's.
+      - /app/.next # Same for .next, allowing Next.js to manage its build artifacts inside the container.
+    # Entrypoint script in the image handles chown + fixuid + starting dev server
 
 volumes:
   root-history:
