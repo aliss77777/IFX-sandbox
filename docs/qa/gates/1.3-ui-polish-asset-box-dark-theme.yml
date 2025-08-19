@@ -1,0 +1,9 @@
+schema: 1
+story: '1.3'
+story_title: 'UI Polish - Asset Box and Dark Theme'
+gate: PASS
+status_reason: 'The UI has been updated to match the v0 design as requested. All acceptance criteria are met.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2025-08-19T12:00:00Z'
+waiver: { active: false }
+top_issues: []

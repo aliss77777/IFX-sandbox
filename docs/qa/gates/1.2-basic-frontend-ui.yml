@@ -1,0 +1,9 @@
+schema: 1
+story: '1.2'
+story_title: 'Basic Frontend UI'
+gate: PASS
+status_reason: 'The basic chat UI has been implemented and meets all acceptance criteria. The code is clean and the styling is consistent with the theme.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2025-08-19T12:00:00Z'
+waiver: { active: false }
+top_issues: []

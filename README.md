@@ -1,55 +1,41 @@
-# Docker Dev 
+# Huge IFX Soccer AI Demo
 
-A Docker template for a Python development environment.
+This repository contains the source code for the Huge IFX Soccer AI Demo, a real-time, conversational AI application that allows users to interact with a fictional soccer league.
 
-## Features
+## Monorepo Structure
 
-- Multi-stage Docker build for optimized image size
-- Poetry-based dependency management
-- *optional* NVIDIA GPU support for machine learning workloads
-- Persistent volumes for history, VS Code server, and HuggingFace cache, etc
-- Gemini CLI support
-- Makefile for simplified Docker operations
+The project is organized as a monorepo with the following structure:
 
-## Prerequisites
-
-- Docker and Docker Compose
-- Make (for using the Makefile commands)
-- For GPU support: NVIDIA Container Toolkit
+-   **/app**: The backend Python application, built with FastAPI.
+-   **/ifx-app**: The frontend Next.js application.
+-   **/docs**: Project documentation, including PRD and architecture.
+-   **/data**: Data for the fictional Huge League.
+-   **/tests**: Application tests.
 
 ## Getting Started
 
-### Basic Setup
+### Prerequisites
 
-1. Couple startup tips:
+-   Docker and Docker Compose
+-   Make (for using the Makefile commands)
 
-- You may need to create the volumes before running the containers:
+### Running the Application
 
-```bash
-docker volume create root-history
-docker volume create vscode-server
-docker volume create huggingface-cache
-docker volume create google-vscode-extension-cache
-```
+1.  **Create Volumes and Environment File:**
+    ```bash
+    docker volume create root-history
+    docker volume create vscode-server
+    docker volume create huggingface-cache
+    docker volume create google-vscode-extension-cache
+    touch .env
+    ```
 
-- You also need a `.env` file to store your environment variables
+2.  **Build and Run the Services:**
+    ```bash
+    docker-compose up --build
+    ```
 
-```bash
-touch .env
-```
+    This will start both the backend and frontend services.
 
-2. Clone this repository
-3. Update the `pyproject.toml` with your project details and dependencies
-4. Build the Docker image:
-
-```bash
-make build
-```
-
-5. Extract the lockfile from the container:
-
-```bash
-make extract-lock
-```
-
-You should now have a `poetry.lock` file in the `dev` directory.
+    -   The frontend application will be available at [http://localhost:3000](http://localhost:3000).
+    -   The backend service runs in the `dev` container.

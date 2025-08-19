@@ -18,6 +18,7 @@ RUN apt-get update -y && apt-get install --no-install-recommends -y \
     fontconfig \
     git \
     inotify-tools \
+    openssh-client \
     python3-dev \
     python3-pip \
     sudo \
@@ -102,6 +103,9 @@ RUN chsh -s /usr/bin/zsh dev || true
 
 # --- GeminiCLI ---
 RUN npm install -g @google/gemini-cli
+
+# --- Markdown Tree Parser ---
+RUN npm install -g @kayvan/markdown-tree-parser
 
 
 # --- <Poetry (system-wide) + shared venv> ---

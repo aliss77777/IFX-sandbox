@@ -229,3 +229,68 @@ Communication between the frontend and backend will be exclusively over WebSocke
 *   **Scalable Vector Store:** For a production application, the in-memory vector store should be replaced with a managed, scalable solution like Pinecone, Weaviate, or a cloud-native vector database.
 *   **Persistent User Data:** To support features beyond session-based personalization, a database (e.g., PostgreSQL, MongoDB) and a user authentication system would be required.
 *   **Stateful Backend:** For more complex conversational flows and to better manage user sessions, a stateful backend architecture or a distributed cache like Redis could be implemented.
+
+## 14. Tech Stack
+
+This document outlines the technology stack for the Huge IFX Soccer project, as derived from project standards and the Product Requirements Document (PRD).
+
+### Backend
+
+- **Language:** Python 3.13
+- **Framework:** FastAPI
+- **Package Manager:** Poetry
+- **Containerization:** Docker
+- **Vector Store:** In-memory, using LangChain with FAISS.
+- **LLM:** A high-performance model from a major provider (e.g., Google, OpenAI, Anthropic).
+
+### Frontend
+
+- **Language:** JavaScript/TypeScript
+- **Framework:** React
+- **Build Tool:** Vite
+- **UI Library:** shadcn/ui
+
+### Development & Infrastructure
+
+- **Repository:** GitHub
+- **Development Environment:** GeminiCLI
+- **Hosting:** Vercel (for both frontend and backend services).
+- **Communication:** WebSockets for real-time, bidirectional communication between frontend and backend.
+
+## 15. Coding Standards
+
+This document outlines the coding standards and conventions to be followed for the Huge IFX Soccer project. These are based on the global standards defined for the project.
+
+### Python (Backend)
+
+- **Formatting:** We use single quotes (`'`) for strings unless a double quote (`"`) is required within the string. We use `ruff` to format and lint our code.
+- **Typing:** All function signatures must have type hints. No exceptions.
+- **Paths:** Use the `pathlib` library for all filesystem path manipulations. It's cleaner and more expressive.
+
+#### Unit tests
+
+- All unit and integration tests must use the `pytest` framework.
+- Prefer using `pytest` markers (e.g., `@pytest.mark.integration`) to distinguish test types.
+- Each test function should include a docstring describing its intent.
+- Assertions should include helpful error messages for easier debugging.
+- Tests should be simple, readable, and leverage pytest features (fixtures, parametrization, etc.) where beneficial.
+
+### Frontend
+
+(Frontend-specific standards to be defined, e.g., for React/TypeScript).
+
+## 16. Source Tree
+
+This document describes the source tree structure for the Huge IFX Soccer monorepo.
+
+### Monorepo Structure
+
+The project is organized as a monorepo to simplify development and dependency management. The primary directories are:
+
+- **`/app`**: Contains the backend Python application, built with FastAPI.
+- **`/ifx-app`**: Contains the frontend React application, built with Vite.
+- **`/docs`**: Contains all project documentation, including the PRD and architecture documents.
+- **`/data`**: Contains data for the fictional Huge League, including teams, players, and logos.
+- **`/tests`**: Contains tests for the application.
+- **`/.bmad-core`**: Contains the configuration and tasks for the BMad development methodology.
+- **`/.gemini`**: Contains configuration and context for the Gemini CLI.
