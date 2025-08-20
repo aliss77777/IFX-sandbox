@@ -1,0 +1,9 @@
+schema: 1
+story: "1.3"
+story_title: "Backend Health Check & WebSocket Endpoint"
+gate: "PASS"
+status_reason: "The WebSocket endpoint is now covered by a test."
+reviewer: "Quinn (Test Architect)"
+updated: "2025-08-20T14:00:00Z"
+waiver: { active: false }
+top_issues: []
