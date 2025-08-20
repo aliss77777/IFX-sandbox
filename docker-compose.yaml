@@ -16,7 +16,7 @@ services:
     stdin_open: true
     tty: true
     ports:
-      # - "8000:8000" # serving site
+      - "8000:8000" # serving site
       - "5678:5678" # debugger
       - "3000:3000" # expose 3000 from dev for local access / VS Code forwarding
     env_file:

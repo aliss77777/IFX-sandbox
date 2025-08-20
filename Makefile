@@ -30,6 +30,9 @@ up:
 up-gpu:
 	docker compose -f docker-compose.yaml -f docker-compose-nvidia.yaml up
 
+run-backend:
+	docker compose exec dev uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
 command:
 	docker exec -it ${IMAGE_NAME}-1 zsh
 
@@ -49,4 +52,4 @@ prune-containers:
 	docker container prune -f
 
 verify-proxy:
-	curl -sS -o /dev/null -w "%{http_code}\n" http://0.0.0.0:3000
+	curl -sS -o /dev/null -w "%{{http_code}}\n" http://0.0.0.0:3000

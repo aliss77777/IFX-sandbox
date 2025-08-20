@@ -7,21 +7,13 @@ interface Message {
   timestamp: Date;
 }
 
-export default function ChatHistory() {
-  const messages: Message[] = [
-    {
-      id: 1,
-      text: "Hello! How can I help you today?",
-      sender: "assistant",
-      timestamp: new Date(),
-    },
-    {
-      id: 2,
-      text: "Tell me about the best soccer player in the world.",
-      sender: "user",
-      timestamp: new Date(),
-    },
-  ];
+export default function ChatHistory({ history }: { history: any[] }) {
+  const messages: Message[] = history.map((chunk, index) => ({
+    id: index,
+    text: chunk,
+    sender: "assistant",
+    timestamp: new Date(),
+  }));
 
   return (
     <div className="flex-1 overflow-auto p-4 space-y-6">

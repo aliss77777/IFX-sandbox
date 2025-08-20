@@ -39,3 +39,13 @@ The project is organized as a monorepo with the following structure:
 
     -   The frontend application will be available at [http://localhost:3000](http://localhost:3000).
     -   The backend service runs in the `dev` container.
+
+3.  **Run the Backend Service:**
+
+    To run the backend FastAPI server, use the following make command:
+
+    ```bash
+    make run-backend
+    ```
+
+    This will start the backend server with hot-reloading, so any changes you make to the backend code will be automatically applied.
