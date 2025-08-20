@@ -18,4 +18,9 @@ This document outlines the coding standards and conventions to be followed for t
 
 ## Frontend
 
-(Frontend-specific standards to be defined, e.g., for React/TypeScript).
+### Unit and Component Tests
+
+-   **Framework:** We use [Jest](https://jestjs.io/) for running tests and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for rendering and interacting with components.
+-   **Configuration:** Jest is configured for Next.js using the `next/jest` preset in `ifx-app/jest.config.js`.
+-   **Test Files:** Test files should be located alongside the component they are testing, with the `.test.tsx` extension (e.g., `chat-input.test.tsx`).
+-   **Running Tests:** Tests can be run from the `ifx-app` directory using the `npm test` command.
