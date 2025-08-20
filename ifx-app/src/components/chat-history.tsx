@@ -1,24 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
+import ClientTimestamp from "./client-timestamp";
 
-interface Message {
-  id: number;
+export interface Message {
   text: string;
   sender: "user" | "assistant";
   timestamp: Date;
 }
 
-export default function ChatHistory({ history }: { history: any[] }) {
-  const messages: Message[] = history.map((chunk, index) => ({
-    id: index,
-    text: chunk,
-    sender: "assistant",
-    timestamp: new Date(),
-  }));
-
+export default function ChatHistory({ history }: { history: Message[] }) {
   return (
     <div className="flex-1 overflow-auto p-4 space-y-6">
-      {messages.map((message) => (
-        <div key={message.id}>
+      {history.map((message, index) => (
+        <div key={index}>
           <Card
             className={`transition-all duration-300 hover:shadow-lg ${
               message.sender === "user"
@@ -44,10 +37,7 @@ export default function ChatHistory({ history }: { history: any[] }) {
                       message.sender === "user" ? "text-accent-foreground/70" : "text-muted-foreground"
                     }`}
                   >
-                    {message.timestamp.toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    <ClientTimestamp timestamp={message.timestamp} />
                   </p>
                 </div>
               </div>

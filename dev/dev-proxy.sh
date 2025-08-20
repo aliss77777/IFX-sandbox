@@ -13,6 +13,16 @@ echo "[dev-proxy] starting: listen ${PROXY_BIND}:${PROXY_PORT} -> ${TARGET_HOST}
 echo "[dev-proxy] log file: $LOG_FILE" | tee -a "$LOG_FILE"
 echo "[dev-proxy] date: $(date)" | tee -a "$LOG_FILE"
 
+# Wait for the target host and port to become available.
+# This uses bash's built-in /dev/tcp for a clean, dependency-free check.
+echo "[dev-proxy] Waiting for ${TARGET_HOST}:${TARGET_PORT} to be ready..." | tee -a "$LOG_FILE"
+while ! bash -c "exec 3<>/dev/tcp/${TARGET_HOST}/${TARGET_PORT}" 2>/dev/null; do
+  echo "[dev-proxy] still waiting for ${TARGET_HOST}:${TARGET_PORT}... ($(date))" | tee -a "$LOG_FILE"
+  sleep 1
+done
+echo "[dev-proxy] Target ${TARGET_HOST}:${TARGET_PORT} is ready!" | tee -a "$LOG_FILE"
+
+
 # Endless supervisor loop; if target is down, socat exits and we retry
 while true; do
   echo "[dev-proxy] (re)starting socat at $(date)" | tee -a "$LOG_FILE"
