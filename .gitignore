@@ -225,6 +225,7 @@ yarn-error.log*
 *.pem
 .vercel
 *.tsbuildinfo
+.claude/*
 
 # Yarn
 .pnp

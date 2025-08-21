@@ -105,6 +105,9 @@ RUN chsh -s /usr/bin/zsh dev || true
 # --- GeminiCLI ---
 RUN npm install -g @google/gemini-cli
 
+# --- ClaudeCLI ---
+RUN npm install -g @anthropic-ai/claude-code
+
 # --- Markdown Tree Parser ---
 RUN npm install -g @kayvan/markdown-tree-parser
 

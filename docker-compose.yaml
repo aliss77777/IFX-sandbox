@@ -11,6 +11,8 @@ services:
       - huggingface-cache:/home/dev/.cache/huggingface
       - google-vscode-extension-cache:/home/dev/.cache/google-vscode-extension
       - ~/.gemini:/home/dev/.gemini
+      - ~/.claude:/home/dev/.claude
+      - ~/.claude.json:home/dev/.claude.json
       - /var/run/docker.sock:/var/run/docker.sock # expose docker socket
       - ~/.ssh:/home/dev/.ssh
     stdin_open: true

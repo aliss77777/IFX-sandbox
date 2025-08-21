@@ -1,9 +1,44 @@
 schema: 1
-story: "1.4"
-story_title: "Streaming \"Hello World\""
-gate: "PASS"
-status_reason: "The implementation is correct and the test coverage is adequate."
-reviewer: "Quinn (Test Architect)"
-updated: "2025-08-20T16:00:00Z"
-waiver: { active: false }
-top_issues: []
+story: '1.4'
+story_title: 'Streaming "Hello World"'
+gate: WAIVED
+status_reason: 'User acknowledged and accepted the risks of no authentication and lack of frontend tests for this POC.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2025-08-20T00:00:00Z' # Using a placeholder time
+
+top_issues:
+  - severity: high
+    description: 'WebSocket endpoint is open and unauthenticated.'
+    suggested_owner: dev
+  - severity: high
+    description: 'No frontend tests to verify UI functionality and user interactions.'
+    suggested_owner: dev
+
+waiver:
+  active: true
+  reason: 'User accepted the risk for the POC.'
+  approver: 'user'
+
+quality_score: 60 # 100 - (20 * 2) for two FAILs
+
+nfr_validation:
+  security:
+    status: FAIL
+    notes: 'WebSocket endpoint lacks authentication/authorization.'
+  performance:
+    status: PASS
+    notes: 'Acceptable for PoC.'
+  reliability:
+    status: CONCERNS
+    notes: 'No error handling for unexpected websocket messages.'
+  maintainability:
+    status: PASS
+    notes: 'Code is simple and clear.'
+
+recommendations:
+  immediate:
+    - action: 'Implement authentication on the /ws endpoint.'
+      refs: ['app/main.py']
+    - action: 'Add frontend tests for the chat functionality.'
+      refs: ['ifx-app/']
+  future: []

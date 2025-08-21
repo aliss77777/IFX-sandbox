@@ -1,0 +1,37 @@
+schema: 1
+story: '1.4.5'
+story_title: 'Implement Token Auth and Frontend Tests'
+gate: WAIVED
+status_reason: 'The critical security vulnerability of using a static token has been formally accepted by the project owner for the POC stage.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2025-08-21T12:00:00Z'
+top_issues:
+  - severity: high
+    description: 'Static, hardcoded token allows unauthorized access.'
+    refs: ['app/main.py']
+    suggested_owner: 'dev'
+waiver:
+  active: true
+  reason: 'Owner accepted the risk for the POC, viewing the static token as a sufficient placeholder pattern for the current, non-sensitive stage of the project.'
+  approver: 'User'
+quality_score: 100
+nfr_validation:
+  security:
+    status: WAIVED
+    notes: 'Static, hardcoded token transmitted via query parameter. Risk accepted by owner.'
+  performance:
+    status: PASS
+    notes: 'No issues found.'
+  reliability:
+    status: PASS
+    notes: 'No issues found.'
+  maintainability:
+    status: CONCERNS
+    notes: 'Hardcoded placeholder logic in WebSocket endpoint. Recommended creating a .env.local file.'
+recommendations:
+  immediate: []
+  future:
+    - action: 'Replace static token with a secure, dynamic authentication mechanism (e.g., JWTs).'
+      refs: ['app/main.py', 'ifx-app/src/app/page.tsx']
+    - action: 'Implement real message handling logic in the WebSocket endpoint.'
+      refs: ['app/main.py']

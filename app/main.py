@@ -1,5 +1,6 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, status
 import asyncio
+from starlette.websockets import WebSocketDisconnect as StarletteWebSocketDisconnect
 
 app = FastAPI()
 
@@ -9,8 +10,16 @@ def health_check():
     return {'status': 'OK'}
 
 
+@app.get('/auth/token')
+def get_token():
+    return {'token': 'static-token'}
+
+
 @app.websocket('/ws')
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket, token: str | None = None):
+    if token != 'static-token':
+        await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+        return
     await websocket.accept()
     try:
         while True:
