@@ -19,7 +19,6 @@ RUN apt-get update -y && apt-get install --no-install-recommends -y \
     git \
     inotify-tools \
     openssh-client \
-    pre-commit \ 
     python3-dev \
     python3-pip \
     sudo \

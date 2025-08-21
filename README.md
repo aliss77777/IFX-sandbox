@@ -31,7 +31,18 @@ The project is organized as a monorepo with the following structure:
     touch .env
     ```
 
-2.  **Build and Start the Development Environment:**
+2.  **Set Up Git Hooks (Optional):**
+
+    This project uses `pre-commit` to enforce code quality. To set up the git hooks, you first need to start the dev container, and then you can install the hooks.
+
+    ```bash
+    make up
+    make command
+    pre-commit install
+    exit
+    ```
+
+3.  **Build and Start the Development Environment:**
 
     ```bash
     make build
@@ -42,7 +53,7 @@ The project is organized as a monorepo with the following structure:
     -   `dev`: The main development container. It contains the Python backend and proxies requests to the frontend.
     -   `ifx-app`: The frontend Next.js application container.
 
-3.  **Run the Backend Service:**
+4.  **Run the Backend Service:**
 
     The backend FastAPI server does not start automatically. To run it, open a new terminal and execute the following command:
 
@@ -52,7 +63,7 @@ The project is organized as a monorepo with the following structure:
 
     This will start the backend server with hot-reloading at `http://localhost:8000`.
 
-4.  **Access the Application:**
+5.  **Access the Application:**
 
     -   The frontend application will be available at [http://localhost:3000](http://localhost:3000).
     -   The backend API will be available at [http://localhost:8000](http://localhost:8000).
